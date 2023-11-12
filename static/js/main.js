@@ -192,9 +192,9 @@ const plotWNL = () => {
         y: plotData.y_vals,
         type: 'scatter', 
         mode: 'markers',
-        name: 'Well Nitrate-N Levels'
+        name: 'Chloride & Production Levels'
     };
-
+    
     var selectorOptions = {
             buttons: [{
                 step: 'year',
@@ -250,7 +250,7 @@ const plotWNL = () => {
            
         },
         title: {
-            text: `<b>Nitrate-N Levels for Well ${plotData.name}</b>`,
+            text: `<b>Chloride & Production Levels ${plotData.name} (Monthly)</b>`,
             font: {
                 size: 20
             }
@@ -327,34 +327,18 @@ const showStats = () => {
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        View Full ${getStats.name} Statistics
+                        View Chloride & Production Levels for ${getStats.name} (Yearly)
                     </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <div class="stats-row">
-                            <div class="stats-col">
-                                <p class="stats-text-full">Facility ID</p>
-                                <p class="stats-text-full">StreetNum ID</p>
-                                <p class="stats-text-full">PWSS Name</p>
-                                <br>
-                                <p class="stats-text-full">Source Type</p>
-                                <p class="stats-text-full">Assigned Capacity</p>
-                            </div>
-                            <div class="stats-col">                
-                                <p class="stats-num-full">${getStats.facility_ID}</p>
-                                <p class="stats-num-full">${getStats.streetNum_ID}</p>              
-                                <p class="stats-num-full">${getStats.pwss_name}</p>
-                                <p class="stats-num-full">${getStats.source_type}</p>
-                                <p class="stats-num-full">${getStats.assigned_capacity}</p>
-                            </div>
-                        </div>
+                        <p> Yearly plot graph </p>
                     </div>
                     </div>
                 </div>
             </div>
             <br><br><br>
-            <h4>Well Nitrate-N Levels for Well ${getStats.name}</h4>
+            <h4>Chloride & Production Levels for Well ${getStats.name} (Monthly)</h4>
             <hr>
             <div id="plot"></div>
             <div class="plot-btn-container">
@@ -378,7 +362,7 @@ const showStats = () => {
             y: getStats.y_vals,
             type: 'scatter', 
             mode: 'markers',
-            name: 'Well Nitrate-N Levels'
+            name: 'Chloride & Production Levels'
         };
 
         // Plot features and layout
