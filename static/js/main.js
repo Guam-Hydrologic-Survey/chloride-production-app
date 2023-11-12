@@ -24,7 +24,6 @@ const devs = ` | <a href="https://weri.uog.edu/">WERI</a>-<a href="https://guamh
 const baseLayersZoom = 19;
 
 // Open Street Map layer
-// TODO: may need to edit attribution
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: baseLayersZoom, 
     attribution: '© OpenStreetMap' + devs,
@@ -302,24 +301,24 @@ const showStats = () => {
             <div>
                 <h4>Well ${getStats.name}</h4>
                 <p class="stats-location">${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)}</p>
-                <p class="stats-location">Facility Name: ${getStats.facility_name}</p>
                 <hr/>
             </div>
 
             <div class="stats-row">
                 <div class="stats-col">
-                    <p class="stats-text">Average</p>
-                    <p class="stats-text">Min</p>
-                    <p class="stats-text">Max</p>
-                    <p class="stats-text">N-Data</p>
+                    <p class="stats-text">[CI-] (mg/L) Slope</p>
+                    <p class="stats-text">[CI-] (mg/L) Intercept</p>
+                    <p class="stats-text">Production (avg GPM) Slope</p>
+                    <p class="stats-text">Production (avg GPM) Intercept</p>
                     <br>
                     <br>
                 </div>
                 <div class="stats-col">
-                    <p class="stats-num">${getStats.average.toFixed(3)}</p>
-                    <p class="stats-num">${getStats.min}</p>
-                    <p class="stats-num">${getStats.max}</p>
-                    <p class="stats-num">${getStats.n_data}</p>
+                    <p class="stats-num">${getStats.ci_slope.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.ci_intercept.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.prod_slope.toFixed(3)}</p>
+                    <br>
+                    <p class="stats-num">${getStats.prod_intercept.toFixed(3)}</p>
                     <br>
                 </div>
             </div>
@@ -486,7 +485,6 @@ fetch(map_url)
                 <strong>Well</strong>: ${feature.properties.name} 
                 <br><strong>Lat:</strong> ${feature.properties.lat.toFixed(3)} 
                 <br><strong>Lon:</strong> ${feature.properties.lon.toFixed(3)}
-                <br><strong>Facility Name:</strong> ${feature.properties.facility_name}
                 <br><br>
                 <div class="d-flex justify-content-center">
                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" onclick="showStats()" id="marker-more-info">More Info</button>
