@@ -5,9 +5,9 @@
             "type": "Feature",
             "properties": {
                 "WID": 1,
-                "name": "D01",
-                "lat": 13.51995488,
-                "lon": 144.8491985,
+                "name": "A01",
+                "lat": 13.45409,
+                "lon": 144.7594,
                 "facility_name": "Isley Field Well #1 (212)",
                 "facility_ID": "MP0000001-GW001",
                 "streetNum_ID": 1,
@@ -24,16 +24,16 @@
                 },
             "geometry": {
                 "type": "Point",
-                "coordinates": [144.8491985,13.51995488]
+                "coordinates": [144.7594,13.45409]
                 }
         },
         {
             "type": "Feature",
             "properties": {
                 "WID": 2,
-                "name": "D02",
-                "lat": 13.5204365,
-                "lon": 144.8490571,
+                "name": "A02",
+                "lat": 13.44534,
+                "lon": 144.77608,
                 "facility_name": "Chc Well 1",
                 "facility_ID": "MP0000171-GW001",
                 "streetNum_ID": 171,
@@ -50,16 +50,16 @@
                 },
             "geometry": {
                 "type": "Point",
-                "coordinates": [144.8490571,13.5204365]
+                "coordinates": [144.77608,13.44534]
                 }
         },
         {
             "type": "Feature",
             "properties": {
                 "WID": 3,
-                "name": "D03A",
-                "lat": 13.52491377,
-                "lon": 144.848678,
+                "name": "A03",
+                "lat": 13.4507,
+                "lon": 144.75861,
                 "facility_name": "Himawari / Niizeki International Well",
                 "facility_ID": "MP0000021-GW001",
                 "streetNum_ID": 21,
@@ -76,7 +76,7 @@
                 },
             "geometry": {
                 "type": "Point",
-                "coordinates": [144.848678,13.52491377]
+                "coordinates": [144.75861,13.4507]
                 }
         }
     ]
