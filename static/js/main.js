@@ -317,7 +317,6 @@ const showStats = () => {
                     <p class="stats-num">${getStats.ci_slope.toFixed(3)}</p>
                     <p class="stats-num">${getStats.ci_intercept.toFixed(3)}</p>
                     <p class="stats-num">${getStats.prod_slope.toFixed(3)}</p>
-                    <br>
                     <p class="stats-num">${getStats.prod_intercept.toFixed(3)}</p>
                     <br>
                 </div>
@@ -368,7 +367,7 @@ const showStats = () => {
         // Plot features and layout
         const layout = {
             autosize: false,
-            width: 400,
+            width: 450,
             height: 550,
             margin: {
                 l: 70,
@@ -378,7 +377,7 @@ const showStats = () => {
                 pad: 30
             },
             title: {
-                // text: `Nitrate Levels for Well ${getStats.name}`,
+                // text: `Chloride & Production Levels for Well ${getStats.name}`,
                 font: {
                     size: 20
                 }
