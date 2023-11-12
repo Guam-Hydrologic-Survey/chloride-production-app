@@ -24,7 +24,6 @@ const devs = ` | <a href="https://weri.uog.edu/">WERI</a>-<a href="https://guamh
 const baseLayersZoom = 19;
 
 // Open Street Map layer
-// TODO: may need to edit attribution
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: baseLayersZoom, 
     attribution: '© OpenStreetMap' + devs,
@@ -193,9 +192,9 @@ const plotWNL = () => {
         y: plotData.y_vals,
         type: 'scatter', 
         mode: 'markers',
-        name: 'Well Nitrate-N Levels'
+        name: 'Chloride & Production Levels'
     };
-
+    
     var selectorOptions = {
             buttons: [{
                 step: 'year',
@@ -251,7 +250,7 @@ const plotWNL = () => {
            
         },
         title: {
-            text: `<b>Nitrate-N Levels for Well ${plotData.name}</b>`,
+            text: `<b>Chloride & Production Levels ${plotData.name} (Monthly)</b>`,
             font: {
                 size: 20
             }
@@ -302,24 +301,24 @@ const showStats = () => {
             <div>
                 <h4>Well ${getStats.name}</h4>
                 <p class="stats-location">${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)}</p>
-                <p class="stats-location">Facility Name: ${getStats.facility_name}</p>
                 <hr/>
             </div>
 
             <div class="stats-row">
                 <div class="stats-col">
-                    <p class="stats-text">Average</p>
-                    <p class="stats-text">Min</p>
-                    <p class="stats-text">Max</p>
-                    <p class="stats-text">N-Data</p>
+                    <p class="stats-text">[CI-] (mg/L) Slope</p>
+                    <p class="stats-text">[CI-] (mg/L) Intercept</p>
+                    <p class="stats-text">Production (avg GPM) Slope</p>
+                    <p class="stats-text">Production (avg GPM) Intercept</p>
                     <br>
                     <br>
                 </div>
                 <div class="stats-col">
-                    <p class="stats-num">${getStats.average.toFixed(3)}</p>
-                    <p class="stats-num">${getStats.min}</p>
-                    <p class="stats-num">${getStats.max}</p>
-                    <p class="stats-num">${getStats.n_data}</p>
+                    <p class="stats-num">${getStats.ci_slope.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.ci_intercept.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.prod_slope.toFixed(3)}</p>
+                    <br>
+                    <p class="stats-num">${getStats.prod_intercept.toFixed(3)}</p>
                     <br>
                 </div>
             </div>
@@ -328,34 +327,18 @@ const showStats = () => {
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        View Full ${getStats.name} Statistics
+                        View Chloride & Production Levels for ${getStats.name} (Yearly)
                     </button>
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <div class="stats-row">
-                            <div class="stats-col">
-                                <p class="stats-text-full">Facility ID</p>
-                                <p class="stats-text-full">StreetNum ID</p>
-                                <p class="stats-text-full">PWSS Name</p>
-                                <br>
-                                <p class="stats-text-full">Source Type</p>
-                                <p class="stats-text-full">Assigned Capacity</p>
-                            </div>
-                            <div class="stats-col">                
-                                <p class="stats-num-full">${getStats.facility_ID}</p>
-                                <p class="stats-num-full">${getStats.streetNum_ID}</p>              
-                                <p class="stats-num-full">${getStats.pwss_name}</p>
-                                <p class="stats-num-full">${getStats.source_type}</p>
-                                <p class="stats-num-full">${getStats.assigned_capacity}</p>
-                            </div>
-                        </div>
+                        <p> Yearly plot graph </p>
                     </div>
                     </div>
                 </div>
             </div>
             <br><br><br>
-            <h4>Well Nitrate-N Levels for Well ${getStats.name}</h4>
+            <h4>Chloride & Production Levels for Well ${getStats.name} (Monthly)</h4>
             <hr>
             <div id="plot"></div>
             <div class="plot-btn-container">
@@ -379,7 +362,7 @@ const showStats = () => {
             y: getStats.y_vals,
             type: 'scatter', 
             mode: 'markers',
-            name: 'Well Nitrate-N Levels'
+            name: 'Chloride & Production Levels'
         };
 
         // Plot features and layout
@@ -486,7 +469,6 @@ fetch(map_url)
                 <strong>Well</strong>: ${feature.properties.name} 
                 <br><strong>Lat:</strong> ${feature.properties.lat.toFixed(3)} 
                 <br><strong>Lon:</strong> ${feature.properties.lon.toFixed(3)}
-                <br><strong>Facility Name:</strong> ${feature.properties.facility_name}
                 <br><br>
                 <div class="d-flex justify-content-center">
                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" onclick="showStats()" id="marker-more-info">More Info</button>
