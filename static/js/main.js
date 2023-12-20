@@ -296,6 +296,7 @@ const showStats = () => {
     }
 
     //TODO: get the right xvalues and yvalues for sampleWells.json value
+    //TODO: if doesn't have slope or intercept data, make it blank ----
     document.getElementById("stats-sidebar").innerHTML =
         `
             <div>
@@ -323,21 +324,8 @@ const showStats = () => {
                 </div>
             </div>
             
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        View Chloride & Production Levels for ${getStats.name} (Yearly)
-                    </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <p> Yearly plot graph </p>
-                    </div>
-                    </div>
-                </div>
             </div>
-            <br><br><br>
+            <br>
             <h4>Chloride & Production Levels for Well ${getStats.name} (Monthly)</h4>
             <hr>
             <div id="plot"></div>
@@ -455,6 +443,7 @@ function getColor(sig) {
 
 // Gets the data from the JSON file and adds well to the map
 // TODO: fix well info popping up
+//TODO: have corresponding map urls for different sheets for diff fetching
 fetch(map_url)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
