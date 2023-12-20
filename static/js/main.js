@@ -186,12 +186,23 @@ const plotWNL = () => {
     };
 
     // Plots x,y coordinates for enlarged plot
+
+    //TODO: mode set for lines+markers currently for enlarged plot
     const wnlTrace = {
         x: x_dates_conv,
         y: plotData.y_vals,
         type: 'scatter', 
-        mode: 'markers',
+        mode: 'lines+markers',
         name: 'Chloride & Production Levels'
+    };
+
+    const wnlTrace2 = {
+        x: x_dates_conv,
+        y: plotData.y_vals,
+        type: 'scatter', 
+        mode: 'lines+markers',
+        name: 'Chloride & Production Levels',
+        yaxis:"y2"
     };
     
     var selectorOptions = {
@@ -258,8 +269,17 @@ const plotWNL = () => {
             rangeselector: selectorOptions,
         },
         yaxis: {
-            title: 'ppm (mg/L)'
+            title: 'ppm (mg/L)',
+            titlefont: {color: 'rgb(31,119,180)'},
+            tickfont: {color: 'rgb(31,119,180)'},
         },
+        yaxis2: {
+            title: 'yaxis2 title',
+            titlefont: {color: 'rgb(251,136,33)'},
+            tickfont: {color: 'rgb(251,136,33)'},
+            overlaying: 'y',
+            side: 'right'
+          }
     };
 
     var config = {
@@ -267,12 +287,12 @@ const plotWNL = () => {
             format: 'png', // png, svg, jpeg, webp
             filename: 'well_plot',
             height: 500,
-            width: 700,
+            width: 900,
             scale: 1 
           }
     };
 
-    Plotly.newPlot('large-plot', [wnlTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+    Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 // Shows the stats on the left side panel 
@@ -342,7 +362,7 @@ const showStats = () => {
             x_dates_conv[i] = new Date(getStats.x_vals[i]);
         };
 
-        // Plots x,y coordinates 
+        // Plots x,y coordinates for small plot
         // TODO: plot x, y1, y2, coordinates
         const wnlTrace = {
             x: x_dates_conv,
