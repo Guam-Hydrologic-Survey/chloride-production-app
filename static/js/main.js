@@ -198,7 +198,7 @@ const plotWNL = () => {
 
     const wnlTrace2 = {
         x: x_dates_conv,
-        y: plotData.y_vals,
+        y: plotData.y_vals_2,
         type: 'scatter', 
         mode: 'lines+markers',
         name: 'Chloride & Production Levels',
