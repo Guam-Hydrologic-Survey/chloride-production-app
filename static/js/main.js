@@ -185,8 +185,7 @@ const plotWNL = () => {
         x_dates_conv[i] = new Date(plotData.x_vals[i]);
     };
 
-    // Plots x,y coordinates 
-    // TODO: change name?
+    // Plots x,y coordinates for enlarged plot
     const wnlTrace = {
         x: x_dates_conv,
         y: plotData.y_vals,
@@ -442,7 +441,6 @@ function getColor(sig) {
 }
 
 // Gets the data from the JSON file and adds well to the map
-// TODO: fix well info popping up
 //TODO: have corresponding map urls for different sheets for diff fetching
 fetch(map_url)
     .then(response => response.json())  // Requests for a json file as a response
@@ -476,70 +474,8 @@ fetch(map_url)
             
         }
 
-        // const sigIncWells = L.geoJSON(geojson, {
-        //     filter: function(feature, layer) {
-        //         return (feature.properties.sig) == 1;
-        //     }, 
-        //     pointToLayer: function(feature, latlng) {
-        //         var iconStyle = L.divIcon({
-        //             html: `
-        //             <svg height="100%" width="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        //                 <g fill="${getColor(2)}" stroke="black">
-        //                     <path stroke-width="5" d="M50 0 L0 100 L100 100 Z"></path>
-        //                 </g>
-        //             </svg>
-        //             `,
-        //             className: "",
-        //             iconSize: [18, 18]
-        //         });
-        //         return L.marker(latlng, {icon: iconStyle});
-        //     }, 
-        //     onEachFeature: getWellInfo}).addTo(map);
-        // layerControl.addOverlay(sigIncWells, "Significantly Increasing");
-
-        // const sigDecWells = L.geoJSON(geojson, {
-        //     filter: function(feature, layer) {
-        //         return (feature.properties.sig) == -1;
-        //     }, 
-        //     pointToLayer: function(feature, latlng) {
-        //         var iconStyle = L.divIcon({
-        //             html: `
-        //             <svg height="100%" width="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        //                 <g fill="${getColor(2)}" stroke="black">
-        //                     <path stroke-width="5" d="M0 0 L50 100 L100 0 Z"></path>
-        //                 </g>
-        //             </svg>
-        //             `,
-        //             className: "",
-        //             iconSize: [18, 18]
-        //         });
-        //         return L.marker(latlng, {icon: iconStyle});
-        //     }, 
-        //     onEachFeature: getWellInfo}).addTo(map);
-        // layerControl.addOverlay(sigDecWells, "Significantly Decreasing");
-        
-        // const insWells = L.geoJSON(geojson, {
-        //     filter: function(feature, layer) {
-        //         return (feature.properties.sig) == 0;
-        //     }, 
-        //     pointToLayer: function(feature, latlng) {
-        //         return L.circleMarker(latlng, {
-        //             radius: 8, 
-        //             fillColor: getColor(2),
-        //             weight: 1,
-        //             fillOpacity: 1.0,
-        //             color: "black",
-        //             opacity: 1.0,
-        //         })
-        //     }, 
-        //     onEachFeature: getWellInfo}).addTo(map);
-        // layerControl.addOverlay(insWells, "Insignificant");
-
-        //TODO: Saipan Layer of Wells
+        //TODO: Sample Layer of Wells
         const sampleWells = L.geoJSON(geojson, {
-            // filter: function(feature, layer) {
-            //     return (feature.properties.sig) == 0;
-            // }, 
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, {
                     radius: 8, 
