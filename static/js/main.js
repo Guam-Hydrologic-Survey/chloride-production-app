@@ -185,14 +185,24 @@ const plotWNL = () => {
         x_dates_conv[i] = new Date(plotData.x_vals[i]);
     };
 
-    // Plots x,y coordinates 
-    // TODO: change name?
+    // Plots x,y coordinates for enlarged plot
+
+    //TODO: mode set for lines+markers currently for enlarged plot
     const wnlTrace = {
         x: x_dates_conv,
         y: plotData.y_vals,
         type: 'scatter', 
-        mode: 'markers',
+        mode: 'lines+markers',
         name: 'Chloride & Production Levels'
+    };
+
+    const wnlTrace2 = {
+        x: x_dates_conv,
+        y: plotData.y_vals,
+        type: 'scatter', 
+        mode: 'lines+markers',
+        name: 'Chloride & Production Levels',
+        yaxis:"y2"
     };
     
     var selectorOptions = {
@@ -259,8 +269,17 @@ const plotWNL = () => {
             rangeselector: selectorOptions,
         },
         yaxis: {
-            title: 'ppm (mg/L)'
+            title: 'ppm (mg/L)',
+            titlefont: {color: 'rgb(31,119,180)'},
+            tickfont: {color: 'rgb(31,119,180)'},
         },
+        yaxis2: {
+            title: 'yaxis2 title',
+            titlefont: {color: 'rgb(251,136,33)'},
+            tickfont: {color: 'rgb(251,136,33)'},
+            overlaying: 'y',
+            side: 'right'
+          }
     };
 
     var config = {
@@ -268,12 +287,12 @@ const plotWNL = () => {
             format: 'png', // png, svg, jpeg, webp
             filename: 'well_plot',
             height: 500,
-            width: 700,
+            width: 900,
             scale: 1 
           }
     };
 
-    Plotly.newPlot('large-plot', [wnlTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+    Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 // Shows the stats on the left side panel 
@@ -296,6 +315,7 @@ const showStats = () => {
     }
 
     //TODO: get the right xvalues and yvalues for sampleWells.json value
+    //TODO: if doesn't have slope or intercept data, make it blank ----
     document.getElementById("stats-sidebar").innerHTML =
         `
             <div>
@@ -322,21 +342,8 @@ const showStats = () => {
                 </div>
             </div>
             
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        View Chloride & Production Levels for ${getStats.name} (Yearly)
-                    </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <p> Yearly plot graph </p>
-                    </div>
-                    </div>
-                </div>
             </div>
-            <br><br><br>
+            <br>
             <h4>Chloride & Production Levels for Well ${getStats.name} (Monthly)</h4>
             <hr>
             <div id="plot"></div>
@@ -354,7 +361,7 @@ const showStats = () => {
             x_dates_conv[i] = new Date(getStats.x_vals[i]);
         };
 
-        // Plots x,y coordinates 
+        // Plots x,y coordinates for small plot
         // TODO: plot x, y1, y2, coordinates
         const wnlTrace = {
             x: x_dates_conv,
@@ -453,7 +460,7 @@ function getColor(sig) {
 }
 
 // Gets the data from the JSON file and adds well to the map
-// TODO: fix well info popping up
+//TODO: have corresponding map urls for different sheets for diff fetching
 fetch(map_url)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
@@ -486,70 +493,8 @@ fetch(map_url)
             
         }
 
-        // const sigIncWells = L.geoJSON(geojson, {
-        //     filter: function(feature, layer) {
-        //         return (feature.properties.sig) == 1;
-        //     }, 
-        //     pointToLayer: function(feature, latlng) {
-        //         var iconStyle = L.divIcon({
-        //             html: `
-        //             <svg height="100%" width="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        //                 <g fill="${getColor(2)}" stroke="black">
-        //                     <path stroke-width="5" d="M50 0 L0 100 L100 100 Z"></path>
-        //                 </g>
-        //             </svg>
-        //             `,
-        //             className: "",
-        //             iconSize: [18, 18]
-        //         });
-        //         return L.marker(latlng, {icon: iconStyle});
-        //     }, 
-        //     onEachFeature: getWellInfo}).addTo(map);
-        // layerControl.addOverlay(sigIncWells, "Significantly Increasing");
-
-        // const sigDecWells = L.geoJSON(geojson, {
-        //     filter: function(feature, layer) {
-        //         return (feature.properties.sig) == -1;
-        //     }, 
-        //     pointToLayer: function(feature, latlng) {
-        //         var iconStyle = L.divIcon({
-        //             html: `
-        //             <svg height="100%" width="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        //                 <g fill="${getColor(2)}" stroke="black">
-        //                     <path stroke-width="5" d="M0 0 L50 100 L100 0 Z"></path>
-        //                 </g>
-        //             </svg>
-        //             `,
-        //             className: "",
-        //             iconSize: [18, 18]
-        //         });
-        //         return L.marker(latlng, {icon: iconStyle});
-        //     }, 
-        //     onEachFeature: getWellInfo}).addTo(map);
-        // layerControl.addOverlay(sigDecWells, "Significantly Decreasing");
-        
-        // const insWells = L.geoJSON(geojson, {
-        //     filter: function(feature, layer) {
-        //         return (feature.properties.sig) == 0;
-        //     }, 
-        //     pointToLayer: function(feature, latlng) {
-        //         return L.circleMarker(latlng, {
-        //             radius: 8, 
-        //             fillColor: getColor(2),
-        //             weight: 1,
-        //             fillOpacity: 1.0,
-        //             color: "black",
-        //             opacity: 1.0,
-        //         })
-        //     }, 
-        //     onEachFeature: getWellInfo}).addTo(map);
-        // layerControl.addOverlay(insWells, "Insignificant");
-
-        //TODO: Saipan Layer of Wells
+        //TODO: Sample Layer of Wells
         const sampleWells = L.geoJSON(geojson, {
-            // filter: function(feature, layer) {
-            //     return (feature.properties.sig) == 0;
-            // }, 
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, {
                     radius: 8, 
