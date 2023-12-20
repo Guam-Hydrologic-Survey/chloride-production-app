@@ -270,15 +270,18 @@ const plotWNL = () => {
         },
         yaxis: {
             title: 'ppm (mg/L)',
-            titlefont: {color: 'rgb(31,119,180)'},
-            tickfont: {color: 'rgb(31,119,180)'},
+            range: [0, 'auto'],
+            titlefont: { color: 'rgb(31, 119, 180)' },
+            tickfont: { color: 'rgb(31, 119, 180)' },
+            
         },
         yaxis2: {
             title: 'yaxis2 title',
             titlefont: {color: 'rgb(251,136,33)'},
             tickfont: {color: 'rgb(251,136,33)'},
             overlaying: 'y',
-            side: 'right'
+            side: 'right',
+            range: [0, 'auto']
           }
     };
 
