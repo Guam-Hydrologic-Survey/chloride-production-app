@@ -192,16 +192,16 @@ const plotWNL = () => {
         x: x_dates_conv,
         y: plotData.y_vals,
         type: 'scatter', 
-        mode: 'lines+markers',
-        name: 'Chloride & Production Levels'
+        mode: 'markers',
+        name: 'Chloride Levels'
     };
 
     const wnlTrace2 = {
         x: x_dates_conv,
         y: plotData.y_vals_2,
         type: 'scatter', 
-        mode: 'lines+markers',
-        name: 'Chloride & Production Levels',
+        mode: 'markers',
+        name: 'Production Levels',
         yaxis:"y2"
     };
     
@@ -269,14 +269,14 @@ const plotWNL = () => {
             rangeselector: selectorOptions,
         },
         yaxis: {
-            title: 'ppm (mg/L)',
+            title: '[CI-] (mg/L)',
             range: [0, 'auto'],
             titlefont: { color: 'rgb(31, 119, 180)' },
             tickfont: { color: 'rgb(31, 119, 180)' },
             
         },
         yaxis2: {
-            title: 'yaxis2 title',
+            title: 'Production (avg GPM)',
             titlefont: {color: 'rgb(251,136,33)'},
             tickfont: {color: 'rgb(251,136,33)'},
             overlaying: 'y',
@@ -368,23 +368,32 @@ const showStats = () => {
         // TODO: plot x, y1, y2, coordinates
         const wnlTrace = {
             x: x_dates_conv,
-            y: getStats.y_vals,
+            y: plotData.y_vals,
             type: 'scatter', 
             mode: 'markers',
-            name: 'Chloride & Production Levels'
+            name: 'Chloride Levels'
+        };
+    
+        const wnlTrace2 = {
+            x: x_dates_conv,
+            y: plotData.y_vals_2,
+            type: 'scatter', 
+            mode: 'markers',
+            name: 'Production Levels',
+            yaxis:"y2"
         };
 
         // Plot features and layout
         const layout = {
             autosize: false,
-            width: 450,
+            width: 800,
             height: 550,
             margin: {
                 l: 70,
                 r: 20,
                 b: 70,
                 t: 20,
-                pad: 30
+                pad: 10
             },
             title: {
                 // text: `Chloride & Production Levels for Well ${getStats.name}`,
@@ -397,9 +406,22 @@ const showStats = () => {
                 rangeslider: {}
             },
             yaxis: {
-                title: 'ppm (mg/L)',
-                fixedrange: true
-            }
+                title: '[CI-] (mg/L)',
+                fixedrange: true,
+                range: [0, 'auto'],
+                titlefont: { color: 'rgb(31, 119, 180)' },
+                tickfont: { color: 'rgb(31, 119, 180)' },
+                
+            },
+            yaxis2: {
+                title: 'Production (avg GPM)',
+                fixedrange: true,
+                titlefont: {color: 'rgb(251,136,33)'},
+                tickfont: {color: 'rgb(251,136,33)'},
+                overlaying: 'y',
+                side: 'right',
+                range: [0, 'auto']
+              }
         };
 
         var config = {
@@ -408,7 +430,7 @@ const showStats = () => {
             }
         };
 
-        Plotly.newPlot('plot', [wnlTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+        Plotly.newPlot('plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
