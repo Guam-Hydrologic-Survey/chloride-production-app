@@ -319,11 +319,13 @@ const showStats = () => {
 
     //TODO: get the right xvalues and yvalues for sampleWells.json value
     //TODO: if doesn't have slope or intercept data, make it blank ----
+    //TODO: Fix basin name chamorro spelling
     document.getElementById("stats-sidebar").innerHTML =
         `
             <div>
                 <h4>Well ${getStats.name}</h4>
                 <p class="stats-location">${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)}</p>
+                <p class="stats-location">Basin Name: ${getStats.basin}</p>
                 <hr/>
             </div>
 
@@ -486,6 +488,7 @@ function getColor(sig) {
 
 // Gets the data from the JSON file and adds well to the map
 //TODO: have corresponding map urls for different sheets for diff fetching
+//TODO: fix basin name to have proper chamorro spelling
 fetch(map_url)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
@@ -500,6 +503,7 @@ fetch(map_url)
                 <strong>Well</strong>: ${feature.properties.name} 
                 <br><strong>Lat:</strong> ${feature.properties.lat.toFixed(3)} 
                 <br><strong>Lon:</strong> ${feature.properties.lon.toFixed(3)}
+                <br><strong>Basin Name:</strong> ${feature.properties.basin}
                 <br><br>
                 <div class="d-flex justify-content-center">
                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" onclick="showStats()" id="marker-more-info">More Info</button>
