@@ -254,7 +254,7 @@ const plotWNL = () => {
     //TODO: change title -> text? and axes
     const layout = {
         autosize: false,
-        height: 600,
+        height: 500,
         width: 1100,
         margin: {
            
