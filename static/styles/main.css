@@ -67,7 +67,7 @@
 }
 
 .offcanvas-size-xl {
-    --bs-offcanvas-width: min(95vh, 900px) !important;
+    --bs-offcanvas-width: min(100vh, 900px) !important;
 }
 
 /* Style configuration for the title and location section of stats panel */
