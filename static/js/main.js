@@ -190,7 +190,7 @@ const plotWNL = () => {
     //TODO: mode set for lines+markers currently for enlarged plot
     const wnlTrace = {
         x: x_dates_conv,
-        y: plotData.y_vals,
+        y: plotData.ci_vals,
         type: 'scatter', 
         mode: 'markers',
         name: 'Chloride Levels'
@@ -198,7 +198,7 @@ const plotWNL = () => {
 
     const wnlTrace2 = {
         x: x_dates_conv,
-        y: plotData.y_vals_2,
+        y: plotData.prod_vals,
         type: 'scatter', 
         mode: 'markers',
         name: 'Production Levels',
@@ -370,7 +370,7 @@ const showStats = () => {
         // TODO: plot x, y1, y2, coordinates
         const wnlTrace = {
             x: x_dates_conv,
-            y: plotData.y_vals,
+            y: plotData.ci_vals,
             type: 'scatter', 
             mode: 'markers',
             name: 'Chloride Levels'
@@ -378,7 +378,7 @@ const showStats = () => {
     
         const wnlTrace2 = {
             x: x_dates_conv,
-            y: plotData.y_vals_2,
+            y: plotData.prod_vals,
             type: 'scatter', 
             mode: 'markers',
             name: 'Production Levels',
