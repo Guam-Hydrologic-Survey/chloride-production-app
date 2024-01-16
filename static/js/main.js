@@ -437,8 +437,8 @@ const showStats = () => {
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
 //TODO: change map_url AFTER completing samplewells
-// const map_url = './static/data/sampleWells.json';
-const map_url = './static/data/hagatnaBasin.json';
+const map_url = './static/data/sampleWells.json';
+const hagatnaBasin = './static/data/hagatnaBasin.json';
   
 
 function getColor(sig) {
@@ -527,7 +527,7 @@ fetch(map_url)
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, {
                     radius: 8, 
-                    fillColor: getColor(2),
+                    fillColor: getColor(1),
                     weight: 1,
                     fillOpacity: 1,
                     color: "black",
@@ -537,8 +537,31 @@ fetch(map_url)
             onEachFeature: getWellInfo}).addTo(map);
         layerControl.addOverlay(sampleWells, "Sample Wells");
 
+        // Load hagatnaBasin GeoJSON data
+        fetch(hagatnaBasin)
+        .then(response => response.json())
+        .then(geojson => {
+            const hagatnaBasinLayer = L.geoJSON(geojson, {
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 8, 
+                        fillColor: getColor(5),
+                        weight: 1,
+                        fillOpacity: 1,
+                        color: "black",
+                        opacity: 1.0,
+                    })
+                }, 
+                onEachFeature: getWellInfo}).addTo(map);
+            layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin");
+            const mapJson = L.layerGroup([hagatnaBasinLayer]).addTo(map);
+        })
+        .catch(console.error);
+
         // const mapJson = L.layerGroup([sigIncWells, sigDecWells, insWells]).addTo(map);
-        const mapJson = L.layerGroup([sampleWells]).addTo(map);
+        const mapJson = L.layerGroup([sampleWells, hagatnaBasinLayer]).addTo(map);
+
+
         
         // Control search  
         const searchControl = new L.Control.Search({ 
