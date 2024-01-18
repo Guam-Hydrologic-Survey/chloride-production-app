@@ -488,7 +488,6 @@ function getColor(sig) {
 
 // Gets the data from the JSON file and adds well to the map
 //TODO: have corresponding map urls for different sheets for diff fetching
-//TODO: fix basin name to have proper chamorro spelling
 fetch(yigoTumonBasin)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
