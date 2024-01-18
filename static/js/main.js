@@ -437,7 +437,7 @@ const showStats = () => {
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
 //TODO: change map_url AFTER completing samplewells
-const map_url = './static/data/yigoTumonBasin.json';
+const yigoTumonBasin = './static/data/yigoTumonBasin.json';
 const hagatnaBasin = './static/data/hagatnaBasin.json';
   
 
@@ -489,7 +489,7 @@ function getColor(sig) {
 // Gets the data from the JSON file and adds well to the map
 //TODO: have corresponding map urls for different sheets for diff fetching
 //TODO: fix basin name to have proper chamorro spelling
-fetch(map_url)
+fetch(yigoTumonBasin)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
 
@@ -523,7 +523,7 @@ fetch(map_url)
         }
 
         //TODO: Sample Layer of Wells
-        const sampleWells = L.geoJSON(geojson, {
+        const yigoTumonBasinLayer = L.geoJSON(geojson, {
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, {
                     radius: 8, 
@@ -535,7 +535,7 @@ fetch(map_url)
                 })
             }, 
             onEachFeature: getWellInfo}).addTo(map);
-        layerControl.addOverlay(sampleWells, "Sample Wells");
+        layerControl.addOverlay(yigoTumonBasinLayer, "Yigo-Tumon");
 
         // Load hagatnaBasin GeoJSON data
         fetch(hagatnaBasin)
@@ -559,7 +559,7 @@ fetch(map_url)
         .catch(console.error);
 
         // const mapJson = L.layerGroup([sigIncWells, sigDecWells, insWells]).addTo(map);
-        const mapJson = L.layerGroup([sampleWells, hagatnaBasinLayer]).addTo(map);
+        const mapJson = L.layerGroup([yigoTumonBasinLayer, hagatnaBasinLayer]).addTo(map);
 
 
         
