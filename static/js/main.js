@@ -486,6 +486,8 @@ function getColor(sig) {
     return c; 
 }
 
+
+
 // Gets the data from the JSON file and adds well to the map
 //TODO: have corresponding map urls for different sheets for diff fetching
 fetch(yigoTumonBasin)
@@ -535,33 +537,9 @@ fetch(yigoTumonBasin)
             }, 
             onEachFeature: getWellInfo}).addTo(map);
         layerControl.addOverlay(yigoTumonBasinLayer, "Yigo-Tumon");
-
-        // Load hagatnaBasin GeoJSON data
-        fetch(hagatnaBasin)
-        .then(response => response.json())
-        .then(geojson => {
-            const hagatnaBasinLayer = L.geoJSON(geojson, {
-                pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng, {
-                        radius: 8, 
-                        fillColor: getColor(5),
-                        weight: 1,
-                        fillOpacity: 1,
-                        color: "black",
-                        opacity: 1.0,
-                    })
-                }, 
-                onEachFeature: getWellInfo}).addTo(map);
-            layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin");
-            const mapJson = L.layerGroup([hagatnaBasinLayer]).addTo(map);
-        })
-        .catch(console.error);
-
-        // const mapJson = L.layerGroup([sigIncWells, sigDecWells, insWells]).addTo(map);
-        const mapJson = L.layerGroup([yigoTumonBasinLayer, hagatnaBasinLayer]).addTo(map);
-
-
         
+        const mapJson = L.layerGroup([yigoTumonBasinLayer]).addTo(map);
+
         // Control search  
         const searchControl = new L.Control.Search({ 
             layer: mapJson, 
@@ -592,6 +570,35 @@ fetch(yigoTumonBasin)
             getStats = e.layer.feature.properties;
         }); 
         map.addControl(searchControl);
+
+        // Load hagatnaBasin GeoJSON data
+        fetch(hagatnaBasin)
+        .then(response => response.json())
+        .then(geojson => {
+            const hagatnaBasinLayer = L.geoJSON(geojson, {
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 8, 
+                        fillColor: getColor(5),
+                        weight: 1,
+                        fillOpacity: 1,
+                        color: "black",
+                        opacity: 1.0,
+                    })
+                }, 
+                onEachFeature: getWellInfo}).addTo(map);
+            layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin");
+            mapJson.addLayer(hagatnaBasinLayer); // Add to the existing layer group
+            
+        })
+        .catch(console.error);
+
+        // const mapJson = L.layerGroup([sigIncWells, sigDecWells, insWells]).addTo(map);
+        // const mapJson = L.layerGroup([yigoTumonBasinLayer, hagatnaBasinLayer]).addTo(map);
+
+
+        
+        
     })
     .catch(console.error);
     
