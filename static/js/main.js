@@ -682,6 +682,31 @@ fetch(yigoTumonBasin)
             layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin");
             mapJson.addLayer(hagatnaBasinLayer); // Add to the existing layer group
             
+            // Load finegayanBasin GeoJSON data
+            fetch(finegayanBasin)
+            .then(response => response.json())
+            .then(geojson => {
+                const finegayanBasinLayer = L.geoJSON(geojson, {
+                    pointToLayer: function(feature, latlng) {
+                        return L.circleMarker(latlng, {
+                            radius: 8, 
+                            fillColor: getColor(3),
+                            weight: 1,
+                            fillOpacity: 1,
+                            color: "black",
+                            opacity: 1.0,
+                        })
+                    }, 
+                    onEachFeature: getWellInfo}).addTo(map);
+                layerControl.addOverlay(finegayanBasinLayer, "Finegayan Basin");
+                mapJson.addLayer(finegayanBasinLayer); // Add to the existing layer group
+                
+            })
+            .catch(console.error);
+            
+
+
+
         })
         .catch(console.error);
 
