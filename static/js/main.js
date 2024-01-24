@@ -435,6 +435,7 @@ const yigoTumonBasin = './static/data/yigoTumonBasin.json';
 const hagatnaBasin = './static/data/hagatnaBasin.json';
 const finegayanBasin = './static/data/finegayanBasin.json';
 const mangilaoBasin = './static/data/mangilaoBasin.json';
+const upiBasin = './static/data/upiBasin.json';
 
 function getColor(sig) {
     const colors = [
@@ -721,6 +722,29 @@ fetch(yigoTumonBasin)
                         layerControl.addOverlay(mangilaoBasinLayer, "Mangilao Basin");
                         mapJson.addLayer(mangilaoBasinLayer); // Add to the existing layer group
                         
+                            // Load upiBasin GeoJSON data
+                            fetch(upiBasin)
+                            .then(response => response.json())
+                            .then(geojson => {
+                                const upiBasinLayer = L.geoJSON(geojson, {
+                                    pointToLayer: function(feature, latlng) {
+                                        return L.circleMarker(latlng, {
+                                            radius: 8, 
+                                            fillColor: "blue",
+                                            weight: 1,
+                                            fillOpacity: 1,
+                                            color: "black",
+                                            opacity: 1.0,
+                                        })
+                                    }, 
+                                    onEachFeature: getWellInfo}).addTo(map);
+                                layerControl.addOverlay(upiBasinLayer, "Upi Basin");
+                                mapJson.addLayer(upiBasinLayer); // Add to the existing layer group
+                                
+                            })
+                            .catch(console.error);
+
+
                     })
                     .catch(console.error);
             })
