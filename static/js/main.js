@@ -436,6 +436,7 @@ const hagatnaBasin = './static/data/hagatnaBasin.json';
 const finegayanBasin = './static/data/finegayanBasin.json';
 const mangilaoBasin = './static/data/mangilaoBasin.json';
 const upiBasin = './static/data/upiBasin.json';
+const machanaoBasin = './static/data/machanaoBasin.json';
 
 function getColor(sig) {
     const colors = [
@@ -741,6 +742,29 @@ fetch(yigoTumonBasin)
                                 layerControl.addOverlay(upiBasinLayer, "Upi Basin");
                                 mapJson.addLayer(upiBasinLayer); // Add to the existing layer group
                                 
+                                 // Load machanaoBasin GeoJSON data
+                                 fetch(machanaoBasin)
+                                 .then(response => response.json())
+                                 .then(geojson => {
+                                     const machanaoBasinLayer = L.geoJSON(geojson, {
+                                         pointToLayer: function(feature, latlng) {
+                                             return L.circleMarker(latlng, {
+                                                 radius: 8, 
+                                                 fillColor: "green",
+                                                 weight: 1,
+                                                 fillOpacity: 1,
+                                                 color: "black",
+                                                 opacity: 1.0,
+                                             })
+                                         }, 
+                                         onEachFeature: getWellInfo}).addTo(map);
+                                     layerControl.addOverlay(machanaoBasinLayer, "Machanao Basin");
+                                     mapJson.addLayer(machanaoBasinLayer); // Add to the existing layer group
+                                     
+                                 })
+                                 .catch(console.error);
+
+                               
                             })
                             .catch(console.error);
 
