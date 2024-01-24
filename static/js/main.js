@@ -434,7 +434,7 @@ const showStats = () => {
 const yigoTumonBasin = './static/data/yigoTumonBasin.json';
 const hagatnaBasin = './static/data/hagatnaBasin.json';
 const finegayanBasin = './static/data/finegayanBasin.json';
-  
+const mangilaoBasin = './static/data/mangilaoBasin.json';
 
 function getColor(sig) {
     const colors = [
