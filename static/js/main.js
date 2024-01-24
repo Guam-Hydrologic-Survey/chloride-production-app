@@ -186,8 +186,6 @@ const plotWNL = () => {
     };
 
     // Plots x,y coordinates for enlarged plot
-
-    //TODO: mode set for lines+markers currently for enlarged plot
     const wnlTrace = {
         x: x_dates_conv,
         y: plotData.ci_vals,
@@ -251,7 +249,6 @@ const plotWNL = () => {
         };
     
     // Plot features and layout
-    //TODO: change title -> text? and axes
     const layout = {
         autosize: false,
         height: 500,
@@ -317,9 +314,7 @@ const showStats = () => {
         }
     }
 
-    //TODO: get the right xvalues and yvalues for sampleWells.json value
     //TODO: if doesn't have slope or intercept data, make it blank ----
-    //TODO: Fix basin name chamorro spelling
     document.getElementById("stats-sidebar").innerHTML =
         `
             <div>
@@ -367,7 +362,6 @@ const showStats = () => {
         };
 
         // Plots x,y coordinates for small plot
-        // TODO: plot x, y1, y2, coordinates
         const wnlTrace = {
             x: x_dates_conv,
             y: plotData.ci_vals,
@@ -439,6 +433,7 @@ const showStats = () => {
 //TODO: change map_url AFTER completing samplewells
 const yigoTumonBasin = './static/data/yigoTumonBasin.json';
 const hagatnaBasin = './static/data/hagatnaBasin.json';
+const finegayanBasin = './static/data/finegayanBasin.json';
   
 
 function getColor(sig) {
