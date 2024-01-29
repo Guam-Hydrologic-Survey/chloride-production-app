@@ -430,7 +430,6 @@ const showStats = () => {
 }
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
-//TODO: change map_url AFTER completing samplewells
 const yigoTumonBasin = './static/data/yigoTumonBasin.json';
 const hagatnaBasin = './static/data/hagatnaBasin.json';
 const finegayanBasin = './static/data/finegayanBasin.json';
@@ -613,11 +612,9 @@ fetch(yigoTumonBasin)
                 getStats = pt.target.feature.properties;
             })
             
-            
-            
         }
 
-        //TODO: Sample Layer of Wells
+        // Yigo-Tumon Basin Layer of Well
         const yigoTumonBasinLayer = L.geoJSON(geojson, {
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, {
@@ -667,32 +664,14 @@ fetch(yigoTumonBasin)
 
         // Load hagatnaBasin GeoJSON data
         fetch(hagatnaBasin)
-        .then(response => response.json())
-        .then(geojson => {
-            const hagatnaBasinLayer = L.geoJSON(geojson, {
-                pointToLayer: function(feature, latlng) {
-                    return L.circleMarker(latlng, {
-                        radius: 8, 
-                        fillColor: getColor(5),
-                        weight: 1,
-                        fillOpacity: 1,
-                        color: "black",
-                        opacity: 1.0,
-                    })
-                }, 
-                onEachFeature: getWellInfo}).addTo(map);
-            layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin");
-            mapJson.addLayer(hagatnaBasinLayer); // Add to the existing layer group
-            
-            // Load finegayanBasin GeoJSON data
-            fetch(finegayanBasin)
             .then(response => response.json())
             .then(geojson => {
-                const finegayanBasinLayer = L.geoJSON(geojson, {
+                // Hagatna Basin Layer of Well
+                const hagatnaBasinLayer = L.geoJSON(geojson, {
                     pointToLayer: function(feature, latlng) {
                         return L.circleMarker(latlng, {
                             radius: 8, 
-                            fillColor: getColor(3),
+                            fillColor: getColor(5),
                             weight: 1,
                             fillOpacity: 1,
                             color: "black",
@@ -700,19 +679,19 @@ fetch(yigoTumonBasin)
                         })
                     }, 
                     onEachFeature: getWellInfo}).addTo(map);
-                layerControl.addOverlay(finegayanBasinLayer, "Finegayan Basin");
-                mapJson.addLayer(finegayanBasinLayer); // Add to the existing layer group
-                
-
-                    // Load mangilaoBasin GeoJSON data
-                    fetch(mangilaoBasin)
+                layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin");
+                mapJson.addLayer(hagatnaBasinLayer); // Add to the existing layer group
+            
+                // Load finegayanBasin GeoJSON data
+                fetch(finegayanBasin)
                     .then(response => response.json())
                     .then(geojson => {
-                        const mangilaoBasinLayer = L.geoJSON(geojson, {
+                        // Finegayan Basin Layer of Well
+                        const finegayanBasinLayer = L.geoJSON(geojson, {
                             pointToLayer: function(feature, latlng) {
                                 return L.circleMarker(latlng, {
                                     radius: 8, 
-                                    fillColor: "red",
+                                    fillColor: getColor(3),
                                     weight: 1,
                                     fillOpacity: 1,
                                     color: "black",
@@ -720,18 +699,20 @@ fetch(yigoTumonBasin)
                                 })
                             }, 
                             onEachFeature: getWellInfo}).addTo(map);
-                        layerControl.addOverlay(mangilaoBasinLayer, "Mangilao Basin");
-                        mapJson.addLayer(mangilaoBasinLayer); // Add to the existing layer group
+                        layerControl.addOverlay(finegayanBasinLayer, "Finegayan Basin");
+                        mapJson.addLayer(finegayanBasinLayer); // Add to the existing layer group
                         
-                            // Load upiBasin GeoJSON data
-                            fetch(upiBasin)
+
+                        // Load mangilaoBasin GeoJSON data
+                        fetch(mangilaoBasin)
                             .then(response => response.json())
                             .then(geojson => {
-                                const upiBasinLayer = L.geoJSON(geojson, {
+                                // Mangilao Basin Layer of Well
+                                const mangilaoBasinLayer = L.geoJSON(geojson, {
                                     pointToLayer: function(feature, latlng) {
                                         return L.circleMarker(latlng, {
                                             radius: 8, 
-                                            fillColor: "blue",
+                                            fillColor: "red",
                                             weight: 1,
                                             fillOpacity: 1,
                                             color: "black",
@@ -739,53 +720,58 @@ fetch(yigoTumonBasin)
                                         })
                                     }, 
                                     onEachFeature: getWellInfo}).addTo(map);
-                                layerControl.addOverlay(upiBasinLayer, "Upi Basin");
-                                mapJson.addLayer(upiBasinLayer); // Add to the existing layer group
+                                layerControl.addOverlay(mangilaoBasinLayer, "Mangilao Basin");
+                                mapJson.addLayer(mangilaoBasinLayer); // Add to the existing layer group
                                 
-                                 // Load machanaoBasin GeoJSON data
-                                 fetch(machanaoBasin)
-                                 .then(response => response.json())
-                                 .then(geojson => {
-                                     const machanaoBasinLayer = L.geoJSON(geojson, {
-                                         pointToLayer: function(feature, latlng) {
-                                             return L.circleMarker(latlng, {
-                                                 radius: 8, 
-                                                 fillColor: "green",
-                                                 weight: 1,
-                                                 fillOpacity: 1,
-                                                 color: "black",
-                                                 opacity: 1.0,
-                                             })
-                                         }, 
-                                         onEachFeature: getWellInfo}).addTo(map);
-                                     layerControl.addOverlay(machanaoBasinLayer, "Machanao Basin");
-                                     mapJson.addLayer(machanaoBasinLayer); // Add to the existing layer group
-                                     
-                                 })
-                                 .catch(console.error);
-
-                               
+                                // Load upiBasin GeoJSON data
+                                fetch(upiBasin)
+                                    .then(response => response.json())
+                                    .then(geojson => {
+                                        // Upi Basin Layer of Well
+                                        const upiBasinLayer = L.geoJSON(geojson, {
+                                            pointToLayer: function(feature, latlng) {
+                                                return L.circleMarker(latlng, {
+                                                    radius: 8, 
+                                                    fillColor: "blue",
+                                                    weight: 1,
+                                                    fillOpacity: 1,
+                                                    color: "black",
+                                                    opacity: 1.0,
+                                                })
+                                            }, 
+                                            onEachFeature: getWellInfo}).addTo(map);
+                                        layerControl.addOverlay(upiBasinLayer, "Upi Basin");
+                                        mapJson.addLayer(upiBasinLayer); // Add to the existing layer group
+                                        
+                                        // Load machanaoBasin GeoJSON data
+                                        fetch(machanaoBasin)
+                                            .then(response => response.json())
+                                            .then(geojson => {
+                                                // Machanao Basin Layer of Well
+                                                const machanaoBasinLayer = L.geoJSON(geojson, {
+                                                    pointToLayer: function(feature, latlng) {
+                                                        return L.circleMarker(latlng, {
+                                                            radius: 8, 
+                                                            fillColor: "green",
+                                                            weight: 1,
+                                                            fillOpacity: 1,
+                                                            color: "black",
+                                                            opacity: 1.0,
+                                                        })
+                                                    }, 
+                                                    onEachFeature: getWellInfo}).addTo(map);
+                                                layerControl.addOverlay(machanaoBasinLayer, "Machanao Basin");
+                                                mapJson.addLayer(machanaoBasinLayer); // Add to the existing layer group
+                                            })
+                                            .catch(console.error);
+                                    })
+                                    .catch(console.error);
                             })
                             .catch(console.error);
-
-
                     })
                     .catch(console.error);
             })
             .catch(console.error);
-            
-
-
-
-        })
-        .catch(console.error);
-
-        // const mapJson = L.layerGroup([sigIncWells, sigDecWells, insWells]).addTo(map);
-        // const mapJson = L.layerGroup([yigoTumonBasinLayer, hagatnaBasinLayer]).addTo(map);
-
-
-        
-        
     })
     .catch(console.error);
     
