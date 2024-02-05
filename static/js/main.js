@@ -313,6 +313,15 @@ const showStats = () => {
             twoType[i] = twoType[i].toFixed(3);
         }
     }
+    
+    const ciSlope = getStats.ci_slope;
+    const ciIntercept = getStats.ci_intercept;
+    if (getStats.ci_slope != "---") {
+        ciSlope = getStats.ci_slope.toFixed(3)
+    } else if (getStats.ci_intercept != "---"){
+        ciIntercept = getStats.ci_intercept.toFixed(3)
+    }
+
 
     //TODO: if doesn't have slope or intercept data, make it blank ----
     document.getElementById("stats-sidebar").innerHTML =
@@ -334,8 +343,8 @@ const showStats = () => {
                     <br>
                 </div>
                 <div class="stats-col">
-                    <p class="stats-num">${getStats.ci_slope.toFixed(3)}</p>
-                    <p class="stats-num">${getStats.ci_intercept.toFixed(3)}</p>
+                    <p class="stats-num">${ciSlope}</p>
+                    <p class="stats-num">${ciIntercept}</p>
                     <p class="stats-num">${getStats.prod_slope.toFixed(3)}</p>
                     <p class="stats-num">${getStats.prod_intercept.toFixed(3)}</p>
                     <br>
