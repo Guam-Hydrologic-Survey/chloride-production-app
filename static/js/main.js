@@ -313,12 +313,13 @@ const showStats = () => {
             twoType[i] = twoType[i].toFixed(3);
         }
     }
-    
-    const ciSlope = getStats.ci_slope;
-    const ciIntercept = getStats.ci_intercept;
-    if (getStats.ci_slope != "---") {
+
+    var ciSlope = getStats.ci_slope;
+    var ciIntercept = getStats.ci_intercept;
+    if (ciSlope != "---") {
         ciSlope = getStats.ci_slope.toFixed(3)
-    } else if (getStats.ci_intercept != "---"){
+    } 
+    if (ciIntercept != "---"){
         ciIntercept = getStats.ci_intercept.toFixed(3)
     }
 
