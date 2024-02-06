@@ -392,7 +392,7 @@ const showStats = () => {
         // Plot features and layout
         const layout = {
             autosize: false,
-            width: 550,
+            width: 800,
             height: 550,
             margin: {
                 l: 70,
