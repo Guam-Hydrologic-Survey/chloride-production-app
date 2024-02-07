@@ -296,9 +296,6 @@ const plotWNL = () => {
 }
 
 // Shows the stats on the left side panel 
-// First row: General statistics
-// Second row: Additional statistics wrapped in an accordion 
-//TODO: fix stats display
 let getStats
 const showStats = () => {
     
@@ -323,8 +320,6 @@ const showStats = () => {
         ciIntercept = getStats.ci_intercept.toFixed(3)
     }
 
-
-    //TODO: if doesn't have slope or intercept data, make it blank ----
     document.getElementById("stats-sidebar").innerHTML =
         `
             <div>
@@ -591,7 +586,7 @@ function createGeoJSONLayer(geojson, color) {
 
 
 // Gets the data from the JSON file and adds well to the map
-//TODO: have corresponding map urls for different sheets for diff fetching
+//TODO: make fetch more clean and efficient if possible
 fetch(yigoTumonBasin)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
