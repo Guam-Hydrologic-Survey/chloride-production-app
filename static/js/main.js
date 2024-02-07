@@ -530,60 +530,6 @@ function createGeoJSONLayer(geojson, color) {
         onEachFeature: getWellInfo,
     });
 }
-// Function to add a GeoJSON layer to the map and layer control
-// function addLayerToMap(layer, name) {
-//     layer.addTo(map);
-//     layerControl.addOverlay(layer, name);
-//     layer.addLayer(layer);
-// }
-
-// // Fetch both GeoJSON files concurrently
-// Promise.all([
-//     fetch(yigoTumonBasin).then(response => response.json()),
-//     fetch(hagatnaBasin).then(response => response.json()),
-// ])
-//     .then(([yigoTumonGeojson, hagatnaGeojson]) => {
-//         // Create GeoJSON layers
-//         const yigoTumonLayer = createGeoJSONLayer(yigoTumonGeojson, 1);
-//         const hagatnaLayer = createGeoJSONLayer(hagatnaGeojson, 5);
-
-//         // Add layers to the map and layer control
-//         addLayerToMap(yigoTumonLayer, "Yigo-Tumon");
-//         addLayerToMap(hagatnaLayer, "Hagåtña Basin");
-
-//         // Control search
-//         const searchControl = new L.Control.Search({
-//             layer: mapJson,
-//             propertyName: 'name',
-//             casesensitive: false,
-//             textPlaceholder: 'Well Name...',
-//             textErr: 'Sorry, could not find well.',
-//             autoResize: true,
-//             moveToLocation: function (latlng, title, map) {
-//                 map.flyTo(latlng, 16);
-//             },
-//             marker: {
-//                 icon: false,
-//                 animate: false,
-//                 circle: {
-//                     weight: 6,
-//                     radius: 30,
-//                     color: 'red',
-//                 },
-//             },
-//             hideMarkerOnCollapse: true,
-//             autoCollapseTime: 1200,
-//         });
-
-//         searchControl.on("search:locationfound", function (e) {
-//             e.layer.openPopup();
-//             plotData = e.layer.feature.properties;
-//             getStats = e.layer.feature.properties;
-//         });
-//         map.addControl(searchControl);
-//     })
-//     .catch(console.error);
-
 
 // Gets the data from the JSON file and adds well to the map
 //TODO: make fetch more clean and efficient if possible
