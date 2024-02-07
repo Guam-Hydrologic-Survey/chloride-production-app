@@ -247,7 +247,7 @@ const plotWNL = () => {
                 step: 'all',
             }],
         };
-    
+    //TODO: edit legend position
     // Plot features and layout
     const layout = {
         autosize: false,
@@ -383,18 +383,18 @@ const showStats = () => {
             name: 'Production Levels',
             yaxis:"y2"
         };
-
+        //TODO: Edit legend position
         // Plot features and layout
         const layout = {
             autosize: true,
             height: 550,
-            margin: {
-                l: 70,
-                r: 20,
-                b: 70,
-                t: 20,
-                pad: 10
-            },
+            // margin: {
+            //     l: 70,
+            //     r: 20,
+            //     b: 70,
+            //     t: 20,
+            //     pad: 10
+            // },
             title: {
                 // text: `Chloride & Production Levels for Well ${getStats.name}`,
                 font: {
@@ -422,6 +422,13 @@ const showStats = () => {
                 side: 'right',
                 range: [0, 'auto']
               }
+              ,
+            legend: {
+                "orientation": "h",
+                x: 0.4,
+                xanchor: 'right',
+                y: 1.2
+            }
         };
 
         var config = {
