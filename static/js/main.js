@@ -254,7 +254,7 @@ const plotWNL = () => {
         height: 500,
         width: 1100,
         margin: {
-           
+ 
         },
         title: {
             text: `<b>Chloride & Production Levels ${plotData.name} (Monthly)</b>`,
@@ -279,6 +279,13 @@ const plotWNL = () => {
             overlaying: 'y',
             side: 'right',
             range: [0, 'auto']
+          }
+          ,
+          legend: {
+              "orientation": "h",
+              x: 0.3,
+              xanchor: 'right',
+              y: -0.1
           }
     };
 
@@ -427,7 +434,7 @@ const showStats = () => {
                 "orientation": "h",
                 x: 0.4,
                 xanchor: 'right',
-                y: 1.2
+                y: -0.4
             }
         };
 
