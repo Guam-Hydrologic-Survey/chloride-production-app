@@ -13,7 +13,7 @@ const map = L.map('map', {
     // }
 })
 
-const devs = ` | <a href="https://weri.uog.edu/">WERI</a>-<a href="https://guamhydrologicsurvey.uog.edu/">GHS</a>: MWZapata, DKValerio, NCHabana 2023`;
+const devs = ` | <a href="https://weri.uog.edu/">WERI</a>-<a href="https://guamhydrologicsurvey.uog.edu/">GHS</a>: MWZapata, DKValerio, NCHabana 2024`;
 
     map.addEventListener("click", function (event) {
         console.log(map.getCenter());
