@@ -320,6 +320,8 @@ const showStats = () => {
 
     var ciSlope = getStats.ci_slope;
     var ciIntercept = getStats.ci_intercept;
+    var prodSlope = getStats.prod_slope;
+    var prodIntercept = getStats.prod_intercept;
     if (ciSlope != "---") {
         ciSlope = getStats.ci_slope.toFixed(3)
     } 
@@ -390,6 +392,16 @@ const showStats = () => {
             name: 'Production Levels',
             yaxis:"y2"
         };
+
+        // Create trendlines based on existing slope and intercept values
+        const prodTrendline = {
+            x: x_dates_conv,
+            y: x_dates_conv.map(x => prodSlope * x + prodIntercept),
+            mode: 'lines',
+            name: 'Chloride Trendline'
+        };
+
+       
         //TODO: Edit legend position
         // Plot features and layout
         const layout = {
@@ -444,7 +456,7 @@ const showStats = () => {
             }
         };
 
-        Plotly.newPlot('plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+        Plotly.newPlot('plot', [wnlTrace, wnlTrace2, prodTrendline], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
