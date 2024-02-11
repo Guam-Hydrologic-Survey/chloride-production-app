@@ -185,8 +185,13 @@ const plotWNL = () => {
         x_dates_conv[i] = new Date(plotData.x_vals[i]);
     };
 
+    var ciSlope = getStats.ci_slope;
+    var ciIntercept = getStats.ci_intercept;
+    var prodSlope = getStats.prod_slope;
+    var prodIntercept = getStats.prod_intercept;
+
     // Plots x,y coordinates for enlarged plot
-    const wnlTrace = {
+    const ciTrace = {
         x: x_dates_conv,
         y: plotData.ci_vals,
         type: 'scatter', 
@@ -194,7 +199,7 @@ const plotWNL = () => {
         name: 'Chloride Levels'
     };
 
-    const wnlTrace2 = {
+    const prodTrace = {
         x: x_dates_conv,
         y: plotData.prod_vals,
         type: 'scatter', 
@@ -202,6 +207,28 @@ const plotWNL = () => {
         name: 'Production Levels',
         yaxis:"y2"
     };
+
+    // Create trendlines based on existing slope and intercept values
+    const prodTrendline = {
+        x: x_dates_conv,
+        y: x_dates_conv.map(x => prodSlope * x + prodIntercept),
+        mode: 'lines',
+        name: 'Production Trendline',
+        line: {
+            color: 'rgb(251,136,33)'
+        }
+    };
+   
+    const ciTrendline = {
+        x: x_dates_conv,
+        y: x_dates_conv.map(x => ciSlope * x + ciIntercept),
+        mode: 'lines',
+        name: 'Chloride Trendline',
+        line: {
+            color: 'rgb(31, 119, 180)'
+        }
+    };
+    
     
     var selectorOptions = {
             buttons: [{
@@ -283,9 +310,9 @@ const plotWNL = () => {
           ,
           legend: {
               "orientation": "h",
-              x: 0.3,
-              xanchor: 'right',
-              y: -0.1
+            //   x: 0.4,
+            //   xanchor: 'right',
+            //   y: -0.1
           }
     };
 
@@ -299,7 +326,7 @@ const plotWNL = () => {
           }
     };
 
-    Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+    Plotly.newPlot('large-plot', [ciTrace, prodTrace, ciTrendline, prodTrendline], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 // Shows the stats on the left side panel 
@@ -376,7 +403,7 @@ const showStats = () => {
         };
 
         // Plots x,y coordinates for small plot
-        const wnlTrace = {
+        const ciTrace = {
             x: x_dates_conv,
             y: plotData.ci_vals,
             type: 'scatter', 
@@ -384,21 +411,13 @@ const showStats = () => {
             name: 'Chloride Levels'
         };
     
-        const wnlTrace2 = {
+        const prodTrace = {
             x: x_dates_conv,
             y: plotData.prod_vals,
             type: 'scatter', 
             mode: 'markers',
             name: 'Production Levels',
             yaxis:"y2"
-        };
-
-        // Create trendlines based on existing slope and intercept values
-        const prodTrendline = {
-            x: x_dates_conv,
-            y: x_dates_conv.map(x => prodSlope * x + prodIntercept),
-            mode: 'lines',
-            name: 'Chloride Trendline'
         };
 
        
@@ -446,7 +465,7 @@ const showStats = () => {
                 "orientation": "h",
                 x: 0.4,
                 xanchor: 'right',
-                y: -0.4
+                y: -0.4,
             }
         };
 
@@ -456,7 +475,7 @@ const showStats = () => {
             }
         };
 
-        Plotly.newPlot('plot', [wnlTrace, wnlTrace2, prodTrendline], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+        Plotly.newPlot('plot', [ciTrace, prodTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
@@ -536,6 +555,7 @@ function createGeoJSONLayer(geojson, color) {
         layer.on('click', pt => {
             plotData = pt.target.feature.properties;
             getStats = pt.target.feature.properties;
+            
         })
         
         
