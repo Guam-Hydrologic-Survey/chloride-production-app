@@ -190,6 +190,12 @@ const plotWNL = () => {
     var prodSlope = getStats.prod_slope;
     var prodIntercept = getStats.prod_intercept;
 
+    console.log('ciSlope:', ciSlope.toFixed(3));
+    console.log('ciIntercept:', ciIntercept.toFixed(3));
+    console.log('prodSlope:', prodSlope.toFixed(3));
+    console.log('prodIntercept:', prodIntercept.toFixed(3));
+    
+
     // Plots x,y coordinates for enlarged plot
     const ciTrace = {
         x: x_dates_conv,
@@ -552,11 +558,11 @@ function createGeoJSONLayer(geojson, color) {
 
         // On click event on the points
         // Sends data for clicked item to global variable plotData 
-        layer.on('click', pt => {
-            plotData = pt.target.feature.properties;
-            getStats = pt.target.feature.properties;
+        // layer.on('click', pt => {
+        //     plotData = pt.target.feature.properties;
+        //     getStats = pt.target.feature.properties;
             
-        })
+        // })
         
         
         
@@ -606,6 +612,12 @@ fetch(yigoTumonBasin)
             layer.on('click', pt => {
                 plotData = pt.target.feature.properties;
                 getStats = pt.target.feature.properties;
+                console.log("Well:", pt.target.feature.properties.name);
+                console.log("CI Slope:", pt.target.feature.properties.ci_slope.toFixed(3));
+                console.log("CI intercept:", pt.target.feature.properties.ci_intercept.toFixed(3));
+                console.log("Prod. Slope:", pt.target.feature.properties.prod_slope.toFixed(3));
+                console.log("Prod. Intercept:", pt.target.feature.properties.prod_intercept.toFixed(3));
+                console.log("---------------------------------------------");
             })
             
         }
