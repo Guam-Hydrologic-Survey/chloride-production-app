@@ -234,7 +234,64 @@ const plotWNL = () => {
             color: 'rgb(31, 119, 180)'
         }
     };
-    
+    //TODO: Perform linear regression on the ciTrace data
+var lr = linearRegression(ciTrace.x, ciTrace.y);
+
+// Calculate the range for the regression line
+var fit_from = Math.min(...ciTrace.x);
+var fit_to = Math.max(...ciTrace.x);
+
+// Generate data for the regression line
+var fit = {
+    x: [fit_from, fit_to],
+    y: [fit_from * lr.sl + lr.off, fit_to * lr.sl + lr.off],
+    mode: 'lines',
+    type: 'scatter',
+    name: "R2=" + (Math.round(lr.r2 * 10000) / 10000).toString()
+};
+
+// Define the linear regression function
+function linearRegression(x, y) {
+    var lr = {};
+    var n = y.length;
+    var sum_x = 0;
+    var sum_y = 0;
+    var sum_xy = 0;
+    var sum_xx = 0;
+    var sum_yy = 0;
+
+    // Calculate the sums needed for linear regression
+    for (var i = 0; i < y.length; i++) {
+        sum_x += x[i];
+        sum_y += y[i];
+        sum_xy += (x[i] * y[i]);
+        sum_xx += (x[i] * x[i]);
+        sum_yy += (y[i] * y[i]);
+    } 
+
+     // Check for zero denominator
+     var denominator1 = n * sum_xx - sum_x * sum_x;
+     var denominator2 = n * sum_yy - sum_y * sum_y;
+     if (denominator1 === 0 || denominator2 === 0) {
+         console.error("Denominator is zero. Unable to calculate R-squared.");
+         return lr;
+     }
+
+    // Calculate slope, intercept, and R-squared
+    lr['sl'] = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
+    lr['off'] = (sum_y - lr.sl * sum_x) / n;
+    var r2_numerator = (n * sum_xy - sum_x * sum_y);
+    var r2_denominator = Math.sqrt(denominator1 * denominator2);
+    // Check for negative square root
+    if (isNaN(r2_denominator) || r2_denominator === 0) {
+        console.error("Invalid denominator for R-squared calculation. R-squared value cannot be computed.");
+        return lr;
+    }
+    lr['r2'] = Math.pow(r2_numerator / r2_denominator, 2);
+
+    return lr;
+}
+
     
     var selectorOptions = {
             buttons: [{
@@ -332,7 +389,7 @@ const plotWNL = () => {
           }
     };
 
-    Plotly.newPlot('large-plot', [ciTrace, prodTrace, ciTrendline, prodTrendline], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+    Plotly.newPlot('large-plot', [ciTrace, prodTrace, ciTrendline, prodTrendline, fit], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 // Shows the stats on the left side panel 
