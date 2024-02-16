@@ -60,8 +60,13 @@ const baseLayers = {
     'ESRI World Street Map': ewsp,
     'ESRI World Gray Canvas': ewgc,
 }
+var groupedLayersOptions = {
+    exclusiveGroups: ["Base Maps"],
+    groupCheckboxes: true, 
+    position: 'bottomright'
+};
 
-const layerControl = L.control.layers(baseLayers, null, {position: 'bottomright'});
+const layerControl = L.control.groupedLayers(baseLayers, null, groupedLayersOptions);
 layerControl.addTo(map);
 
 const mapTitle = L.control({position: 'topleft'});
@@ -555,6 +560,7 @@ function createGeoJSONLayer(geojson, color) {
 
 // Gets the data from the JSON file and adds well to the map
 //TODO: make fetch more clean and efficient if possible
+const groupName = "Toggle All Basins"
 fetch(yigoTumonBasin)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
@@ -599,7 +605,7 @@ fetch(yigoTumonBasin)
                 })
             }, 
             onEachFeature: getWellInfo}).addTo(map);
-        layerControl.addOverlay(yigoTumonBasinLayer, "Yigo-Tumon");
+        layerControl.addOverlay(yigoTumonBasinLayer, "Yigo-Tumon Basin", groupName);
         
         const mapJson = L.layerGroup([yigoTumonBasinLayer]).addTo(map);
 
@@ -651,7 +657,7 @@ fetch(yigoTumonBasin)
                         })
                     }, 
                     onEachFeature: getWellInfo}).addTo(map);
-                layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin");
+                layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin", groupName);
                 mapJson.addLayer(hagatnaBasinLayer); // Add to the existing layer group
             
                 // Load finegayanBasin GeoJSON data
@@ -671,7 +677,7 @@ fetch(yigoTumonBasin)
                                 })
                             }, 
                             onEachFeature: getWellInfo}).addTo(map);
-                        layerControl.addOverlay(finegayanBasinLayer, "Finegayan Basin");
+                        layerControl.addOverlay(finegayanBasinLayer, "Finegayan Basin", groupName);
                         mapJson.addLayer(finegayanBasinLayer); // Add to the existing layer group
                         
 
@@ -692,7 +698,7 @@ fetch(yigoTumonBasin)
                                         })
                                     }, 
                                     onEachFeature: getWellInfo}).addTo(map);
-                                layerControl.addOverlay(mangilaoBasinLayer, "Mangilao Basin");
+                                layerControl.addOverlay(mangilaoBasinLayer, "Mangilao Basin", groupName);
                                 mapJson.addLayer(mangilaoBasinLayer); // Add to the existing layer group
                                 
                                 // Load upiBasin GeoJSON data
@@ -712,7 +718,7 @@ fetch(yigoTumonBasin)
                                                 })
                                             }, 
                                             onEachFeature: getWellInfo}).addTo(map);
-                                        layerControl.addOverlay(upiBasinLayer, "Upi Basin");
+                                        layerControl.addOverlay(upiBasinLayer, "Upi Basin", groupName);
                                         mapJson.addLayer(upiBasinLayer); // Add to the existing layer group
                                         
                                         // Load machanaoBasin GeoJSON data
@@ -732,7 +738,7 @@ fetch(yigoTumonBasin)
                                                         })
                                                     }, 
                                                     onEachFeature: getWellInfo}).addTo(map);
-                                                layerControl.addOverlay(machanaoBasinLayer, "Machanao Basin");
+                                                layerControl.addOverlay(machanaoBasinLayer, "Machanao Basin", groupName);
                                                 mapJson.addLayer(machanaoBasinLayer); // Add to the existing layer group
                                             })
                                             .catch(console.error);
