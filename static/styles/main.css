@@ -150,3 +150,14 @@ button {
     font-size: 14px;
     text-align: center;
 }
+.vl {
+    border-right: 1.99px solid rgba(0, 0, 0, 0.1);
+    height: 500px;
+  }
+
+.well-stats{
+    top: -60px;
+    left: 10px;
+    position: relative;
+    
+}

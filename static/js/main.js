@@ -174,8 +174,50 @@ if (map.hasLayer(drawnFeatures)) {
 }
 
 // Plots data points from selected well to chart 
+//TODO: Edit modal to add info
 let plotData 
 const plotWNL = () => {
+
+    var ciSlope = getStats.ci_slope;
+    var ciIntercept = getStats.ci_intercept;
+    if (ciSlope != "---") {
+        ciSlope = getStats.ci_slope.toFixed(3)
+    } 
+    if (ciIntercept != "---"){
+        ciIntercept = getStats.ci_intercept.toFixed(3)
+    }
+    // document.getElementById("exampleModalLabel").innerHTML = 
+    //     `
+    //     <h5><b>Chloride & Production Levels ${plotData.name} (Monthly)</b></h5>
+    //     `
+
+    document.getElementById("modal-body-content").innerHTML =
+        `
+            <div class="well-stats">
+                <h4>Well ${getStats.name}</h4>
+                <p class="stats-location">${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)}</p>
+                <p class="stats-location">Basin Name: ${getStats.basin}</p>
+            </div>
+
+            <div class="stats-row">
+                <div class="stats-col">
+                    <p class="stats-text">[CI-] (mg/L) Slope</p>
+                    <p class="stats-text">[CI-] (mg/L) Intercept</p>
+                    <p class="stats-text">Production (avg GPM) Slope</p>
+                    <p class="stats-text">Production (avg GPM) Intercept</p>
+                    <br>
+                    <br>
+                </div>
+                <div class="stats-col">
+                    <p class="stats-num">${ciSlope}</p>
+                    <p class="stats-num">${ciIntercept}</p>
+                    <p class="stats-num">${getStats.prod_slope.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.prod_intercept.toFixed(3)}</p>
+                    <br>
+                </div>
+            </div>
+            
+        `
 
     // Array to hold date objects
     const x_dates_conv = [];
@@ -252,11 +294,12 @@ const plotWNL = () => {
     const layout = {
         autosize: false,
         height: 500,
-        width: 1100,
+        width: 800,
         margin: {
  
         },
         title: {
+            x:0.1,
             text: `<b>Chloride & Production Levels ${plotData.name} (Monthly)</b>`,
             font: {
                 size: 20
@@ -283,7 +326,7 @@ const plotWNL = () => {
           ,
           legend: {
               "orientation": "h",
-              x: 0.3,
+              x: .4,
               xanchor: 'right',
               y: -0.1
           }
@@ -514,7 +557,9 @@ function createGeoJSONLayer(geojson, color) {
             <br><strong>Basin Name:</strong> ${feature.properties.basin}
             <br><br>
             <div class="d-flex justify-content-center">
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" onclick="showStats()" id="marker-more-info">More Info</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="plotWNL()" data-bs-target="#exampleModal">
+                More Info
+                </button>            
             </div>
             `
         );
@@ -564,7 +609,9 @@ fetch(yigoTumonBasin)
                 <br><strong>Basin Name:</strong> ${feature.properties.basin}
                 <br><br>
                 <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" onclick="showStats()" id="marker-more-info">More Info</button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="plotWNL()" data-bs-target="#exampleModal">
+                        More Info
+                    </button>                
                 </div>
                 `
             );
