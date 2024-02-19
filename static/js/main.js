@@ -191,17 +191,28 @@ const plotWNL = () => {
     if (ciIntercept != "---"){
         ciIntercept = getStats.ci_intercept.toFixed(3)
     }
-    // document.getElementById("exampleModalLabel").innerHTML = 
-    //     `
-    //     <h5><b>Chloride & Production Levels ${plotData.name} (Monthly)</b></h5>
-    //     `
+    document.getElementById("exampleModalLabel").innerHTML = 
+        `
+        <b>Well ${plotData.name} : Chloride & Production Levels (Monthly)</b>
+        `
 
     document.getElementById("modal-body-content").innerHTML =
         `
-            <div class="well-stats">
-                <h4>Well ${getStats.name}</h4>
-                <p class="stats-location">${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)}</p>
-                <p class="stats-location">Basin Name: ${getStats.basin}</p>
+            <div class="stats-row">
+                <div class="stats-col">
+                    <p class="stats-location">Latitude:</p>
+                    <p class="stats-location">Longitude:</p>
+                    <p class="stats-location">Basin Name:</p>
+                    <br>
+                    <br>
+                </div>
+                <div class="stats-col">
+                    <p class="stats-num">${getStats.lat.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.lon.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.basin}</p>
+                    <br>
+                    <br>
+                </div>
             </div>
 
             <div class="stats-row">
@@ -216,7 +227,9 @@ const plotWNL = () => {
                 <div class="stats-col">
                     <p class="stats-num">${ciSlope}</p>
                     <p class="stats-num">${ciIntercept}</p>
+                    <br>
                     <p class="stats-num">${getStats.prod_slope.toFixed(3)}</p>
+                    <br>
                     <p class="stats-num">${getStats.prod_intercept.toFixed(3)}</p>
                     <br>
                 </div>
@@ -298,20 +311,23 @@ const plotWNL = () => {
     // Plot features and layout
     const layout = {
         autosize: false,
-        height: 500,
+        height: 550,
         width: 800,
         margin: {
- 
+            // "l": 0,
+            // "r": 0,
+            "t": 50,
+            // "b": 0
         },
-        title: {
-            x:0.1,
-            text: `<b>Chloride & Production Levels ${plotData.name} (Monthly)</b>`,
-            font: {
-                size: 20
-            }
-        },
+        // title: {
+
+        //     font: {
+        //         size: 20
+        //     }
+        // },
         xaxis: {
-            rangeselector: selectorOptions,
+            // rangeselector: selectorOptions,
+            rangeslider: {}
         },
         yaxis: {
             title: '[CI-] (mg/L)',
@@ -331,9 +347,9 @@ const plotWNL = () => {
           ,
           legend: {
               "orientation": "h",
-              x: .4,
+              x: .5,
               xanchor: 'right',
-              y: -0.1
+              y: -0.3
           }
     };
 
