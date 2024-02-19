@@ -185,11 +185,19 @@ const plotWNL = () => {
 
     var ciSlope = getStats.ci_slope;
     var ciIntercept = getStats.ci_intercept;
+    var prodSlope = getStats.prod_slope;
+    var prodIntercept = getStats.prod_intercept;
     if (ciSlope != "---") {
         ciSlope = getStats.ci_slope.toFixed(3)
     } 
     if (ciIntercept != "---"){
         ciIntercept = getStats.ci_intercept.toFixed(3)
+    }
+    if (prodSlope != "---") {
+        prodSlope = getStats.prod_slope.toFixed(3)
+    } 
+    if (prodIntercept != "---"){
+        prodIntercept = getStats.prod_intercept.toFixed(3)
     }
     document.getElementById("exampleModalLabel").innerHTML = 
         `
@@ -228,9 +236,9 @@ const plotWNL = () => {
                     <p class="stats-num">${ciSlope}</p>
                     <p class="stats-num">${ciIntercept}</p>
                     <br>
-                    <p class="stats-num">${getStats.prod_slope.toFixed(3)}</p>
+                    <p class="stats-num">${prodSlope}</p>
                     <br>
-                    <p class="stats-num">${getStats.prod_intercept.toFixed(3)}</p>
+                    <p class="stats-num">${prodIntercept}</p>
                     <br>
                 </div>
             </div>
