@@ -204,31 +204,18 @@ const plotWNL = () => {
         <b>Well ${plotData.name} : Chloride & Production Levels (Monthly)</b>
         `
 
+    document.getElementById("modal-subheader").innerHTML = 
+        `
+        <p class="stats-location"> ${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)} | ${getStats.basin}</p>
+        `
     document.getElementById("modal-body-content").innerHTML =
         `
             <div class="stats-row">
                 <div class="stats-col">
-                    <p class="stats-location">Latitude:</p>
-                    <p class="stats-location">Longitude:</p>
-                    <p class="stats-location">Basin Name:</p>
-                    <br>
-                    <br>
-                </div>
-                <div class="stats-col">
-                    <p class="stats-num">${getStats.lat.toFixed(3)}</p>
-                    <p class="stats-num">${getStats.lon.toFixed(3)}</p>
-                    <p class="stats-num">${getStats.basin}</p>
-                    <br>
-                    <br>
-                </div>
-            </div>
-
-            <div class="stats-row">
-                <div class="stats-col">
-                    <p class="stats-text">[CI-] (mg/L) Slope</p>
-                    <p class="stats-text">[CI-] (mg/L) Intercept</p>
-                    <p class="stats-text">Production (avg GPM) Slope</p>
-                    <p class="stats-text">Production (avg GPM) Intercept</p>
+                    <p class="stats-text">[CI-] Slope (mg/L)</p>
+                    <p class="stats-text">[CI-] Intercept (mg/L)</p>
+                    <p class="stats-text">Production Slope (avg GPM)</p>
+                    <p class="stats-text">Production Intercept <br>(avg GPM)</p>
                     <br>
                     <br>
                 </div>
