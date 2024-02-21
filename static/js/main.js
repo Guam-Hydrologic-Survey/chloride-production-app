@@ -179,7 +179,6 @@ if (map.hasLayer(drawnFeatures)) {
 }
 
 // Plots data points from selected well to chart 
-//TODO: Edit modal to add info
 let plotData 
 const plotWNL = () => {
 
@@ -302,26 +301,16 @@ const plotWNL = () => {
                 step: 'all',
             }],
         };
-    //TODO: edit legend position
     // Plot features and layout
     const layout = {
         autosize: false,
         height: 550,
         width: 800,
         margin: {
-            // "l": 0,
-            // "r": 0,
             "t": 50,
-            // "b": 0
         },
-        // title: {
-
-        //     font: {
-        //         size: 20
-        //     }
-        // },
         xaxis: {
-            // rangeselector: selectorOptions,
+            rangeselector: selectorOptions,
             rangeslider: {}
         },
         yaxis: {
@@ -361,158 +350,6 @@ const plotWNL = () => {
     Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
-// Shows the stats on the left side panel 
-let getStats
-const showStats = () => {
-    
-     //well properties w/ either data type of string or decimals
-    rcalc_mo = getStats.rcalc_mo;
-    annual_freq = getStats.annual_freq;
-
-    // array twoType formats data to 3 decimals place
-    const twoType = [rcalc_mo, annual_freq];
-    for (i = 0; i < twoType.length; i ++){
-        if (typeof twoType[i] === 'number'){
-            twoType[i] = twoType[i].toFixed(3);
-        }
-    }
-
-    var ciSlope = getStats.ci_slope;
-    var ciIntercept = getStats.ci_intercept;
-    var prodSlope = getStats.prod_slope;
-    var prodIntercept = getStats.prod_intercept;
-    if (ciSlope != "---") {
-        ciSlope = getStats.ci_slope.toFixed(3)
-    } 
-    if (ciIntercept != "---"){
-        ciIntercept = getStats.ci_intercept.toFixed(3)
-    }
-    if (prodSlope != "---") {
-        prodSlope = getStats.prod_slope.toFixed(3)
-    } 
-    if (prodIntercept != "---"){
-        prodIntercept = getStats.prod_intercept.toFixed(3)
-    }
-
-    document.getElementById("stats-sidebar").innerHTML =
-        `
-            <div>
-                <h4>Well ${getStats.name}</h4>
-                <p class="stats-location">${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)}</p>
-                <p class="stats-location">Basin Name: ${getStats.basin}</p>
-                <hr/>
-            </div>
-
-            <div class="stats-row">
-                <div class="stats-col">
-                    <p class="stats-text">[CI-] (mg/L) Slope</p>
-                    <p class="stats-text">[CI-] (mg/L) Intercept</p>
-                    <p class="stats-text">Production (avg GPM) Slope</p>
-                    <p class="stats-text">Production (avg GPM) Intercept</p>
-                    <br>
-                    <br>
-                </div>
-                <div class="stats-col">
-                    <p class="stats-num">${ciSlope}</p>
-                    <p class="stats-num">${ciIntercept}</p>
-                    <p class="stats-num">${prodSlope}</p>
-                    <p class="stats-num">${prodIntercept}</p>
-                    <br>
-                </div>
-            </div>
-            
-            </div>
-            <br>
-            <h4>Chloride & Production Levels for Well ${getStats.name} (Monthly)</h4>
-            <hr>
-            <div id="plot"></div>
-            <div class="plot-btn-container">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="plotWNL()" data-bs-target="#exampleModal">
-                    <i class="bi bi-arrows-angle-expand"></i> Enlarge Plot
-                </button>
-            </div>
-        `
-        // Array to hold date objects
-        const x_dates_conv = [];
-
-        // Converted date strings from x_vals to JS date objects 
-        for (let i = 0; i < getStats.x_vals.length; i++) {
-            x_dates_conv[i] = new Date(getStats.x_vals[i]);
-        };
-
-        // Plots x,y coordinates for small plot
-        const wnlTrace = {
-            x: x_dates_conv,
-            y: plotData.ci_vals,
-            type: 'scatter', 
-            mode: 'markers',
-            name: 'Chloride Levels'
-        };
-    
-        const wnlTrace2 = {
-            x: x_dates_conv,
-            y: plotData.prod_vals,
-            type: 'scatter', 
-            mode: 'markers',
-            name: 'Production Levels',
-            yaxis:"y2"
-        };
-        //TODO: Edit legend position
-        // Plot features and layout
-        const layout = {
-            autosize: true,
-            height: 550,
-            // margin: {
-            //     l: 70,
-            //     r: 20,
-            //     b: 70,
-            //     t: 20,
-            //     pad: 10
-            // },
-            title: {
-                // text: `Chloride & Production Levels for Well ${getStats.name}`,
-                font: {
-                    size: 20
-                }
-            },
-            xaxis: {
-                // rangeselector: selectorOptions,
-                rangeslider: {}
-            },
-            yaxis: {
-                title: '[CI-] (mg/L)',
-                fixedrange: true,
-                range: [0, 'auto'],
-                titlefont: { color: 'rgb(31, 119, 180)' },
-                tickfont: { color: 'rgb(31, 119, 180)' },
-                
-            },
-            yaxis2: {
-                title: 'Production (avg GPM)',
-                fixedrange: true,
-                titlefont: {color: 'rgb(251,136,33)'},
-                tickfont: {color: 'rgb(251,136,33)'},
-                overlaying: 'y',
-                side: 'right',
-                range: [0, 'auto']
-              }
-              ,
-            legend: {
-                "orientation": "h",
-                x: 0.4,
-                xanchor: 'right',
-                y: -0.4
-            }
-        };
-
-        var config = {
-            toImageButtonOptions: {
-                filename: `plot_well_${plotData.name}`
-            }
-        };
-
-        Plotly.newPlot('plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
-}
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
 const yigoTumonBasin = './static/data/yigoTumonBasin.json';
