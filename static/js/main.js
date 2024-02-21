@@ -256,6 +256,14 @@ const plotWNL = () => {
         name: 'Production Levels',
         yaxis:"y2"
     };
+
+    const wnlTrace3 = {
+        x: x_dates_conv,
+        y: plotData.ci_vals_outlier,
+        type: 'scatter', 
+        mode: 'markers',
+        name: 'Chloride Levels(Above 700)'
+    }
     
     var selectorOptions = {
             buttons: [{
@@ -331,7 +339,7 @@ const plotWNL = () => {
           ,
           legend: {
               "orientation": "h",
-              x: .5,
+              x: .2,
               xanchor: 'right',
               y: -0.3
           }
@@ -347,7 +355,7 @@ const plotWNL = () => {
           }
     };
 
-    Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+    Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2, wnlTrace3], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 
@@ -358,6 +366,7 @@ const finegayanBasin = './static/data/finegayanBasin.json';
 const mangilaoBasin = './static/data/mangilaoBasin.json';
 const upiBasin = './static/data/upiBasin.json';
 const machanaoBasin = './static/data/machanaoBasin.json';
+const testBasin = './static/data/Above700Chloride.json';
 
 function getColor(sig) {
     const colors = [
@@ -635,6 +644,27 @@ fetch(finegayanBasin)
                                                     onEachFeature: getWellInfo}).addTo(map);
                                                 layerControl.addOverlay(yigoTumonBasinLayer, "Yigo-Tumon Basin", groupName);
                                                 mapJson.addLayer(yigoTumonBasinLayer); // Add to the existing layer group
+                                                // TODO: TEST
+                                                fetch(testBasin)
+                                                .then(response => response.json())
+                                                .then(geojson => {
+                                                    // Yigo-Tumon Basin Layer of Well
+                                                    const testBasinLayer = L.geoJSON(geojson, {
+                                                        pointToLayer: function(feature, latlng) {
+                                                            return L.circleMarker(latlng, {
+                                                                radius: 8, 
+                                                                fillColor: "black",
+                                                                weight: 1,
+                                                                fillOpacity: 1,
+                                                                color: "black",
+                                                                opacity: 1.0,
+                                                            })
+                                                        }, 
+                                                        onEachFeature: getWellInfo}).addTo(map);
+                                                    layerControl.addOverlay(testBasinLayer, "test Basin", groupName);
+                                                    mapJson.addLayer(testBasinLayer); // Add to the existing layer group
+                                                })
+                                                .catch(console.error);
                                             })
                                             .catch(console.error);
                                     })
