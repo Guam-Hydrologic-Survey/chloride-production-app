@@ -147,8 +147,8 @@ button {
 }
 
 .legend p {
-    /* line-height: 3px; */
-    /* margin-bottom: 10px; */
+    line-height: 3px; 
+     margin-bottom: 10px;
 }
 
 .legend h4 {
