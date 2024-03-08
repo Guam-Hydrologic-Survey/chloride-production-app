@@ -179,7 +179,14 @@ if (map.hasLayer(drawnFeatures)) {
 }
 
 // Plots data points from selected well to chart 
-let plotData 
+// Define a global variable to hold the plot data
+let plotData = {
+    wnlTrace: [],
+    otherTrace: []
+};
+
+
+
 const plotWNL = () => {
 
     var ciSlope = getStats.ci_slope;
@@ -339,7 +346,7 @@ const plotWNL = () => {
           ,
           legend: {
               "orientation": "h",
-              x: .2,
+              x: .5,
               xanchor: 'right',
               y: -0.3
           }
@@ -354,10 +361,36 @@ const plotWNL = () => {
             scale: 1 
           }
     };
+    plotData.wnlTrace.push(wnlTrace);
+    plotData.wnlTrace.push(wnlTrace2);
 
-    Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2, wnlTrace3], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+    Plotly.newPlot('large-plot', plotData.wnlTrace.concat(plotData.otherTrace), layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
-
+function plotOutlierData(welldata){
+    // Array to hold date objects
+       const x_dates_conv = [];
+   
+       // Converted date strings from x_vals to JS date objects 
+       for (let i = 0; i < plotData.x_vals.length; i++) {
+           x_dates_conv[i] = new Date(plotData.x_vals[i]);
+       };
+   
+       // Plots x,y coordinates for enlarged plot
+       const outlierTrace = {
+        x: x_dates_conv,
+        y: plotData.ci_vals_outlier,
+        type: 'scatter', 
+        mode: 'markers',
+        name: 'Chloride Levels(Above 700)'
+       };
+   
+      
+       
+      plotData.otherTrace.push(outlierTrace);
+   
+      Plotly.newPlot('large-plot', plotData.wnlTrace.concat(plotData.otherTrace), layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+   }
+   
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
 const yigoTumonBasin = './static/data/yigoTumonBasin.json';
@@ -366,7 +399,6 @@ const finegayanBasin = './static/data/finegayanBasin.json';
 const mangilaoBasin = './static/data/mangilaoBasin.json';
 const upiBasin = './static/data/upiBasin.json';
 const machanaoBasin = './static/data/machanaoBasin.json';
-const testBasin = './static/data/Above700Chloride.json';
 
 function getColor(sig) {
     const colors = [
@@ -462,6 +494,7 @@ function createGeoJSONLayer(geojson, color) {
 
 // Gets the data from the JSON file and adds well to the map
 //TODO: make fetch more clean and efficient if possible
+//TODO: work on outlier trace
 const groupName = "Toggle All Basins"
 //TODO: FINEGAYAN
 fetch(finegayanBasin)
@@ -493,6 +526,15 @@ fetch(finegayanBasin)
             layer.on('click', pt => {
                 plotData = pt.target.feature.properties;
                 getStats = pt.target.feature.properties;
+
+                // Check if the clicked well matches the specific condition (e.g., name, location, etc.)
+                if (feature.properties.name === "D01") {
+                    // Call the plotting function for the specific well
+                    plotOutlierData(pt.target.feature.properties);
+                } else {
+                    // Call the default plotting function for other wells
+                    plotWNL();
+                }
             })
             
         }
@@ -644,27 +686,6 @@ fetch(finegayanBasin)
                                                     onEachFeature: getWellInfo}).addTo(map);
                                                 layerControl.addOverlay(yigoTumonBasinLayer, "Yigo-Tumon Basin", groupName);
                                                 mapJson.addLayer(yigoTumonBasinLayer); // Add to the existing layer group
-                                                // TODO: TEST
-                                                fetch(testBasin)
-                                                .then(response => response.json())
-                                                .then(geojson => {
-                                                    // Yigo-Tumon Basin Layer of Well
-                                                    const testBasinLayer = L.geoJSON(geojson, {
-                                                        pointToLayer: function(feature, latlng) {
-                                                            return L.circleMarker(latlng, {
-                                                                radius: 8, 
-                                                                fillColor: "black",
-                                                                weight: 1,
-                                                                fillOpacity: 1,
-                                                                color: "black",
-                                                                opacity: 1.0,
-                                                            })
-                                                        }, 
-                                                        onEachFeature: getWellInfo}).addTo(map);
-                                                    layerControl.addOverlay(testBasinLayer, "test Basin", groupName);
-                                                    mapJson.addLayer(testBasinLayer); // Add to the existing layer group
-                                                })
-                                                .catch(console.error);
                                             })
                                             .catch(console.error);
                                     })
