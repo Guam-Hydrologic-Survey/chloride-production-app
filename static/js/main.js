@@ -15,11 +15,11 @@ const map = L.map('map', {
 
 const devs = ` | <a href="https://weri.uog.edu/">WERI</a>-<a href="https://guamhydrologicsurvey.uog.edu/">GHS</a>: MWZapata, DKValerio, NCHabana 2024`;
 
-    map.addEventListener("click", function (event) {
-        console.log(map.getCenter());
+    // map.addEventListener("click", function (event) {
+    //     console.log(map.getCenter());
 
-        return false;
-    });
+    //     return false;
+    // });
 
 const baseLayersZoom = 19;
 
@@ -534,6 +534,7 @@ const finegayanBasin = './static/data/finegayanBasin.json';
 const mangilaoBasin = './static/data/mangilaoBasin.json';
 const upiBasin = './static/data/upiBasin.json';
 const machanaoBasin = './static/data/machanaoBasin.json';
+const erroneousChloride = './static/data/erroneousChloride.json';
 
 function getColor(sig) {
     const colors = [
@@ -606,6 +607,21 @@ function createGeoJSONLayer(geojson, color) {
         layer.on('click', pt => {
             plotData = pt.target.feature.properties;
             getStats = pt.target.feature.properties;
+
+            // Add new trace for the clicked point
+            const clickedPointTrace = {
+                x: [new Date(plotData.x_vals[0])],
+                y: [plotData.ci_vals[0]],
+                type: 'scatter',
+                mode: 'markers',
+                marker: {
+                    color: 'red',
+                    size: 10
+                },
+                name: 'Clicked Point'
+            };
+
+            Plotly.addTraces('large-plot', clickedPointTrace);
         })
         
         
@@ -823,4 +839,32 @@ fetch(yigoTumonBasin)
             .catch(console.error);
     })
     .catch(console.error);
+    
+    map.on('click', function(pt) {
+        const clickedWell =pt.layer.feature.properties.name;;
+        if (clickedWell === 'A10') {
+            // Fetch the data for the exclusive trace
+            fetch(erroneousChloride)
+                .then(response => response.json())
+                .then(data => {
+
+    
+                    // Create a new trace with the fetched data
+                    const exclusiveTrace = {
+                        x: x_dates_conv,
+                        y: plotData.ci_vals_erroneous,
+                        mode: 'markers',
+                        marker: {
+                            color: 'red',
+                            size: 8
+                        },
+                        name: 'Exclusive Trace' // Change the name as needed
+                    };
+    
+                    // Add the new trace to the plot
+                    Plotly.addTraces('large-plot', exclusiveTrace);
+                })
+                .catch(error => console.error('Error fetching exclusive trace data:', error));
+        }
+    });
     
