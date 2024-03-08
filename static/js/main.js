@@ -179,14 +179,8 @@ if (map.hasLayer(drawnFeatures)) {
 }
 
 // Plots data points from selected well to chart 
-// Define a global variable to hold the plot data
-let plotData = {
-    wnlTrace: [],
-    otherTrace: []
-};
-
-
-
+//TODO: Edit modal to add info
+let plotData 
 const plotWNL = () => {
 
     var ciSlope = getStats.ci_slope;
@@ -210,18 +204,31 @@ const plotWNL = () => {
         <b>Well ${plotData.name} : Chloride & Production Levels (Monthly)</b>
         `
 
-    document.getElementById("modal-subheader").innerHTML = 
-        `
-        <p class="stats-location"> ${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)} | ${getStats.basin}</p>
-        `
     document.getElementById("modal-body-content").innerHTML =
         `
             <div class="stats-row">
                 <div class="stats-col">
-                    <p class="stats-text">[CI-] Slope (mg/L)</p>
-                    <p class="stats-text">[CI-] Intercept (mg/L)</p>
-                    <p class="stats-text">Production Slope (avg GPM)</p>
-                    <p class="stats-text">Production Intercept <br>(avg GPM)</p>
+                    <p class="stats-location">Latitude:</p>
+                    <p class="stats-location">Longitude:</p>
+                    <p class="stats-location">Basin Name:</p>
+                    <br>
+                    <br>
+                </div>
+                <div class="stats-col">
+                    <p class="stats-num">${getStats.lat.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.lon.toFixed(3)}</p>
+                    <p class="stats-num">${getStats.basin}</p>
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stats-col">
+                    <p class="stats-text">[CI-] (mg/L) Slope</p>
+                    <p class="stats-text">[CI-] (mg/L) Intercept</p>
+                    <p class="stats-text">Production (avg GPM) Slope</p>
+                    <p class="stats-text">Production (avg GPM) Intercept</p>
                     <br>
                     <br>
                 </div>
@@ -263,14 +270,6 @@ const plotWNL = () => {
         name: 'Production Levels',
         yaxis:"y2"
     };
-
-    const wnlTrace3 = {
-        x: x_dates_conv,
-        y: plotData.ci_vals_outlier,
-        type: 'scatter', 
-        mode: 'markers',
-        name: 'Chloride Levels(Above 700)'
-    }
     
     var selectorOptions = {
             buttons: [{
@@ -316,16 +315,26 @@ const plotWNL = () => {
                 step: 'all',
             }],
         };
+    //TODO: edit legend position
     // Plot features and layout
     const layout = {
         autosize: false,
         height: 550,
         width: 800,
         margin: {
+            // "l": 0,
+            // "r": 0,
             "t": 50,
+            // "b": 0
         },
+        // title: {
+
+        //     font: {
+        //         size: 20
+        //     }
+        // },
         xaxis: {
-            rangeselector: selectorOptions,
+            // rangeselector: selectorOptions,
             rangeslider: {}
         },
         yaxis: {
@@ -361,36 +370,162 @@ const plotWNL = () => {
             scale: 1 
           }
     };
-    plotData.wnlTrace.push(wnlTrace);
-    plotData.wnlTrace.push(wnlTrace2);
 
-    Plotly.newPlot('large-plot', plotData.wnlTrace.concat(plotData.otherTrace), layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+    Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
-function plotOutlierData(welldata){
-    // Array to hold date objects
-       const x_dates_conv = [];
-   
-       // Converted date strings from x_vals to JS date objects 
-       for (let i = 0; i < plotData.x_vals.length; i++) {
-           x_dates_conv[i] = new Date(plotData.x_vals[i]);
-       };
-   
-       // Plots x,y coordinates for enlarged plot
-       const outlierTrace = {
-        x: x_dates_conv,
-        y: plotData.ci_vals_outlier,
-        type: 'scatter', 
-        mode: 'markers',
-        name: 'Chloride Levels(Above 700)'
-       };
-   
-      
-       
-      plotData.otherTrace.push(outlierTrace);
-   
-      Plotly.newPlot('large-plot', plotData.wnlTrace.concat(plotData.otherTrace), layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
-   }
-   
+
+// Shows the stats on the left side panel 
+let getStats
+const showStats = () => {
+    
+     //well properties w/ either data type of string or decimals
+    rcalc_mo = getStats.rcalc_mo;
+    annual_freq = getStats.annual_freq;
+
+    // array twoType formats data to 3 decimals place
+    const twoType = [rcalc_mo, annual_freq];
+    for (i = 0; i < twoType.length; i ++){
+        if (typeof twoType[i] === 'number'){
+            twoType[i] = twoType[i].toFixed(3);
+        }
+    }
+
+    var ciSlope = getStats.ci_slope;
+    var ciIntercept = getStats.ci_intercept;
+    var prodSlope = getStats.prod_slope;
+    var prodIntercept = getStats.prod_intercept;
+    if (ciSlope != "---") {
+        ciSlope = getStats.ci_slope.toFixed(3)
+    } 
+    if (ciIntercept != "---"){
+        ciIntercept = getStats.ci_intercept.toFixed(3)
+    }
+    if (prodSlope != "---") {
+        prodSlope = getStats.prod_slope.toFixed(3)
+    } 
+    if (prodIntercept != "---"){
+        prodIntercept = getStats.prod_intercept.toFixed(3)
+    }
+
+    document.getElementById("stats-sidebar").innerHTML =
+        `
+            <div>
+                <h4>Well ${getStats.name}</h4>
+                <p class="stats-location">${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)}</p>
+                <p class="stats-location">Basin Name: ${getStats.basin}</p>
+                <hr/>
+            </div>
+
+            <div class="stats-row">
+                <div class="stats-col">
+                    <p class="stats-text">[CI-] (mg/L) Slope</p>
+                    <p class="stats-text">[CI-] (mg/L) Intercept</p>
+                    <p class="stats-text">Production (avg GPM) Slope</p>
+                    <p class="stats-text">Production (avg GPM) Intercept</p>
+                    <br>
+                    <br>
+                </div>
+                <div class="stats-col">
+                    <p class="stats-num">${ciSlope}</p>
+                    <p class="stats-num">${ciIntercept}</p>
+                    <p class="stats-num">${prodSlope}</p>
+                    <p class="stats-num">${prodIntercept}</p>
+                    <br>
+                </div>
+            </div>
+            
+            </div>
+            <br>
+            <h4>Chloride & Production Levels for Well ${getStats.name} (Monthly)</h4>
+            <hr>
+            <div id="plot"></div>
+            <div class="plot-btn-container">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="plotWNL()" data-bs-target="#exampleModal">
+                    <i class="bi bi-arrows-angle-expand"></i> Enlarge Plot
+                </button>
+            </div>
+        `
+        // Array to hold date objects
+        const x_dates_conv = [];
+
+        // Converted date strings from x_vals to JS date objects 
+        for (let i = 0; i < getStats.x_vals.length; i++) {
+            x_dates_conv[i] = new Date(getStats.x_vals[i]);
+        };
+
+        // Plots x,y coordinates for small plot
+        const wnlTrace = {
+            x: x_dates_conv,
+            y: plotData.ci_vals,
+            type: 'scatter', 
+            mode: 'markers',
+            name: 'Chloride Levels'
+        };
+    
+        const wnlTrace2 = {
+            x: x_dates_conv,
+            y: plotData.prod_vals,
+            type: 'scatter', 
+            mode: 'markers',
+            name: 'Production Levels',
+            yaxis:"y2"
+        };
+        //TODO: Edit legend position
+        // Plot features and layout
+        const layout = {
+            autosize: true,
+            height: 550,
+            // margin: {
+            //     l: 70,
+            //     r: 20,
+            //     b: 70,
+            //     t: 20,
+            //     pad: 10
+            // },
+            title: {
+                // text: `Chloride & Production Levels for Well ${getStats.name}`,
+                font: {
+                    size: 20
+                }
+            },
+            xaxis: {
+                // rangeselector: selectorOptions,
+                rangeslider: {}
+            },
+            yaxis: {
+                title: '[CI-] (mg/L)',
+                fixedrange: true,
+                range: [0, 'auto'],
+                titlefont: { color: 'rgb(31, 119, 180)' },
+                tickfont: { color: 'rgb(31, 119, 180)' },
+                
+            },
+            yaxis2: {
+                title: 'Production (avg GPM)',
+                fixedrange: true,
+                titlefont: {color: 'rgb(251,136,33)'},
+                tickfont: {color: 'rgb(251,136,33)'},
+                overlaying: 'y',
+                side: 'right',
+                range: [0, 'auto']
+              }
+              ,
+            legend: {
+                "orientation": "h",
+                x: 0.4,
+                xanchor: 'right',
+                y: -0.4
+            }
+        };
+
+        var config = {
+            toImageButtonOptions: {
+                filename: `plot_well_${plotData.name}`
+            }
+        };
+
+        Plotly.newPlot('plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+}
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
 const yigoTumonBasin = './static/data/yigoTumonBasin.json';
@@ -494,10 +629,8 @@ function createGeoJSONLayer(geojson, color) {
 
 // Gets the data from the JSON file and adds well to the map
 //TODO: make fetch more clean and efficient if possible
-//TODO: work on outlier trace
 const groupName = "Toggle All Basins"
-//TODO: FINEGAYAN
-fetch(finegayanBasin)
+fetch(yigoTumonBasin)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
 
@@ -526,25 +659,16 @@ fetch(finegayanBasin)
             layer.on('click', pt => {
                 plotData = pt.target.feature.properties;
                 getStats = pt.target.feature.properties;
-
-                // Check if the clicked well matches the specific condition (e.g., name, location, etc.)
-                if (feature.properties.name === "D01") {
-                    // Call the plotting function for the specific well
-                    plotOutlierData(pt.target.feature.properties);
-                } else {
-                    // Call the default plotting function for other wells
-                    plotWNL();
-                }
             })
             
         }
 
-        // Finegayan Basin Layer of Well
-        const finegayanBasinLayer = L.geoJSON(geojson, {
+        // Yigo-Tumon Basin Layer of Well
+        const yigoTumonBasinLayer = L.geoJSON(geojson, {
             pointToLayer: function(feature, latlng) {
                 return L.circleMarker(latlng, {
                     radius: 8, 
-                    fillColor: "green",
+                    fillColor: getColor(1),
                     weight: 1,
                     fillOpacity: 1,
                     color: "black",
@@ -552,8 +676,9 @@ fetch(finegayanBasin)
                 })
             }, 
             onEachFeature: getWellInfo}).addTo(map);
-        layerControl.addOverlay(finegayanBasinLayer, "Finegayan Basin", groupName);
-        const mapJson = L.layerGroup([finegayanBasinLayer]).addTo(map);
+        layerControl.addOverlay(yigoTumonBasinLayer, "Yigo-Tumon Basin", groupName);
+        
+        const mapJson = L.layerGroup([yigoTumonBasinLayer]).addTo(map);
 
         // Control search  
         const searchControl = new L.Control.Search({ 
@@ -606,12 +731,12 @@ fetch(finegayanBasin)
                 layerControl.addOverlay(hagatnaBasinLayer, "Hagåtña Basin", groupName);
                 mapJson.addLayer(hagatnaBasinLayer); // Add to the existing layer group
             
-                // Load machanaoBasin GeoJSON data
-                fetch(machanaoBasin)
+                // Load finegayanBasin GeoJSON data
+                fetch(finegayanBasin)
                     .then(response => response.json())
                     .then(geojson => {
-                        // Machanao Basin Layer of Well
-                        const machanaoBasinLayer = L.geoJSON(geojson, {
+                        // Finegayan Basin Layer of Well
+                        const finegayanBasinLayer = L.geoJSON(geojson, {
                             pointToLayer: function(feature, latlng) {
                                 return L.circleMarker(latlng, {
                                     radius: 8, 
@@ -623,8 +748,8 @@ fetch(finegayanBasin)
                                 })
                             }, 
                             onEachFeature: getWellInfo}).addTo(map);
-                        layerControl.addOverlay(machanaoBasinLayer, "Machanao Basin", groupName);
-                        mapJson.addLayer(machanaoBasinLayer); // Add to the existing layer group
+                        layerControl.addOverlay(finegayanBasinLayer, "Finegayan Basin", groupName);
+                        mapJson.addLayer(finegayanBasinLayer); // Add to the existing layer group
                         
 
                         // Load mangilaoBasin GeoJSON data
@@ -667,16 +792,16 @@ fetch(finegayanBasin)
                                         layerControl.addOverlay(upiBasinLayer, "Upi Basin", groupName);
                                         mapJson.addLayer(upiBasinLayer); // Add to the existing layer group
                                         
-                                        // Load yigoTumonBasin GeoJSON data
-                                        fetch(yigoTumonBasin)
+                                        // Load machanaoBasin GeoJSON data
+                                        fetch(machanaoBasin)
                                             .then(response => response.json())
                                             .then(geojson => {
-                                                // Yigo-Tumon Basin Layer of Well
-                                                const yigoTumonBasinLayer = L.geoJSON(geojson, {
+                                                // Machanao Basin Layer of Well
+                                                const machanaoBasinLayer = L.geoJSON(geojson, {
                                                     pointToLayer: function(feature, latlng) {
                                                         return L.circleMarker(latlng, {
                                                             radius: 8, 
-                                                            fillColor: getColor(1),
+                                                            fillColor: "green",
                                                             weight: 1,
                                                             fillOpacity: 1,
                                                             color: "black",
@@ -684,8 +809,8 @@ fetch(finegayanBasin)
                                                         })
                                                     }, 
                                                     onEachFeature: getWellInfo}).addTo(map);
-                                                layerControl.addOverlay(yigoTumonBasinLayer, "Yigo-Tumon Basin", groupName);
-                                                mapJson.addLayer(yigoTumonBasinLayer); // Add to the existing layer group
+                                                layerControl.addOverlay(machanaoBasinLayer, "Machanao Basin", groupName);
+                                                mapJson.addLayer(machanaoBasinLayer); // Add to the existing layer group
                                             })
                                             .catch(console.error);
                                     })
