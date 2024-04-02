@@ -454,7 +454,6 @@ function createGeoJSONLayer(geojson, color) {
 // Gets the data from the JSON file and adds well to the map
 //TODO: make fetch more clean and efficient if possible
 const groupName = "Toggle All Basins"
-//TODO: FINEGAYAN
 fetch(finegayanBasin)
     .then(response => response.json())  // Requests for a json file as a response
     .then(geojson => { 
