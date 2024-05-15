@@ -370,7 +370,7 @@ const basins = [
 ];
 
 // maybe use this to contain each layer from fetch (possible TODO)
-let basinLayers; 
+let basinLayers = "Toggle All Basins"; 
 
 // for loop to traverse through basins array list and fetch file from the given data property 
 for (let i = 0; i < basins.length; i++) {
@@ -424,6 +424,6 @@ for (let i = 0; i < basins.length; i++) {
 
             // TODO - add toggle for each layer in layer control 
 
-            // layerControl.addOverlay(basin, `${basins[i].name} Basin`);
+            layerControl.addOverlay(basin, `${basins[i].name} Basin`, basinLayers);
         }); // end of fetch 
 } // end of for-loop
