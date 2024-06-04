@@ -359,7 +359,7 @@ const basins = [
 	},
 	{
 		"name": "Upi",
-		"data":	"./static/data/upiBasin.json",
+		"data":	"./static/data/upiBasinV2.json",
         "color": "blue",
 	},
 	{
