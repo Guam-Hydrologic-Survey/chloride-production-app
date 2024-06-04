@@ -185,7 +185,7 @@ const plotWNL = () => {
     }
     document.getElementById("exampleModalLabel").innerHTML = 
         `
-        <b>Well ${plotData.name} : Chloride & Production Levels (Monthly)</b>
+        <b>Well ${plotData.name} : Chloride & Production (Monthly)</b>
         `
 
     document.getElementById("modal-subheader").innerHTML = 
@@ -238,7 +238,7 @@ const plotWNL = () => {
         y: plotData.prod_vals,
         type: 'scatter', 
         mode: 'markers',
-        name: 'Production Levels',
+        name: 'Production Rate',
         yaxis:"y2"
     };
     
@@ -369,7 +369,7 @@ const basins = [
 	},
 ];
 
-// maybe use this to contain each layer from fetch (possible TODO)
+//contain each layer from fetch in layer control
 let basinLayers = "Toggle All Basins"; 
 
 // for loop to traverse through basins array list and fetch file from the given data property 
