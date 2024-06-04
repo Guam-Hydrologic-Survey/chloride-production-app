@@ -354,7 +354,7 @@ const basins = [
 	},
 	{
 		"name": "Mangilao",
-		"data":	"./static/data/mangilaoBasin.json",
+		"data":	"./static/data/mangilaoBasinV2.json",
         "color": "red",
 	},
 	{
