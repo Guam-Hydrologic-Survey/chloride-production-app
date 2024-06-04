@@ -349,7 +349,7 @@ const basins = [
 	},
 	{
 		"name": "Machanao",
-		"data":	"./static/data/machanaoBasin.json",
+		"data":	"./static/data/machanaoBasinV2.json",
         "color": "#7A8EF5",
 	},
 	{
