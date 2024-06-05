@@ -334,6 +334,39 @@ const plotWNL = () => {
 
     Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
+// Create a layer group to hold all GeoJSON layers for searching
+const searchLayerGroup = L.layerGroup();
+
+// Control search  
+const searchControl = new L.Control.Search({ 
+    layer: searchLayerGroup, 
+    propertyName: 'name', 
+    casesensitive: false, 
+    textPlaceholder: 'Well Name...', 
+    textErr: 'Sorry, could not find well.', 
+    autoResize: true, 
+    moveToLocation: function(latlng, title, map) { 
+        map.flyTo(latlng, 16); 
+    }, 
+    marker: { 
+        icon: false, 
+        animate: false, 
+        circle: { 
+            weight: 6, 
+            radius: 30, 
+            color: 'red', 
+        } 
+    },
+    hideMarkerOnCollapse: true,
+    autoCollapseTime: 1200,
+}); 
+
+searchControl.on("search:locationfound", function(e) { 
+    e.layer.openPopup(); 
+    plotData = e.layer.feature.properties;
+    getStats = e.layer.feature.properties;
+}); 
+map.addControl(searchControl);
 
 // array of objects, each object containing basin name, full file path, and color on map 
 const basins = [
@@ -421,9 +454,14 @@ for (let i = 0; i < basins.length; i++) {
             });
 
             basin.addTo(map);
-
-            // TODO - add toggle for each layer in layer control 
+            basin.addTo(searchLayerGroup)
 
             layerControl.addOverlay(basin, `${basins[i].name} Basin`, basinLayers);
+
+  
         }); // end of fetch 
 } // end of for-loop
+
+// Use the layer group as the layer for the search control
+searchControl.setLayer(searchLayerGroup);
+
