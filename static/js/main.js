@@ -364,7 +364,7 @@ const basins = [
 	},
 	{
 		"name": "Yigo-Tumon",
-		"data":	"./static/data/yigoTumonBasin.json",
+		"data":	"./static/data/yigoTumonBasinV2.json",
         "color": "#73DFFF",
 	},
 ];
