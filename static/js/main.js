@@ -464,4 +464,3 @@ for (let i = 0; i < basins.length; i++) {
 
 // Use the layer group as the layer for the search control
 searchControl.setLayer(searchLayerGroup);
-
