@@ -344,7 +344,7 @@ const basins = [
 	},
 	{
 		"name": "Hagatna",
-		"data": "./static/data/hagatnaBasin.json",
+		"data": "./static/data/hagatnaBasinV2.json",
         "color": "#FFAA00",
 	},
 	{
