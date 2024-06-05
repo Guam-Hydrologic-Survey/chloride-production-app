@@ -21,7 +21,9 @@
     margin: 0 0 5px;
     color: #777;
 }
-
+.modal-header{
+    justify-content: space-around;
+}
 .modal-body {
     display: flex;
     align-items: center;
@@ -67,18 +69,21 @@
 }
 
 .offcanvas-size-xl {
-    --bs-offcanvas-width: min(95vh, 450px) !important;
+    --bs-offcanvas-width: min(100vh, 900px) !important;
 }
 
 /* Style configuration for the title and location section of stats panel */
 .stats-location {
+    font-size: 18px;
     font-style: italic;
-    padding: 0;
+    text-align: center;
+    padding-top: 6px;
     margin: 0;
 }
 
 .stats-row {
     display: flex;
+    padding-left: 22px;
 }
 
 .stats-col {
@@ -89,14 +94,14 @@
 .stats-text {
     /* font-weight: bold; */
     font-size: 15px;
-    padding: 3px;
+    padding: 20px 0px 50px 0px;
     margin: 0;
 }
 
 .stats-num {
     font-size: 15px;
     text-align: right;
-    padding: 3px;
+    padding: 20px 36px 50px 0px;
     margin: 0;
 }
 
@@ -142,11 +147,25 @@ button {
 }
 
 .legend p {
-    /* line-height: 3px; */
-    /* margin-bottom: 10px; */
+    line-height: 3px; 
+     margin-bottom: 10px;
 }
 
 .legend h4 {
     font-size: 14px;
     text-align: center;
+}
+.vl {
+    border-right: 1.99px solid rgba(0, 0, 0, 0.1);
+    height: 500px;
+  }
+
+.well-stats{
+    top: -60px;
+    left: 10px;
+    position: relative;
+    
+}
+.modal-title-plot {
+    margin-left: 24%;
 }

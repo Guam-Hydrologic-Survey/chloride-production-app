@@ -1,25 +1,19 @@
 //center of guam
 const center = [13.5435056,144.7478083];
 
-
 // Creates Leaflet map 
 const map = L.map('map', {
     center: center,
     zoom: 12,
     zoomControl: false,
-    // fullscreenControl: true, 
-    // fullscreenControlOptions: {
-    //     position: 'topleft'
-    // }
 })
 
-const devs = ` | <a href="https://weri.uog.edu/">WERI</a>-<a href="https://guamhydrologicsurvey.uog.edu/">GHS</a>: MWZapata, DKValerio, NCHabana 2023`;
+const devs = ` | <a href="https://weri.uog.edu/">WERI</a>-<a href="https://guamhydrologicsurvey.uog.edu/">GHS</a>: MWZapata, DKValerio, NCHabana 2024`;
 
-    map.addEventListener("click", function (event) {
-        console.log(map.getCenter());
-
-        return false;
-    });
+map.addEventListener("click", function (event) {
+    console.log(map.getCenter());
+    return false;
+});
 
 const baseLayersZoom = 19;
 
@@ -32,24 +26,24 @@ const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // ESRI World Street Map 
 const ewsp = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: baseLayersZoom,
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012' + devs,
+	attribution: 'Tiles &copy; Esri' + devs,
 })
 
 // ESRI World Topo Map 
 const ewtm = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: baseLayersZoom, 
-	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community' + devs,
+	attribution: 'Tiles &copy; Esri' + devs,
 });
 
 // ESRI World Imagery 
 const ewi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: baseLayersZoom,
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community' + devs,
+	attribution: 'Tiles &copy; Esri' + devs,
 }); 
 
 // ESRI World Gray Canvas 
 var ewgc = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ' + devs,
+	attribution: 'Tiles &copy; Esri' + devs,
 	maxZoom: 16
 });
 
@@ -60,8 +54,13 @@ const baseLayers = {
     'ESRI World Street Map': ewsp,
     'ESRI World Gray Canvas': ewgc,
 }
+var groupedLayersOptions = {
+    exclusiveGroups: ["Base Maps"],
+    groupCheckboxes: true, 
+    position: 'bottomright'
+};
 
-const layerControl = L.control.layers(baseLayers, null, {position: 'bottomright'});
+const layerControl = L.control.groupedLayers(baseLayers, null, groupedLayersOptions);
 layerControl.addTo(map);
 
 const mapTitle = L.control({position: 'topleft'});
@@ -75,15 +74,6 @@ mapTitle.onAdd =  function(map) {
 
 //TODO: Add Chloride and Production MAppFx Title
 // mapTitle.addTo(map);
-
-// var sidebar = L.control.sidebar('sidebar').addTo(map); //was always commented out
-
-L.control.fullscreen({
-    position: 'bottomright',
-    title: 'Toggle fullscreen mode',
-    titleCancel: 'Exit fullscreen mode',
-    forceSeparateButton: false,
-}).addTo(map);
 
 L.control.zoom({
     // options: topleft, topright, bottomleft, bottomright
@@ -177,6 +167,55 @@ if (map.hasLayer(drawnFeatures)) {
 let plotData 
 const plotWNL = () => {
 
+    var ciSlope = getStats.ci_slope;
+    var ciIntercept = getStats.ci_intercept;
+    var prodSlope = getStats.prod_slope;
+    var prodIntercept = getStats.prod_intercept;
+    if (ciSlope != "---") {
+        ciSlope = getStats.ci_slope.toFixed(3)
+    } 
+    if (ciIntercept != "---"){
+        ciIntercept = getStats.ci_intercept.toFixed(3)
+    }
+    if (prodSlope != "---") {
+        prodSlope = getStats.prod_slope.toFixed(3)
+    } 
+    if (prodIntercept != "---"){
+        prodIntercept = getStats.prod_intercept.toFixed(3)
+    }
+    document.getElementById("exampleModalLabel").innerHTML = 
+        `
+        <b>Well ${plotData.name} : Chloride & Production (Monthly)</b>
+        `
+
+    document.getElementById("modal-subheader").innerHTML = 
+        `
+        <p class="stats-location"> ${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)} | ${getStats.basin}</p>
+        `
+    document.getElementById("modal-body-content").innerHTML = /* html */
+        `
+            <div class="stats-row">
+                <div class="stats-col">
+                    <p class="stats-text">[CI-] Slope (mg/L)</p>
+                    <p class="stats-text">[CI-] Intercept (mg/L)</p>
+                    <p class="stats-text">Production Slope (avg GPM)</p>
+                    <p class="stats-text">Production Intercept <br>(avg GPM)</p>
+                    <br>
+                    <br>
+                </div>
+                <div class="stats-col">
+                    <p class="stats-num">${ciSlope}</p>
+                    <p class="stats-num">${ciIntercept}</p>
+                    <br>
+                    <p class="stats-num">${prodSlope}</p>
+                    <br>
+                    <p class="stats-num">${prodIntercept}</p>
+                    <br>
+                </div>
+            </div>
+            
+        `
+
     // Array to hold date objects
     const x_dates_conv = [];
 
@@ -186,22 +225,20 @@ const plotWNL = () => {
     };
 
     // Plots x,y coordinates for enlarged plot
-
-    //TODO: mode set for lines+markers currently for enlarged plot
     const wnlTrace = {
         x: x_dates_conv,
-        y: plotData.y_vals,
+        y: plotData.ci_vals,
         type: 'scatter', 
-        mode: 'lines+markers',
-        name: 'Chloride & Production Levels'
+        mode: 'markers',
+        name: 'Chloride Levels'
     };
 
     const wnlTrace2 = {
         x: x_dates_conv,
-        y: plotData.y_vals,
+        y: plotData.prod_vals,
         type: 'scatter', 
-        mode: 'lines+markers',
-        name: 'Chloride & Production Levels',
+        mode: 'markers',
+        name: 'Production Rate',
         yaxis:"y2"
     };
     
@@ -249,36 +286,39 @@ const plotWNL = () => {
                 step: 'all',
             }],
         };
-    
     // Plot features and layout
-    //TODO: change title -> text? and axes
     const layout = {
         autosize: false,
-        height: 600,
-        width: 1100,
+        height: 550,
+        width: 800,
         margin: {
-           
-        },
-        title: {
-            text: `<b>Chloride & Production Levels ${plotData.name} (Monthly)</b>`,
-            font: {
-                size: 20
-            }
+            "t": 50,
         },
         xaxis: {
             rangeselector: selectorOptions,
+            rangeslider: {}
         },
         yaxis: {
-            title: 'ppm (mg/L)',
-            titlefont: {color: 'rgb(31,119,180)'},
-            tickfont: {color: 'rgb(31,119,180)'},
+            title: '[CI-] (mg/L)',
+            range: [0, 'auto'],
+            titlefont: { color: 'rgb(31, 119, 180)' },
+            tickfont: { color: 'rgb(31, 119, 180)' },
+            
         },
         yaxis2: {
-            title: 'yaxis2 title',
+            title: 'Production (avg GPM)',
             titlefont: {color: 'rgb(251,136,33)'},
             tickfont: {color: 'rgb(251,136,33)'},
             overlaying: 'y',
-            side: 'right'
+            side: 'right',
+            range: [0, 'auto']
+          }
+          ,
+          legend: {
+              "orientation": "h",
+              x: .5,
+              xanchor: 'right',
+              y: -0.3
           }
     };
 
@@ -294,254 +334,133 @@ const plotWNL = () => {
 
     Plotly.newPlot('large-plot', [wnlTrace, wnlTrace2], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
+// Create a layer group to hold all GeoJSON layers for searching
+const searchLayerGroup = L.layerGroup();
 
-// Shows the stats on the left side panel 
-// First row: General statistics
-// Second row: Additional statistics wrapped in an accordion 
-//TODO: fix stats display
-let getStats
-const showStats = () => {
-    
-     //well properties w/ either data type of string or decimals
-    rcalc_mo = getStats.rcalc_mo;
-    annual_freq = getStats.annual_freq;
+// Control search  
+const searchControl = new L.Control.Search({ 
+    layer: searchLayerGroup, 
+    propertyName: 'name', 
+    casesensitive: false, 
+    textPlaceholder: 'Well Name...', 
+    textErr: 'Sorry, could not find well.', 
+    autoResize: true, 
+    moveToLocation: function(latlng, title, map) { 
+        map.flyTo(latlng, 16); 
+    }, 
+    marker: { 
+        icon: false, 
+        animate: false, 
+        circle: { 
+            weight: 6, 
+            radius: 30, 
+            color: 'red', 
+        } 
+    },
+    hideMarkerOnCollapse: true,
+    autoCollapseTime: 1200,
+}); 
 
-    // array twoType formats data to 3 decimals place
-    const twoType = [rcalc_mo, annual_freq];
-    for (i = 0; i < twoType.length; i ++){
-        if (typeof twoType[i] === 'number'){
-            twoType[i] = twoType[i].toFixed(3);
-        }
-    }
+searchControl.on("search:locationfound", function(e) { 
+    e.layer.openPopup(); 
+    plotData = e.layer.feature.properties;
+    getStats = e.layer.feature.properties;
+}); 
+map.addControl(searchControl);
 
-    //TODO: get the right xvalues and yvalues for sampleWells.json value
-    //TODO: if doesn't have slope or intercept data, make it blank ----
-    document.getElementById("stats-sidebar").innerHTML =
-        `
-            <div>
-                <h4>Well ${getStats.name}</h4>
-                <p class="stats-location">${getStats.lat.toFixed(3)}, ${getStats.lon.toFixed(3)}</p>
-                <hr/>
-            </div>
+// array of objects, each object containing basin name, full file path, and color on map 
+const basins = [
+	{
+		"name": "Finegayan",
+		"data": "./static/data/finegayanBasinV2.json",
+        "color": "green",
+	},
+	{
+		"name": "Hagatna",
+		"data": "./static/data/hagatnaBasinV2.json",
+        "color": "#FFAA00",
+	},
+	{
+		"name": "Machanao",
+		"data":	"./static/data/machanaoBasinV2.json",
+        "color": "#7A8EF5",
+	},
+	{
+		"name": "Mangilao",
+		"data":	"./static/data/mangilaoBasinV2.json",
+        "color": "red",
+	},
+	{
+		"name": "Upi",
+		"data":	"./static/data/upiBasinV2.json",
+        "color": "blue",
+	},
+	{
+		"name": "Yigo-Tumon",
+		"data":	"./static/data/yigoTumonBasinV2.json",
+        "color": "#73DFFF",
+	},
+];
 
-            <div class="stats-row">
-                <div class="stats-col">
-                    <p class="stats-text">[CI-] (mg/L) Slope</p>
-                    <p class="stats-text">[CI-] (mg/L) Intercept</p>
-                    <p class="stats-text">Production (avg GPM) Slope</p>
-                    <p class="stats-text">Production (avg GPM) Intercept</p>
-                    <br>
-                    <br>
-                </div>
-                <div class="stats-col">
-                    <p class="stats-num">${getStats.ci_slope.toFixed(3)}</p>
-                    <p class="stats-num">${getStats.ci_intercept.toFixed(3)}</p>
-                    <p class="stats-num">${getStats.prod_slope.toFixed(3)}</p>
-                    <br>
-                    <p class="stats-num">${getStats.prod_intercept.toFixed(3)}</p>
-                    <br>
-                </div>
-            </div>
-            
-            </div>
-            <br>
-            <h4>Chloride & Production Levels for Well ${getStats.name} (Monthly)</h4>
-            <hr>
-            <div id="plot"></div>
-            <div class="plot-btn-container">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="plotWNL()" data-bs-target="#exampleModal">
-                    <i class="bi bi-arrows-angle-expand"></i> Enlarge Plot
-                </button>
-            </div>
-        `
-        // Array to hold date objects
-        const x_dates_conv = [];
+//contain each layer from fetch in layer control
+let basinLayers = "Toggle All Basins"; 
 
-        // Converted date strings from x_vals to JS date objects 
-        for (let i = 0; i < getStats.x_vals.length; i++) {
-            x_dates_conv[i] = new Date(getStats.x_vals[i]);
-        };
-
-        // Plots x,y coordinates for small plot
-        // TODO: plot x, y1, y2, coordinates
-        const wnlTrace = {
-            x: x_dates_conv,
-            y: getStats.y_vals,
-            type: 'scatter', 
-            mode: 'markers',
-            name: 'Chloride & Production Levels'
-        };
-
-        // Plot features and layout
-        const layout = {
-            autosize: false,
-            width: 400,
-            height: 550,
-            margin: {
-                l: 70,
-                r: 20,
-                b: 70,
-                t: 20,
-                pad: 30
-            },
-            title: {
-                // text: `Nitrate Levels for Well ${getStats.name}`,
-                font: {
-                    size: 20
-                }
-            },
-            xaxis: {
-                // rangeselector: selectorOptions,
-                rangeslider: {}
-            },
-            yaxis: {
-                title: 'ppm (mg/L)',
-                fixedrange: true
-            }
-        };
-
-        var config = {
-            toImageButtonOptions: {
-                filename: `plot_well_${plotData.name}`
-            }
-        };
-
-        Plotly.newPlot('plot', [wnlTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
-}
-
-// Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
-//TODO: change map_url AFTER completing samplewells
-const map_url = './static/data/sampleWells.json';
-// const map_url = './static/data/saipanWells.json';
-  
-
-function getColor(sig) {
-    const colors = [
-        {
-            name: "orange",
-            hex: "#FFAA00",
-            range: "<= 5"
-        },
-        {
-            name: "black",
-            hex: "#000000",
-            range: "<= 4"
-        },
-        {
-            name: "blue",
-            hex: "#7A8EF5",
-            range: "<= 3"
-        },
-        {
-            name: "light-blue",
-            hex: "#73DFFF", 
-            range: "<= 2"
-        },
-        {
-            name: "red",
-            hex: "F50000", 
-            range: "> 5"
-        }
-    ]
-    var c;
-    if (sig > 5) {
-        c = colors[4].hex;
-    } else {
-        if (sig == 5) {
-            c = colors[0].hex;
-        } else if (sig == 4) {
-            c = colors[1].hex;
-        } else if (sig == 3) {
-            c = colors[2].hex;
-        } else {
-            c = colors[3].hex;
-        }
-    }
-    return c; 
-}
-
-// Gets the data from the JSON file and adds well to the map
-//TODO: have corresponding map urls for different sheets for diff fetching
-fetch(map_url)
-    .then(response => response.json())  // Requests for a json file as a response
-    .then(geojson => { 
-
-        const getWellInfo = (feature, layer) => {
-            // Label for well name
-            layer.bindTooltip(feature.properties.name, {permanent: true, direction: 'bottom', offset: [0,10]})
-
-            // Popups with basic well info and buttons for stats and plot
-            layer.bindPopup(
-                `
-                <strong>Well</strong>: ${feature.properties.name} 
-                <br><strong>Lat:</strong> ${feature.properties.lat.toFixed(3)} 
-                <br><strong>Lon:</strong> ${feature.properties.lon.toFixed(3)}
-                <br><br>
-                <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" onclick="showStats()" id="marker-more-info">More Info</button>
-                </div>
-                `
-            );
-
-            // On click event on the points
-            // Sends data for clicked item to global variable plotData 
-            layer.on('click', pt => {
-                plotData = pt.target.feature.properties;
-                getStats = pt.target.feature.properties;
-            })
-            
-            
-            
-        }
-
-        //TODO: Sample Layer of Wells
-        const sampleWells = L.geoJSON(geojson, {
-            pointToLayer: function(feature, latlng) {
-                return L.circleMarker(latlng, {
-                    radius: 8, 
-                    fillColor: getColor(2),
-                    weight: 1,
-                    fillOpacity: 1,
-                    color: "black",
-                    opacity: 1.0,
-                })
-            }, 
-            onEachFeature: getWellInfo}).addTo(map);
-        layerControl.addOverlay(sampleWells, "Sample Wells");
-
-        // const mapJson = L.layerGroup([sigIncWells, sigDecWells, insWells]).addTo(map);
-        const mapJson = L.layerGroup([sampleWells]).addTo(map);
+// for loop to traverse through basins array list and fetch file from the given data property 
+for (let i = 0; i < basins.length; i++) {
+    fetch(basins[i].data)
+        .then(response => response.json())
+        .then(geojson => {
+            const getWellInfo = (feature, layer) => {
+                // Label for well name
+                layer.bindTooltip(feature.properties.name, { permanent: true, direction: 'bottom', offset: [0,10] })
         
-        // Control search  
-        const searchControl = new L.Control.Search({ 
-            layer: mapJson, 
-            propertyName: 'name', 
-            casesensitive: false, 
-            textPlaceholder: 'Well Name...', 
-            textErr: 'Sorry, could not find well.', 
-            autoResize: true, 
-            moveToLocation: function(latlng, title, map) { 
-                map.flyTo(latlng, 16); 
-            }, 
-            marker: { 
-                icon: false, 
-                animate: false, 
-                circle: { 
-                    weight: 6, 
-                    radius: 30, 
-                    color: 'red', 
-                } 
-            },
-            hideMarkerOnCollapse: true,
-            autoCollapseTime: 1200,
-        }); 
+                // Popups with basic well info and buttons for stats and plot
+                layer.bindPopup(
+                    `
+                    <strong>Well</strong>: ${feature.properties.name} 
+                    <br><strong>Lat:</strong> ${feature.properties.lat.toFixed(3)} 
+                    <br><strong>Lon:</strong> ${feature.properties.lon.toFixed(3)}
+                    <br><strong>Basin Name:</strong> ${feature.properties.basin}
+                    <br><br>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="plotWNL()" data-bs-target="#exampleModal">
+                            More Info
+                        </button>                
+                    </div>
+                    `
+                );
 
-        searchControl.on("search:locationfound", function(e) { 
-            e.layer.openPopup(); 
-            plotData = e.layer.feature.properties;
-            getStats = e.layer.feature.properties;
-        }); 
-        map.addControl(searchControl);
-    })
-    .catch(console.error);
-    
+                // On click event on the points
+                // Sends data for clicked item to global variable plotData 
+                layer.on('click', pt => {
+                    plotData = pt.target.feature.properties;
+                    getStats = pt.target.feature.properties;
+                });
+            } // end of getWellInfo function
+            
+            let basin = L.geoJSON(geojson, {
+                pointToLayer: function(feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        // configure options 
+                        radius: 8,
+                        fillColor: basins[i].color, // color is based on object property in basins array 
+                        weight: 1,
+                        fillOpacity: 1,
+                        color: "black", // marker outline 
+                        opacity: 1.0,
+                    });
+                }, 
+                onEachFeature: getWellInfo,
+            });
+
+            basin.addTo(map);
+            basin.addTo(searchLayerGroup)
+
+            layerControl.addOverlay(basin, `${basins[i].name} Basin`, basinLayers);
+
+  
+        }); // end of fetch 
+} // end of for-loop
+
+// Use the layer group as the layer for the search control
+searchControl.setLayer(searchLayerGroup);
