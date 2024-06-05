@@ -339,7 +339,7 @@ const plotWNL = () => {
 const basins = [
 	{
 		"name": "Finegayan",
-		"data": "./static/data/finegayanBasin.json",
+		"data": "./static/data/finegayanBasinV2.json",
         "color": "green",
 	},
 	{
