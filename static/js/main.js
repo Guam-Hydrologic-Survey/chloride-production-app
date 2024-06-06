@@ -67,13 +67,12 @@ const mapTitle = L.control({position: 'topleft'});
 
 mapTitle.onAdd =  function(map) {
     this._div = L.DomUtil.create('div', 'mapTitle'); 
-    //TODO: change img src
-    this._div.innerHTML = '<img src="./static/assets/WERI MAppFx Well Nitrates Title Card-White_Bold.png" height="150">';
+    this._div.innerHTML = '<img src="./static/assets/WERI_MappFx_Chloride_And_Production_Title_Card_White_Bold.png" height="150">';
     return this._div;
 };
 
-//TODO: Add Chloride and Production MAppFx Title
-// mapTitle.addTo(map);
+
+mapTitle.addTo(map);
 
 L.control.zoom({
     // options: topleft, topright, bottomleft, bottomright
