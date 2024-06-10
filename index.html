@@ -50,6 +50,7 @@
     crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
         crossorigin="anonymous"></script>
+        <script src="./static/lib/bootstrap-popover.js" defer></script>  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
         crossorigin="anonymous"></script>
 
@@ -141,8 +142,20 @@
           <div class="modal-footer about-btns">
             <a class="btn btn-secondary" href="static\data\CPDB_2023_Questionable_Data_Removed.xlsx" target="_blank" rel="noreferrer noopener" role="button">Questionable Data Removed</a>
             <a class="btn btn-success" href="https://guamhydrologicsurvey.uog.edu/index.php/data/cpdb/" target="_blank" rel="noreferrer noopener" role="button">Chloride & Production Database</a>
-            <a class="btn btn-primary" href="https://guamhydrologicsurvey.uog.edu/index.php/" target="_blank" rel="noreferrer noopener" role="button">WERI Technical Report</a>
-            <a class="btn btn-primary" href="https://guamhydrologicsurvey.uog.edu/index.php/interagency-maps/" target="_blank" rel="noreferrer noopener" role="button">NGLA Map Series</a>
+             <!-- Dropdown for links to associated TRs -->
+             <div class="btn-group" role="group">
+              <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" title="Associated Technical Reports">
+                Associated Technical Reports
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/WERI%20TR%2098%20-%20McDonald%20&%20Jenson%202003.pdf" target="_blank" rel="noreferrer noopener">WERI TR 98 </a></li>
+                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/CPDB/SimardEtAl2015-SalinityNorthernGuamLensAquifer,TR143,WERIUOG.pdf" target="_blank" rel="noreferrer noopener">WERI TR 143</a></li>
+                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/TRs/WERI%20TR%20177%20-%20Ko%20et%20al%202022.pdf" target="_blank" rel="noreferrer noopener">WERI TR 177</a></li>
+                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/TRs/WERI%20TR%20178%20-%20Ko%20et%20al%202023.pdf" target="_blank" rel="noreferrer noopener">WERI TR 178</a></li>
+              </ul>
+            </div>
+            <a href="#" class="btn btn-primary" role="button" data-bs-toggle="popover"  data-bs-placement="bottom" data-bs-content="Pending">WERI Technical Report</a>
+            <a class="btn btn-primary" href="https://guamhydrologicsurvey.uog.edu/index.php/interagency-maps/" target="_blank" rel="noreferrer noopener" role="button">NGLA Map Series</a>          
           </div>
         </div>
       </div>
