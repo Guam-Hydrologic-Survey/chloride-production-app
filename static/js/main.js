@@ -427,67 +427,7 @@ const basins = [
 // Contains each layer from fetch in layer control
 let basinLayers = "Toggle All Basins"; 
 
-// getOneBasin()
 getBasins()
-
-// --------------------------------------------------------------------------------------------- 
-
-// THIS FUNCTION IS FOR DEBUGGING PURPOSES ONLY 
-function getOneBasin() {
-    fetch(basins[0].data)
-            .then(response => response.json())
-            .then(geojson => {
-                const getWellInfo = (feature, layer) => {
-                    // Label for well name
-                    layer.bindTooltip(feature.properties.name, { permanent: true, direction: 'bottom', offset: [0,10] })
-            
-                    // Popups with basic well info and buttons for stats and plot
-                    layer.bindPopup(
-                        `
-                        <strong>Well</strong>: ${feature.properties.name} 
-                        <br><strong>Lat:</strong> ${feature.properties.lat.toFixed(3)} 
-                        <br><strong>Lon:</strong> ${feature.properties.lon.toFixed(3)}
-                        <br><strong>Basin Name:</strong> ${feature.properties.basin}
-                        <br><br>
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="plotWNL()" data-bs-target="#exampleModal">
-                                More Info
-                            </button>                
-                        </div>
-                        `
-                    );
-
-                    // On click event on the points
-                    // Sends data for clicked item to global variable plotData 
-                    layer.on('click', pt => {
-                        plotData = pt.target.feature.properties;
-                        getStats = pt.target.feature.properties;
-                    });
-                } // end of getWellInfo function
-                
-                let basin = L.geoJSON(geojson, {
-                    pointToLayer: function(feature, latlng) {
-                        let svg = getIcon(feature.properties) 
-                        console.log(svg)
-                        return L.marker(latlng, {
-                            icon: L.divIcon({
-                                className: "custom-icon",
-                                html: `${svg}`,
-                                iconSize: [30, 30],
-                                // iconAnchor: [50, 60]
-                                // iconAnchor: [50, 30]
-                            }),
-                        })
-                    }, 
-                    onEachFeature: getWellInfo,
-                });
-
-                basin.addTo(map);
-                basin.addTo(searchLayerGroup)
-
-                layerControl.addOverlay(basin, `${basins[0].name} Basin`, basinLayers);
-            }); // end of fetch 
-}
 
 // Function retrieves all basins 
 function getBasins() {
@@ -524,29 +464,16 @@ function getBasins() {
                     });
                 } // End of getWellInfo function
                 
+                // Adds GeoJSON layer to map 
                 let basin = L.geoJSON(geojson, {
-                    // pointToLayer: function(feature, latlng) {
-                    //     getIcon(feature.properties) 
-                    //     return L.circleMarker(latlng, {
-                    //         // configure options 
-                    //         radius: 8,
-                    //         fillColor: basins[i].color, // color is based on object property in basins array 
-                    //         weight: 1,
-                    //         fillOpacity: 1,
-                    //         color: "black", // marker outline 
-                    //         opacity: 1.0,
-                    //     });
-                    // }, 
-                    pointToLayer: function(feature, latlng) {
+                    pointToLayer: function(feature, latlng) { // Designates custom marker for each well 
                         let svg = getIcon(feature.properties) 
                         console.log(svg)
                         return L.marker(latlng, {
                             icon: L.divIcon({
                                 className: "custom-icon",
                                 html: `${svg}`,
-                                iconSize: [40, 40],
-                                // iconAnchor: [50, 60]
-                                // iconAnchor: [50, 30]
+                                iconSize: [30, 30],
                             }),
                         })
                     }, 
@@ -565,59 +492,42 @@ function getBasins() {
 
 } // End of getBasins function 
 
+// Function to create icon for point 
 function getIcon(point) { // Expected argument: feature.properties 
-    console.log("from getIcon")
-    // gets the last element of each list 
-    // latestDate = point.x_vals[point.x_vals.length - 1];
-    // chloride = point.ci_vals[point.ci_vals.length - 1];
-    // production = point.prod_vals[point.prod_vals.length - 1]; 
-
-    console.log(point.name)
-    latestProductionValue = checkLastValue(point.prod_vals)
-    console.log(`Production value: ${latestProductionValue[0]} at position ${latestProductionValue[1]}`)
+    // Variables store lastest data values found 
+    latestProductionValue = checkLastValue(point.prod_vals) 
     latestChlorideValue = checkLastValue(point.ci_vals)
-    console.log(`Chloride value: ${latestChlorideValue[0]} at position ${latestChlorideValue[1]}`)
-    console.log("------")
 
-    // console.log(checkProduction(latestChlorideValue[0], latestProductionValue[0]))
-
+    // Calls function and passes element at index 0 from array lists 
     let icon = checkProduction(latestChlorideValue[0], latestProductionValue[0]) 
-    return icon
+    return icon // Returns SVG string 
 }
 
+// Function checks last numerical value from array list 
 function checkLastValue(data) {
-    // console.log("from checkLastValue")
-    // console.log(typeof data)
-    let latestData = 0 // initialize variable 
-    let pos = 0;
+    let latestData = 0; index = 0 // Initialize variables 
+
     for (let i = data.length - 1; i >= 0; i--) {
-        pos = i
+        index = i
         if (data[i] == null) {
             continue;
         } else {
             latestData = data[i];
-            // console.log(latestData);
             break;
         }
     }
-    return [latestData, pos];
+    return [latestData, index]; // Returns array list with 2 values: Latest data found and array index of value 
 }
 
+// Helper function 
 function isNumber(value) {
     return typeof value ==='number';
 }
 
-function createIcon() {
-    // get the lastest date 
-    // check chloride and production values 
-    // ensure they are the same length: dates array list and each variable (chloride & production) 
-    // check production value and set shape 
-    // check chloride value (compare with legend) and set a color 
-}
-
+// Function to compare chloride value against a range to determine inner circle color 
+// Expects a numerical value as an argument 
+// Returns Hex code for color 
 function checkChloride(chloride) {
-
-    // console.log("from checkChloride")
 
     let chlorideIcon = "";
 
@@ -676,22 +586,22 @@ function checkChloride(chloride) {
     } else if (chloride <= 450) {
         chlorideIcon = colors[6].hex
     }
-    // console.log(chlorideIcon)
+
     return chlorideIcon;
 }
 
+// Function to assign SVG for icon based on production value 
+// Expects 2 numerical values passed through its parameters 
+// Returns string containing SVG HTML code 
 function checkProduction(chloride, production) {
-
-    // console.log("from checkProduction")
 
     let productionIcon = "";
 
-    // const height = "100%"
-    // const width = "100%"
-
+    // These are the outer shapes 
+    // The fill color for the inner circle is assigned by calling the checkChloride() function 
     const shapes = [
         {
-            name: "black circle",
+            name: "black circle", // Status is inactive 
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
@@ -701,11 +611,10 @@ function checkProduction(chloride, production) {
                 <path d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `,
-            // status: "inactive",
             range: "0"
         },
         {
-            name: "orange circle", // fill color: #FFD37F
+            name: "orange circle", // Fill color: #FFD37F
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
@@ -718,7 +627,7 @@ function checkProduction(chloride, production) {
             range: "(0 - 100]"
         },
         {
-            name: "green circle", // fill color: #D3FFBE
+            name: "green circle", // Fill color: #D3FFBE
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
@@ -731,7 +640,7 @@ function checkProduction(chloride, production) {
             range: "(100 - 200]"
         },
         {
-            name: "blue circle", // fill color: #0070FF (same goes for all polygons)
+            name: "blue circle", // Fill color: #0070FF (same goes for all polygons)
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
@@ -817,6 +726,5 @@ function checkProduction(chloride, production) {
         productionIcon = shapes[7].svg
     }
 
-    // console.log(productionIcon)
     return productionIcon;
 }
