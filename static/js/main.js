@@ -358,36 +358,75 @@ const plotWNL = () => {
 // Creates a layer group to hold all GeoJSON layers for searching
 const searchLayerGroup = L.layerGroup();
 
-// Search control
+// // Search control
+// const searchControl = new L.Control.Search({ 
+//     layer: searchLayerGroup, 
+//     propertyName: 'name', 
+//     casesensitive: false, 
+//     textPlaceholder: 'Well Name...', 
+//     textErr: 'Sorry, could not find well.', 
+//     autoResize: true, 
+//     moveToLocation: function(latlng, title, map) { 
+//         map.flyTo(latlng, 16); 
+//     }, 
+//     marker: { 
+//         icon: false, 
+//         animate: false, 
+//         circle: { 
+//             weight: 6, 
+//             radius: 30, 
+//             color: 'red', 
+//         } 
+//     },
+//     hideMarkerOnCollapse: true,
+//     autoCollapseTime: 1200,
+// }); 
+
+// searchControl.on("search:locationfound", function(e) { 
+//     e.layer.openPopup(); 
+//     plotData = e.layer.feature.properties;
+//     getStats = e.layer.feature.properties;
+// }); 
+
+// map.addControl(searchControl);
+
+// Search control 
 const searchControl = new L.Control.Search({ 
+    container: "search-box",
     layer: searchLayerGroup, 
+    initial: false,
+    collapsed: false,
     propertyName: 'name', 
     casesensitive: false, 
-    textPlaceholder: 'Well Name...', 
-    textErr: 'Sorry, could not find well.', 
+    textPlaceholder: 'Search well...', 
+    textErr: 'Sorry, could locate well. Please try again.', 
     autoResize: true, 
     moveToLocation: function(latlng, title, map) { 
+        searchCoords = latlng;
+        searchMarker = L.circle(searchCoords, {
+            color: "red",
+            fillColor: "",
+            fillOpacity: 0.5,
+            weight: 3,
+            radius: 80,
+            className: "search-pulse",
+        });
+        searchMarker.addTo(map);
         map.flyTo(latlng, 16); 
+        setTimeout(() => {
+            searchMarker.remove();
+          }, 8000);
     }, 
-    marker: { 
-        icon: false, 
-        animate: false, 
-        circle: { 
-            weight: 6, 
-            radius: 30, 
-            color: 'red', 
-        } 
-    },
-    hideMarkerOnCollapse: true,
-    autoCollapseTime: 1200,
+    marker: false,
 }); 
 
-searchControl.on("search:locationfound", function(e) { 
-    e.layer.openPopup(); 
-    plotData = e.layer.feature.properties;
-    getStats = e.layer.feature.properties;
+searchControl.on("search:locationfound", function(point) { 
+    // point.layer.openPopup(); 
+    SidePanel(point.layer.feature.properties);
+    document.getElementById("searchtext15").value = "";
 }); 
 
+// initialize search 
 map.addControl(searchControl);
 
 // Array of objects, each object containing basin name, full file path, and color on map 
