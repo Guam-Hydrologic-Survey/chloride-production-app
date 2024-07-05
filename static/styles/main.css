@@ -169,3 +169,62 @@ button {
 .modal-title-plot {
     margin-left: 24%;
 }
+
+/* Override styles for Leaflet Control Search plugin */
+.leaflet-control-search.search-exp {
+    background: #0d6efd; 
+    border: 0;
+    border-radius: 0 5px 5px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
+.leaflet-control-search .search-button {
+    display: block;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-color: #0d6efd;
+    background: url(../assets/search.svg) no-repeat 4px 6px #0d6efd;
+    border-radius: 0 5px 5px 0;
+}
+
+.leaflet-control-search .search-button:hover {
+    background-color: #0d6efd;
+    background: url(../assets/search.svg) no-repeat 4px 6px #0d6efd;
+}
+
+.leaflet-control-search .search-cancel {
+    right: 38px;
+    background: url(../assets/cancel.svg) no-repeat 4px 4px #fff;
+}
+
+.leaflet-control-search .search-input {
+    float: left;
+    border: 0;
+    border-radius: 8px;
+    height: 20px;
+    padding: 16px;
+    margin: 6px;
+}
+
+.leaflet-control-search .search-tooltip {
+    padding-left: 4px;
+}
+
+/* */
+.search-pulse {
+    animation: pulsate 1s ease-out;
+    -webkit-animation: pulsate 1s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    opacity: 0.0
+}
+
+
+@keyframes pulsate {
+    0% { transform: opacity: 0.0; }
+    50% { opacity: 1.0; }
+    100% { transform: opacity: 0.0; }
+}
