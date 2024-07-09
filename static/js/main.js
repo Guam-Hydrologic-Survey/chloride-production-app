@@ -68,15 +68,61 @@ const layerControl = L.control.groupedLayers(baseLayers, null, groupedLayersOpti
 layerControl.addTo(map);
 
 // Configuration for custom map image overlay 
-let customMapUrl = "https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/Demo2.png";
-let customMapBounds = L.latLngBounds([[13.547696454499734, 144.788332995940010], [13.4995806, 144.8629739]]);
+/*
+images:
+https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/60KSCP.png
+https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/60KNCP.png
+https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/120KCP.png
+*/
+// let customMapUrl = "https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/Demo2.png";
+// let customMapBounds = L.latLngBounds([[13.547696454499734, 144.788332995940010], [13.4995806, 144.8629739]]);
 
-let customMap = L.imageOverlay(customMapUrl, customMapBounds, {
+// let customMap = L.imageOverlay(customMapUrl, customMapBounds, {
+//     opacity: 1,
+//     interactive: false,
+// })
+
+// layerControl.addOverlay(customMap, "Custom Map");
+
+// 120KCP PNG 
+const overlay_120kcp_url = "./static/assets/overlays/120KCP.png"
+const overlay_120kcp_tl = [13.676549220976273, 144.679002534165647]
+const overlay_120kcp_br = [13.4088743, 145.0248265]
+const overlay_120kcp_bounds = L.latLngBounds([overlay_120kcp_tl, overlay_120kcp_br]); 
+
+let overlay_120kcp = L.imageOverlay(overlay_120kcp_url, overlay_120kcp_bounds, {
     opacity: 1,
     interactive: false,
 })
 
-layerControl.addOverlay(customMap, "Custom Map");
+layerControl.addOverlay(overlay_120kcp, "120K");
+
+// TODO - combine these two on a zoom level
+// 60KNCP PNG 
+const overlay_60kncp_url = "./static/assets/overlays/60KNCP.png"
+const overlay_60kncp_tl = [13.676121397466535, 144.790949685872050]
+const overlay_60kncp_br = [13.5293066, 144.9788355]
+const overlay_60kncp_bounds = L.latLngBounds([overlay_60kncp_tl, overlay_60kncp_br]);
+
+let overlay_60kncp = L.imageOverlay(overlay_60kncp_url, overlay_60kncp_bounds, {
+    opacity: 1,
+    interactive: false,
+})
+
+layerControl.addOverlay(overlay_60kncp, "60KN");
+
+// 60KSCP PNG 
+const overlay_60kscp_url = "./static/assets/overlays/60KSCP.png"
+const overlay_60kscp_tl = [13.530946619838641, 144.724280522275109]
+const overlay_60kscp_br = [13.4089456, 144.9468201]
+const overlay_60kscp_bounds = L.latLngBounds([overlay_60kscp_tl, overlay_60kscp_br]);
+
+let overlay_60kscp = L.imageOverlay(overlay_60kscp_url, overlay_60kscp_bounds, {
+    opacity: 1,
+    interactive: false,
+})
+
+layerControl.addOverlay(overlay_60kscp, "60KS");
 
 // Configure map title 
 const mapTitle = L.control({position: 'topleft'});
@@ -109,7 +155,7 @@ controlBar.addTo(map);
 map.on('zoomend', function(z) {
     let zoomLevel = map.getZoom();
     toggleTooltips(zoomLevel)
-    toggleCustomMap(zoomLevel)
+    // toggleCustomMap(zoomLevel)
 });
 
 // Hides tooltip based on zoom level 
@@ -127,10 +173,25 @@ function toggleTooltips(z) {
 
 // Hides custom map (image overlay) based on zoom level 
 function toggleCustomMap(z) {
-    if (map.hasLayer(customMap) && (z < 12 || z >= baseLayersZoom)) {
-        map.removeLayer(customMap)
+    // if (map.hasLayer(overlay_120kcp) && (z < 12 || z >= baseLayersZoom)) {
+    //     map.removeLayer(overlay_120kcp)
+    // } else {
+    //     map.addLayer(overlay_120kcp)
+    // }
+    console.log(z);
+    if (z > 10 && z <= 12) {
+        map.addLayer(overlay_120kcp)
+    } else if (z >= baseLayersZoom) {
+        if (map.hasLayer(overlay_120kcp)) {
+            map.remove(overlay_120kcp)
+        }
+        map.addLayer(overlay_60kncp)
+        map.addLayer(overlay_60kscp)
     } else {
-        map.addLayer(customMap)
+        if (map.hasLayer(overlay_60kncp) && map.hasLayer(overlay_60kscp)) {
+            map.remove(overlay_60kncp)
+            map.remove(overlay_60kscp)
+        }
     }
 }
 
