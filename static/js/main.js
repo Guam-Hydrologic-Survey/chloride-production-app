@@ -4,7 +4,7 @@ const center = [13.5435056,144.7478083];
 // Creates Leaflet map 
 const map = L.map('map', {
     center: center,
-    zoom: 12,
+    zoom: 11.5,
     zoomControl: false,
 })
 
@@ -18,7 +18,7 @@ map.addEventListener("click", function (event) {
     return false;
 });
 
-const baseLayersZoom = 19;
+const baseLayersZoom = 16;
 
 // Open Street Map layer
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -47,16 +47,8 @@ const ewi = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Wo
 // ESRI World Gray Canvas 
 const ewgc = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri' + attr,
-	maxZoom: 16
+	maxZoom: baseLayersZoom
 });
-
-// TODO: configure custom map 
-// custom tile layer from Dr Habana 
-const custom = L.tileLayer("https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/MAppFX2.png", {
-    attribution: `Tiles &copy <a href="https://weri.uog.edu/">WERI</a> - NC Habana (2024) ${attr}`,
-    maxZoom: 16,
-    tileSize: 512
-})
 
 const baseLayers = {
     'Open Street Map': osm,
@@ -64,10 +56,9 @@ const baseLayers = {
     'ESRI World Topo Map': ewtm,
     'ESRI World Street Map': ewsp,
     'ESRI World Gray Canvas': ewgc,
-    'Custom Map Layer': custom,
 }
 
-var groupedLayersOptions = {
+let groupedLayersOptions = {
     exclusiveGroups: ["Base Maps"],
     groupCheckboxes: true, 
     position: 'bottomright'
@@ -75,6 +66,17 @@ var groupedLayersOptions = {
 
 const layerControl = L.control.groupedLayers(baseLayers, null, groupedLayersOptions);
 layerControl.addTo(map);
+
+// Configuration for custom map image overlay 
+let customMapUrl = "https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/Demo2.png";
+let customMapBounds = L.latLngBounds([[13.547696454499734, 144.788332995940010], [13.4995806, 144.8629739]]);
+
+let customMap = L.imageOverlay(customMapUrl, customMapBounds, {
+    opacity: 1,
+    interactive: false,
+})
+
+layerControl.addOverlay(customMap, "Custom Map");
 
 // Configure map title 
 const mapTitle = L.control({position: 'topleft'});
@@ -103,25 +105,34 @@ const controlBar = L.easyBar([
 
 controlBar.addTo(map);
 
-// Hides tooltip based on zoom level 
+// Run actions based on map zoom 
 map.on('zoomend', function(z) {
-    var zoomLevel = map.getZoom();
-    if (zoomLevel >= 15 ){
+    let zoomLevel = map.getZoom();
+    toggleTooltips(zoomLevel)
+    toggleCustomMap(zoomLevel)
+});
+
+// Hides tooltip based on zoom level 
+function toggleTooltips(z) {
+    if (z >= 15 ){
         [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
             t.style.visibility = 'visible';
         });
-        // TODO: configure marker size based on zoom level (gets bigger when zooming in) and resets to orig size when default zoom 
-        // let customIcons = document.getElementsByClassName("custom-icon")
-        // for (let i = 0; i < customIcons.length; i++) {
-        //     customIcons[i].style.width = 50
-        //     customIcons[i].style.width = 50
-        // }
     } else {
         [].forEach.call(document.querySelectorAll('.leaflet-tooltip'), function (t) {
             t.style.visibility = 'hidden';
         });
     }
-});
+}
+
+// Hides custom map (image overlay) based on zoom level 
+function toggleCustomMap(z) {
+    if (map.hasLayer(customMap) && (z < 12 || z >= baseLayersZoom)) {
+        map.removeLayer(customMap)
+    } else {
+        map.addLayer(customMap)
+    }
+}
 
 // Draw control bar
 var drawnFeatures = new L.FeatureGroup();
@@ -358,38 +369,6 @@ const plotWNL = () => {
 // Creates a layer group to hold all GeoJSON layers for searching
 const searchLayerGroup = L.layerGroup();
 
-// // Search control
-// const searchControl = new L.Control.Search({ 
-//     layer: searchLayerGroup, 
-//     propertyName: 'name', 
-//     casesensitive: false, 
-//     textPlaceholder: 'Well Name...', 
-//     textErr: 'Sorry, could not find well.', 
-//     autoResize: true, 
-//     moveToLocation: function(latlng, title, map) { 
-//         map.flyTo(latlng, 16); 
-//     }, 
-//     marker: { 
-//         icon: false, 
-//         animate: false, 
-//         circle: { 
-//             weight: 6, 
-//             radius: 30, 
-//             color: 'red', 
-//         } 
-//     },
-//     hideMarkerOnCollapse: true,
-//     autoCollapseTime: 1200,
-// }); 
-
-// searchControl.on("search:locationfound", function(e) { 
-//     e.layer.openPopup(); 
-//     plotData = e.layer.feature.properties;
-//     getStats = e.layer.feature.properties;
-// }); 
-
-// map.addControl(searchControl);
-
 // Search control 
 const searchControl = new L.Control.Search({ 
     container: "search-box",
@@ -507,7 +486,7 @@ function getBasins() {
                 let basin = L.geoJSON(geojson, {
                     pointToLayer: function(feature, latlng) { // Designates custom marker for each well 
                         let svg = getIcon(feature.properties) 
-                        console.log(svg)
+                        // console.log(svg)
                         return L.marker(latlng, {
                             icon: L.divIcon({
                                 className: "custom-icon",
@@ -652,6 +631,10 @@ function checkProduction(chloride, production) {
         {
             name: "blue", // default 
             hex: "#0070FF"
+        },
+        {
+            name: "white",
+            hex: "#ffffff"
         }
     ]
 
@@ -761,7 +744,20 @@ function checkProduction(chloride, production) {
             </svg>
             `,
             range: "(600 - 700]"
-        }
+        },
+        {
+            name: "white circle", // high production value - TODO: confirm this 
+            svg: `
+            <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[4].hex}"/>
+                    <path d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                </g>
+                <path d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
+            </svg>
+            `,
+            range: "(700+]"
+        },
     ];
 
     if (production == null) {
@@ -782,6 +778,8 @@ function checkProduction(chloride, production) {
         productionIcon = shapes[6].svg
     } else if (production <= 700) {
         productionIcon = shapes[7].svg
+    } else {
+        productionIcon = shapes[8].svg
     }
 
     return productionIcon;
