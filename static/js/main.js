@@ -109,7 +109,7 @@ let overlay_60kncp = L.imageOverlay(overlay_60kncp_url, overlay_60kncp_bounds, {
     interactive: false,
 })
 
-layerControl.addOverlay(overlay_60kncp, "60KN");
+// layerControl.addOverlay(overlay_60kncp, "60KN");
 
 // 60KSCP PNG 
 const overlay_60kscp_url = "./static/assets/overlays/60KSCP.png"
@@ -122,7 +122,10 @@ let overlay_60kscp = L.imageOverlay(overlay_60kscp_url, overlay_60kscp_bounds, {
     interactive: false,
 })
 
-layerControl.addOverlay(overlay_60kscp, "60KS");
+// layerControl.addOverlay(overlay_60kscp, "60KS");
+
+let overlays_60k_combined = L.layerGroup([overlay_60kncp, overlay_60kscp])
+layerControl.addOverlay(overlays_60k_combined, "60K")
 
 // Configure map title 
 const mapTitle = L.control({position: 'topleft'});
@@ -178,6 +181,7 @@ function toggleCustomMap(z) {
     // } else {
     //     map.addLayer(overlay_120kcp)
     // }
+    // TODO - configure custom map based on zoom level 
     console.log(z);
     if (z > 10 && z <= 12) {
         map.addLayer(overlay_120kcp)
