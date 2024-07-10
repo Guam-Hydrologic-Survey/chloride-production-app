@@ -140,7 +140,7 @@ controlBar.addTo(map);
 map.on('zoomend', function(z) {
     let zoomLevel = map.getZoom();
     toggleTooltips(zoomLevel)
-    // toggleCustomMap(zoomLevel)
+    toggleCustomMap(zoomLevel)
 });
 
 // Hides tooltip based on zoom level 
@@ -158,17 +158,18 @@ function toggleTooltips(z) {
 
 // Hides custom map (image overlay) based on zoom level 
 function toggleCustomMap(z) {
-    // TODO - configure custom map based on zoom level 
     console.log(z);
     if (z >= 13) {
-        if (map.hasLayer(overlay_120kcp)) {
-            map.remove(overlay_120kcp)
-            console.log("map has overlay 120k")
-        }
-        // map.addLayer(overlays_60k_combined)
-        // map.addLayer(overlay_60kncp)
-        // map.addLayer(overlay_60kscp)
-    } // else { }
+        map.removeLayer(overlay_120kcp)
+        console.log("map has unchecked overlay 120k")
+        map.addLayer(overlays_60k_combined)
+        console.log("map has checked overlay 60k")
+    }  else {      
+        map.addLayer(overlay_120kcp)
+        console.log("map has checked overlay 120k")
+        map.removeLayer(overlays_60k_combined)
+        console.log("map has unchecked overlay 60k")
+    }
 }
 
 // Draw control bar
