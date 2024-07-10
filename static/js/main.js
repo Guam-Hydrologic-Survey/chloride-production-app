@@ -1,10 +1,10 @@
-//center of guam
+// Center of Guam
 const center = [13.5435056,144.7478083];
 
 // Creates Leaflet map 
 const map = L.map('map', {
     center: center,
-    zoom: 11.5,
+    zoom: 12,
     zoomControl: false,
 })
 
@@ -68,32 +68,20 @@ const layerControl = L.control.groupedLayers(baseLayers, null, groupedLayersOpti
 layerControl.addTo(map);
 
 // Configuration for custom map image overlay 
-/*
-images:
-https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/60KSCP.png
-https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/60KNCP.png
-https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/120KCP.png
-*/
-// let customMapUrl = "https://ghs-cdn.uog.edu/wp-content/databases/MAppFx/chloride-production-app/Background/Demo2.png";
-// let customMapBounds = L.latLngBounds([[13.547696454499734, 144.788332995940010], [13.4995806, 144.8629739]]);
-
-// let customMap = L.imageOverlay(customMapUrl, customMapBounds, {
-//     opacity: 1,
-//     interactive: false,
-// })
-
-// layerControl.addOverlay(customMap, "Custom Map");
-
 // 120KCP PNG 
 const overlay_120kcp_url = "./static/assets/overlays/120KCP.png"
 const overlay_120kcp_tl = [13.676549220976273, 144.679002534165647]
 const overlay_120kcp_br = [13.4088743, 145.0248265]
 const overlay_120kcp_bounds = L.latLngBounds([overlay_120kcp_tl, overlay_120kcp_br]); 
 
-let overlay_120kcp = L.imageOverlay(overlay_120kcp_url, overlay_120kcp_bounds, {
-    opacity: 1,
+const overlayOptions = {
+    opacity: 1, 
     interactive: false,
-})
+}
+
+let overlay_120kcp = L.imageOverlay(overlay_120kcp_url, overlay_120kcp_bounds, overlayOptions)
+
+overlay_120kcp.addTo(map);
 
 layerControl.addOverlay(overlay_120kcp, "120K");
 
@@ -104,10 +92,7 @@ const overlay_60kncp_tl = [13.676121397466535, 144.790949685872050]
 const overlay_60kncp_br = [13.5293066, 144.9788355]
 const overlay_60kncp_bounds = L.latLngBounds([overlay_60kncp_tl, overlay_60kncp_br]);
 
-let overlay_60kncp = L.imageOverlay(overlay_60kncp_url, overlay_60kncp_bounds, {
-    opacity: 1,
-    interactive: false,
-})
+let overlay_60kncp = L.imageOverlay(overlay_60kncp_url, overlay_60kncp_bounds, overlayOptions)
 
 // layerControl.addOverlay(overlay_60kncp, "60KN");
 
@@ -117,10 +102,7 @@ const overlay_60kscp_tl = [13.530946619838641, 144.724280522275109]
 const overlay_60kscp_br = [13.4089456, 144.9468201]
 const overlay_60kscp_bounds = L.latLngBounds([overlay_60kscp_tl, overlay_60kscp_br]);
 
-let overlay_60kscp = L.imageOverlay(overlay_60kscp_url, overlay_60kscp_bounds, {
-    opacity: 1,
-    interactive: false,
-})
+let overlay_60kscp = L.imageOverlay(overlay_60kscp_url, overlay_60kscp_bounds, overlayOptions)
 
 // layerControl.addOverlay(overlay_60kscp, "60KS");
 
@@ -176,27 +158,17 @@ function toggleTooltips(z) {
 
 // Hides custom map (image overlay) based on zoom level 
 function toggleCustomMap(z) {
-    // if (map.hasLayer(overlay_120kcp) && (z < 12 || z >= baseLayersZoom)) {
-    //     map.removeLayer(overlay_120kcp)
-    // } else {
-    //     map.addLayer(overlay_120kcp)
-    // }
     // TODO - configure custom map based on zoom level 
     console.log(z);
-    if (z > 10 && z <= 12) {
-        map.addLayer(overlay_120kcp)
-    } else if (z >= baseLayersZoom) {
+    if (z >= 13) {
         if (map.hasLayer(overlay_120kcp)) {
             map.remove(overlay_120kcp)
+            console.log("map has overlay 120k")
         }
-        map.addLayer(overlay_60kncp)
-        map.addLayer(overlay_60kscp)
-    } else {
-        if (map.hasLayer(overlay_60kncp) && map.hasLayer(overlay_60kscp)) {
-            map.remove(overlay_60kncp)
-            map.remove(overlay_60kscp)
-        }
-    }
+        // map.addLayer(overlays_60k_combined)
+        // map.addLayer(overlay_60kncp)
+        // map.addLayer(overlay_60kscp)
+    } // else { }
 }
 
 // Draw control bar
@@ -711,10 +683,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
-                    <path d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[0].hex}"/>
-                    <path d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[0].hex}"/>
+                    <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
                 </g>
-                <path d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
+                <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `,
             range: "0"
@@ -724,10 +696,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
-                    <path d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[1].hex}"/>
-                    <path d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[1].hex}"/>
+                    <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
                 </g>
-                <path d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
+                <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `, 
             range: "(0 - 100]"
@@ -737,10 +709,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
-                    <path d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[2].hex}"/>
-                    <path d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[2].hex}"/>
+                    <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
                 </g>
-                <path d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
+                <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `, 
             range: "(100 - 200]"
@@ -750,10 +722,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
-                    <path d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[3].hex}"/>
-                    <path d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[3].hex}"/>
+                    <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
                 </g>
-                <path d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
+                <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `, 
             range: "(200 - 300]"
@@ -763,10 +735,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 96" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_8_62)">
-                <path d="M50 4L96.7654 85H3.23463L50 4Z" fill="${outerShapeColors[3].hex}"/>
-                <path d="M4.10065 84.5L50 5L95.8993 84.5H4.10065Z" stroke="black"/>
+                <path class="outer-shape" d="M50 4L96.7654 85H3.23463L50 4Z" fill="${outerShapeColors[3].hex}"/>
+                <path class="outer-shape-outline" d="M4.10065 84.5L50 5L95.8993 84.5H4.10065Z" stroke="black"/>
             </g>
-            <circle cx="50.0001" cy="58.0001" r="21.6642" fill="${checkChloride(chloride)}" stroke="black"/>
+            <circle class="inner-shape" cx="50.0001" cy="58.0001" r="21.6642" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `,
             range: "(300 - 400]"
@@ -776,10 +748,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 96" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_8_54)">
-                <path d="M92 4L92 88H8V4H92Z" fill="${outerShapeColors[3].hex}"/>
-                <path d="M91.5 4.5L91.5 87.5H8.5V4.5H91.5Z" stroke="black"/>
+                <path class="outer-shape" d="M92 4L92 88H8V4H92Z" fill="${outerShapeColors[3].hex}"/>
+                <path class="outer-shape-outline" d="M91.5 4.5L91.5 87.5H8.5V4.5H91.5Z" stroke="black"/>
             </g>
-            <path d="M75.54 45.79C75.54 60.0114 64.0114 71.54 49.79 71.54C35.5687 71.54 24.04 60.0114 24.04 45.79C24.04 31.5687 35.5687 20.04 49.79 20.04C64.0114 20.04 75.54 31.5687 75.54 45.79Z" fill="${checkChloride(chloride)}" stroke="black"/>
+            <path class="inner-shape" d="M75.54 45.79C75.54 60.0114 64.0114 71.54 49.79 71.54C35.5687 71.54 24.04 60.0114 24.04 45.79C24.04 31.5687 35.5687 20.04 49.79 20.04C64.0114 20.04 75.54 31.5687 75.54 45.79Z" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `,
             range: "(400 - 500]"
@@ -789,10 +761,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 97" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_8_58)">
-                <path d="M49.5 4L93.7241 36.1307L76.832 88.1193H22.168L5.27587 36.1307L49.5 4Z" fill="${outerShapeColors[3].hex}"/>
-                <path d="M5.86366 36.3217L49.5 4.61803L93.1363 36.3217L76.4688 87.6193H22.5313L5.86366 36.3217Z" stroke="black"/>
+                <path class="outer-shape" d="M49.5 4L93.7241 36.1307L76.832 88.1193H22.168L5.27587 36.1307L49.5 4Z" fill="${outerShapeColors[3].hex}"/>
+                <path class="outer-shape-outline" d="M5.86366 36.3217L49.5 4.61803L93.1363 36.3217L76.4688 87.6193H22.5313L5.86366 36.3217Z" stroke="black"/>
             </g>
-            <circle cx="49.4998" cy="50.5" r="25.1057" fill="${checkChloride(chloride)}" stroke="black"/>
+            <circle class="inner-shape" cx="49.4998" cy="50.5" r="25.1057" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `,
             range: "(500 - 600]"
@@ -802,10 +774,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_8_66)">
-                <path d="M2 47.7251L25.8626 6.3939L73.5877 6.3939L97.4503 47.7251L73.5877 89.0562L25.8626 89.0562L2 47.7251Z" fill="${outerShapeColors[3].hex}"/>
-                <path d="M26.1512 88.5562L2.57735 47.7251L26.1512 6.8939L73.299 6.8939L96.8729 47.7251L73.299 88.5562L26.1512 88.5562Z" stroke="black"/>
+                <path class="outer-shape" d="M2 47.7251L25.8626 6.3939L73.5877 6.3939L97.4503 47.7251L73.5877 89.0562L25.8626 89.0562L2 47.7251Z" fill="${outerShapeColors[3].hex}"/>
+                <path class="outer-shape-outline" d="M26.1512 88.5562L2.57735 47.7251L26.1512 6.8939L73.299 6.8939L96.8729 47.7251L73.299 88.5562L26.1512 88.5562Z" stroke="black"/>
             </g>
-            <circle cx="49.5181" cy="47.9326" r="25.4376" fill="${checkChloride(chloride)}" stroke="black"/>
+            <circle class="inner-shape" cx="49.5181" cy="47.9326" r="25.4376" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `,
             range: "(600 - 700]"
@@ -815,10 +787,10 @@ function checkProduction(chloride, production) {
             svg: `
             <svg width="100%" height="100%" viewBox="0 0 100 98" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
-                    <path d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[4].hex}"/>
-                    <path d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="${outerShapeColors[4].hex}"/>
+                    <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
                 </g>
-                <path d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
+                <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="${checkChloride(chloride)}" stroke="black"/>
             </svg>
             `,
             range: "(700+]"
@@ -849,3 +821,196 @@ function checkProduction(chloride, production) {
 
     return productionIcon;
 }
+
+
+function legend() {
+    let chl = document.getElementById("chloride-range") 
+    chl.innerHTML = /*html*/
+    `
+    <h5>Salinity</h5>
+    <p>[Cl-] mg/L</p>
+    `;
+
+    let prod = document.getElementById("production-range")
+    prod.innerHTML = /*html*/
+    `
+    <br>
+    <h5>Production</h5>
+    <p>gpm</p>
+    <hr>
+    `;
+
+    const chloridePath = "./static/data/chlorideRange.json"
+    const productionPath = "./static/data/productionRange.json"
+    const shapesPath = "./static/data/shapes.json"
+
+    fetch(chloridePath)
+        .then(response => response.json())
+        .then(json =>  {
+            let data = json.chlorideRange
+            for (let i = 0; i < data.length; i++) {
+                // chl.innerHTML += `${JSON.stringify(data[i])}<br>`
+                chl.innerHTML += /*html*/ `
+                <div class="chloride-range-item">
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <svg id="circle-icon-svg" width="32px" height="32px" stroke-width="2" viewBox="0 0 24 24" fill="${data[i].hex}" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                    <!--<p>${data[i].range}</p>-->
+                    ${data[i].range}
+                </div>
+                <br>
+                `;
+            }
+        });
+
+        const height = 50
+        const width = 50
+        const viewboxHeight = 100
+        const viewboxWidth = 100
+    
+        const shapes = [
+            {
+                name: "black circle", // Status is inactive 
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="#000000"/>
+                        <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    </g>
+                    <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `,
+                range: "0"
+            },
+            {
+                name: "orange circle", // Fill color: #FFD37F (outerShapeColors[1].hex)
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="#FFD37F"/>
+                        <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    </g>
+                    <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `, 
+                range: "(0 - 100]"
+            },
+            {
+                name: "green circle", // Fill color: #D3FFBE (outerShapeColors[2].hex})
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="#D3FFBE"/>
+                        <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    </g>
+                    <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `, 
+                range: "(100 - 200]"
+            },
+            {
+                name: "blue circle", // Fill color: #0070FF (same goes for all polygons) Alt: #3E68FF (outerShapeColors[3].hex)
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="#0070FF"/>
+                        <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    </g>
+                    <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `, 
+                range: "(200 - 300]"
+            },
+            {
+                name: "triangle",
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_8_62)">
+                    <path class="outer-shape" d="M50 4L96.7654 85H3.23463L50 4Z" fill="#0070FF"/>
+                    <path class="outer-shape-outline" d="M4.10065 84.5L50 5L95.8993 84.5H4.10065Z" stroke="black"/>
+                </g>
+                <circle class="inner-shape" cx="50.0001" cy="58.0001" r="21.6642" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `,
+                range: "(300 - 400]"
+            },
+            {
+                name: "square",
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_8_54)">
+                    <path class="outer-shape" d="M92 4L92 88H8V4H92Z" fill="#0070FF"/>
+                    <path class="outer-shape-outline" d="M91.5 4.5L91.5 87.5H8.5V4.5H91.5Z" stroke="black"/>
+                </g>
+                <path class="inner-shape" d="M75.54 45.79C75.54 60.0114 64.0114 71.54 49.79 71.54C35.5687 71.54 24.04 60.0114 24.04 45.79C24.04 31.5687 35.5687 20.04 49.79 20.04C64.0114 20.04 75.54 31.5687 75.54 45.79Z" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `,
+                range: "(400 - 500]"
+            },
+            {
+                name: "pentagon",
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_8_58)">
+                    <path class="outer-shape" d="M49.5 4L93.7241 36.1307L76.832 88.1193H22.168L5.27587 36.1307L49.5 4Z" fill="#0070FF"/>
+                    <path class="outer-shape-outline" d="M5.86366 36.3217L49.5 4.61803L93.1363 36.3217L76.4688 87.6193H22.5313L5.86366 36.3217Z" stroke="black"/>
+                </g>
+                <circle class="inner-shape" cx="49.4998" cy="50.5" r="25.1057" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `,
+                range: "(500 - 600]"
+            },
+            {
+                name: "hexagon",
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_8_66)">
+                    <path class="outer-shape" d="M2 47.7251L25.8626 6.3939L73.5877 6.3939L97.4503 47.7251L73.5877 89.0562L25.8626 89.0562L2 47.7251Z" fill="#0070FF"/>
+                    <path class="outer-shape-outline" d="M26.1512 88.5562L2.57735 47.7251L26.1512 6.8939L73.299 6.8939L96.8729 47.7251L73.299 88.5562L26.1512 88.5562Z" stroke="black"/>
+                </g>
+                <circle class="inner-shape" cx="49.5181" cy="47.9326" r="25.4376" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `,
+                range: "(600 - 700]"
+            },
+            {
+                name: "white circle", // high production value - TODO: confirm this 
+                svg: `
+                <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <path class="outer-shape" d="M94.5596 47.8414C94.5596 72.0543 74.7348 91.6827 50.2798 91.6827C25.8247 91.6827 6 72.0543 6 47.8414C6 23.6284 25.8247 3.99999 50.2798 3.99999C74.7348 3.99999 94.5596 23.6284 94.5596 47.8414Z" fill="#FFFFFF"/>
+                        <path class="outer-shape-outline" d="M94.0596 47.8414C94.0596 71.7735 74.4634 91.1827 50.2798 91.1827C26.0962 91.1827 6.5 71.7735 6.5 47.8414C6.5 23.9093 26.0962 4.49999 50.2798 4.49999C74.4634 4.49999 94.0596 23.9093 94.0596 47.8414Z" stroke="black"/>
+                    </g>
+                    <path class="inner-shape" d="M76.9619 47.6222C76.9619 62.4791 64.9179 74.523 50.061 74.523C35.2041 74.523 23.1602 62.4791 23.1602 47.6222C23.1602 32.7652 35.2041 20.7213 50.061 20.7213C64.9179 20.7213 76.9619 32.7652 76.9619 47.6222Z" fill="#D9D9D9" stroke="black"/>
+                </svg>
+                `,
+                range: "(700+]"
+            },
+        ];
+
+    // Adds svg and ranges to HTML container 
+    for (let i = 0; i < shapes.length; i++) {
+        if (shapes[i].range == 0) {
+            prod.innerHTML += /*html*/
+            `
+            <div class="production-range-item">
+                ${shapes[i].svg}
+                ${shapes[i].range} (inactive)
+                <br>
+            </div>
+            `;
+            continue
+        } 
+        prod.innerHTML += /*html*/
+        `
+        <div class="production-range-item">
+            ${shapes[i].svg}
+            ${shapes[i].range}
+            <br>
+        </div>
+        `;
+    }
+} 
+
+legend()
