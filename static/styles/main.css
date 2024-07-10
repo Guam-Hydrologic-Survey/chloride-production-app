@@ -170,6 +170,17 @@ button {
     margin-left: 24%;
 }
 
+.chloride-range-item {
+    display: flex;
+    align-items: center;
+    line-height: normal;
+}
+
+/* .chloride-range-item > p {
+    padding-top: 15px;
+    padding-left: 10px;
+} */
+
 /* Override styles for Leaflet Control Search plugin */
 .leaflet-control-search.search-exp {
     background: #0d6efd; 
