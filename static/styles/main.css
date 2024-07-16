@@ -21,9 +21,24 @@
     margin: 0 0 5px;
     color: #777;
 }
+
+#marker-content-container {
+    font-size: 14px;
+    text-align: center;
+}
+
+#marker-well-name {
+    font-weight: 700;
+}
+
+#marker-basin-name {
+    font-style: italic;
+}
+
 .modal-header{
     justify-content: space-around;
 }
+
 .modal-body {
     display: flex;
     align-items: center;
@@ -70,6 +85,19 @@
 
 .offcanvas-size-xl {
     --bs-offcanvas-width: min(100vh, 900px) !important;
+}
+
+.btn-link {
+    text-decoration: none;
+    color: black;
+}
+
+.btn-link:hover {
+    color:#555;
+}
+
+.btn-link:focus {
+    color:#555;
 }
 
 /* Style configuration for the title and location section of stats panel */
@@ -144,17 +172,18 @@
 
 .legend p {
     line-height: 3px; 
-     margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .legend h4 {
     font-size: 14px;
     text-align: center;
 }
+
 .vl {
     border-right: 1.99px solid rgba(0, 0, 0, 0.1);
     height: 500px;
-  }
+}
 
 .well-stats{
     top: -60px;
@@ -162,20 +191,24 @@
     position: relative;
     
 }
-.modal-title-plot {
-    margin-left: 24%;
+#point-info-header {
+    margin-left: 30%;
 }
 
 .chloride-range-item {
     display: flex;
     align-items: center;
-    line-height: normal;
+    line-height: 40px;
 }
 
 /* .chloride-range-item > p {
     padding-top: 15px;
     padding-left: 10px;
 } */
+
+.production-range-item {
+    line-height: 45px;
+}
 
 /* Override styles for Leaflet Control Search plugin */
 .leaflet-control-search.search-exp {
