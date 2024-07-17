@@ -89,7 +89,6 @@ overlay_120kcp.addTo(map);
 
 layerControl.addOverlay(overlay_120kcp, "120K");
 
-// TODO - combine these two on a zoom level
 // 60KNCP PNG 
 const overlay_60kncp_url = "./static/assets/overlays/60KNCP.png"
 const overlay_60kncp_tl = [13.676121397466535, 144.790949685872050]

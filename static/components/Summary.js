@@ -91,7 +91,7 @@ let tot_prod = 0
 let tot_pwac = 0
 
 // table headers 
-let h = ["basin", "total production", "production weighted average chloride"]
+let h = ["Basin", "Total Production", "Production Weighted Average Chloride"]
 
   
 // creates BS table, calls table functions, returns table html
@@ -105,7 +105,7 @@ function createTable() {
     return table
 }
 
-// creates header for table, uses h constant (h needs to be defined --> change to function)
+// creates header for table, uses h constant (TODO - h needs to be defined --> change to function)
 function tableHeaders(theaders) {
     let tr = ""
     for (let i = 0; i < theaders.length; i++) {
@@ -135,7 +135,7 @@ function tableFooter() {
     let tf = ""
     let sums = getSum()
     for (let i = 0; i < h.length; i++) {
-        if (i == 0) { tf += `<th scope="row">totals</th>`; }
+        if (i == 0) { tf += `<th scope="row">Totals</th>`; }
         else { tf += `<td>${sums[i - 1]}</td>` }
     } 
     return tf

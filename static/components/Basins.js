@@ -36,7 +36,4 @@ const basins = [
 	},
 ];
 
-// Contains each layer from fetch in layer control
-let basinLayers = "Toggle All Basins"; 
-
-export { basins, basinLayers }
+export { basins }
