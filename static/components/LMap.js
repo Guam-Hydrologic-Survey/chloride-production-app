@@ -19,9 +19,9 @@ export function LMap(element) {
         center: center,
         zoom: 12,
         zoomControl: false,
-    }) 
+    });
 
-    const baseLayers = BaseLayers(map)
+    const baseLayers = BaseLayers(map);
 
     let groupedLayersOptions = {
         exclusiveGroups: ["Base Maps"],
@@ -36,44 +36,42 @@ export function LMap(element) {
 
     // Configuration for custom map image overlay 
     // 120KCP PNG 
-    const overlay_120kcp_url = "./static/assets/overlays/120KCP.png"
-    const overlay_120kcp_tl = [13.676549220976273, 144.679002534165647]
-    const overlay_120kcp_br = [13.4088743, 145.0248265]
+    const overlay_120kcp_url = "./static/assets/overlays/120KCP.png";
+    const overlay_120kcp_tl = [13.676549220976273, 144.679002534165647];
+    const overlay_120kcp_br = [13.4088743, 145.0248265];
     const overlay_120kcp_bounds = L.latLngBounds([overlay_120kcp_tl, overlay_120kcp_br]); 
 
     const overlayOptions = {
         opacity: 1, 
         interactive: false,
-    }
+    };
 
-    let overlay_120kcp = L.imageOverlay(overlay_120kcp_url, overlay_120kcp_bounds, overlayOptions)
+    let overlay_120kcp = L.imageOverlay(overlay_120kcp_url, overlay_120kcp_bounds, overlayOptions);
 
     overlay_120kcp.addTo(map);
 
     layerControl.addOverlay(overlay_120kcp, "120K");
 
     // 60KNCP PNG 
-    const overlay_60kncp_url = "./static/assets/overlays/60KNCP.png"
-    const overlay_60kncp_tl = [13.676121397466535, 144.790949685872050]
-    const overlay_60kncp_br = [13.5293066, 144.9788355]
+    const overlay_60kncp_url = "./static/assets/overlays/60KNCP.png";
+    const overlay_60kncp_tl = [13.676121397466535, 144.790949685872050];
+    const overlay_60kncp_br = [13.5293066, 144.9788355];
     const overlay_60kncp_bounds = L.latLngBounds([overlay_60kncp_tl, overlay_60kncp_br]);
 
-    let overlay_60kncp = L.imageOverlay(overlay_60kncp_url, overlay_60kncp_bounds, overlayOptions)
+    let overlay_60kncp = L.imageOverlay(overlay_60kncp_url, overlay_60kncp_bounds, overlayOptions);
 
     // layerControl.addOverlay(overlay_60kncp, "60KN");
 
     // 60KSCP PNG 
-    const overlay_60kscp_url = "./static/assets/overlays/60KSCP.png"
-    const overlay_60kscp_tl = [13.530946619838641, 144.724280522275109]
-    const overlay_60kscp_br = [13.4089456, 144.9468201]
+    const overlay_60kscp_url = "./static/assets/overlays/60KSCP.png";
+    const overlay_60kscp_tl = [13.530946619838641, 144.724280522275109];
+    const overlay_60kscp_br = [13.4089456, 144.9468201];
     const overlay_60kscp_bounds = L.latLngBounds([overlay_60kscp_tl, overlay_60kscp_br]);
 
-    let overlay_60kscp = L.imageOverlay(overlay_60kscp_url, overlay_60kscp_bounds, overlayOptions)
+    let overlay_60kscp = L.imageOverlay(overlay_60kscp_url, overlay_60kscp_bounds, overlayOptions);
 
-    // layerControl.addOverlay(overlay_60kscp, "60KS");
-
-    let overlays_60k_combined = L.layerGroup([overlay_60kncp, overlay_60kscp])
-    layerControl.addOverlay(overlays_60k_combined, "60K")
+    let overlays_60k_combined = L.layerGroup([overlay_60kncp, overlay_60kscp]);
+    layerControl.addOverlay(overlays_60k_combined, "60K");
 
     // Configure map title 
     const mapTitle = L.control({position: 'topleft'});
@@ -139,6 +137,7 @@ export function LMap(element) {
     var drawnFeatures = new L.FeatureGroup();
     map.addLayer(drawnFeatures);
 
+    // Configurations for draw controls 
     var drawControl = new L.Control.Draw({
         position: "bottomright",
         draw: {
@@ -184,7 +183,7 @@ export function LMap(element) {
 
     map.addControl(drawControl);
 
-    // Handling draw events 
+    // Handles draw events 
     map.on(L.Draw.Event.CREATED, function(event) {
         var layer = event.layer;
         drawnFeatures.addLayer(layer);
@@ -194,6 +193,7 @@ export function LMap(element) {
         layerControl.addOverlay(drawnFeatures, "Drawings");
     }
 
+    // TODO - refine layers for chloride and production ranges
     // Layer groups for chloride ranges 
     let chlorideLayers = "Toggle All Salinity Levels"; 
 
@@ -205,6 +205,7 @@ export function LMap(element) {
     const chlorideRange400 = L.layerGroup();
     const chlorideRange450 = L.layerGroup();
 
+    // add layers to the layer control 
     layerControl.addOverlay(chlorideRange30, "[0 - 30] [CL-] mg/L", chlorideLayers);
     layerControl.addOverlay(chlorideRange70, "(30 - 70] [CL-] mg/L", chlorideLayers);
     layerControl.addOverlay(chlorideRange150, "(70 - 150] [CL-] mg/L", chlorideLayers);
@@ -227,6 +228,7 @@ export function LMap(element) {
     const productionRange700 = L.layerGroup();
     const productionRange700Plus = L.layerGroup();
 
+    // add layers to the layer control 
     layerControl.addOverlay(productionRangeInactive, "Inactive", productionLayers);
     layerControl.addOverlay(productionRange0, "0", productionLayers);
     layerControl.addOverlay(productionRange100, "(0 - 100] gpm", productionLayers);
@@ -281,11 +283,11 @@ export function LMap(element) {
     // Contains each layer from fetch in layer control
     let basinLayers = "Toggle All Basins"; 
 
-    getBasins()
+    getBasins(); 
 
     // Function retrieves all basins 
     function getBasins() {
-        // For loop to traverse through basins array list and fetch file from the given data property 
+        // For loop traverses through basins array list and fetches file from the given data property 
         for (let i = 0; i < basins.length; i++) {
             fetch(basins[i].data)
                 .then(response => response.json())
@@ -323,13 +325,7 @@ export function LMap(element) {
                     // Adds GeoJSON layer to map 
                     let basin = L.geoJSON(geojson, {
                         pointToLayer: function(feature, latlng) { // Designates custom marker for each well 
-                            let svg = getIcon(feature.properties) 
-                            // console.log(svg)
-
-                            // TODO - Add point to chloride range layer group
-                            const latestChloride = checkLastValue(feature.properties.ci_vals)[0]
-                            const latestProduction = checkLastValue(feature.properties.prod_vals)[0]
-                            // console.log(latestChloride, latestProduction)
+                            let svg = getIcon(feature.properties); 
 
                             let point = L.marker(latlng, {
                                 icon: L.divIcon({
@@ -337,8 +333,13 @@ export function LMap(element) {
                                     html: `${svg}`,
                                     iconSize: [30, 30],
                                 }),
-                            })
+                            });
 
+                            // TODO - Add point to chloride range layer group
+                            const latestChloride = checkLastValue(feature.properties.ci_vals)[0]
+                            const latestProduction = checkLastValue(feature.properties.prod_vals)[0]
+
+                            // adds point to chloride range layer based on value 
                             if (latestChloride == null) {
                                 point.addTo(chlorideRange30);
                             } else if (latestChloride <= 30) {
@@ -357,6 +358,7 @@ export function LMap(element) {
                                 point.addTo(chlorideRange450);
                             }
 
+                            // adds point to production range layer based on value
                             if (latestProduction == null) {
                                 point.addTo(productionRangeInactive);
                             } else if (latestProduction < 1) {
