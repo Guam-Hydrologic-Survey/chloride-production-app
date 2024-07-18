@@ -442,8 +442,6 @@ const searchControl = new L.Control.Search({
 }); 
 
 searchControl.on("search:locationfound", function(point) { 
-    // point.layer.openPopup(); 
-    SidePanel(point.layer.feature.properties);
     document.getElementById("searchtext15").value = "";
 }); 
 
@@ -511,7 +509,7 @@ function getBasins() {
                         <div class="d-flex justify-content-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="plotWNL()" data-bs-target="#exampleModal">
                                 More Info
-                            </button>                
+                            </button>
                         </div>
                         `
                     );

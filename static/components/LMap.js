@@ -194,6 +194,50 @@ export function LMap(element) {
         layerControl.addOverlay(drawnFeatures, "Drawings");
     }
 
+    // Layer groups for chloride ranges 
+    let chlorideLayers = "Toggle All Salinity Levels"; 
+
+    const chlorideRange30 = L.layerGroup();
+    const chlorideRange70 = L.layerGroup();
+    const chlorideRange150 = L.layerGroup();
+    const chlorideRange250 = L.layerGroup();
+    const chlorideRange300 = L.layerGroup();
+    const chlorideRange400 = L.layerGroup();
+    const chlorideRange450 = L.layerGroup();
+
+    layerControl.addOverlay(chlorideRange30, "[0 - 30] [CL-] mg/L", chlorideLayers);
+    layerControl.addOverlay(chlorideRange70, "(30 - 70] [CL-] mg/L", chlorideLayers);
+    layerControl.addOverlay(chlorideRange150, "(70 - 150] [CL-] mg/L", chlorideLayers);
+    layerControl.addOverlay(chlorideRange250, "(150 - 250] [CL-] mg/L", chlorideLayers);
+    layerControl.addOverlay(chlorideRange300, "(250 - 300] [CL-] mg/L", chlorideLayers);
+    layerControl.addOverlay(chlorideRange400, "(300 - 400] [CL-] mg/L", chlorideLayers);
+    layerControl.addOverlay(chlorideRange400, "(400 - 450] [CL-] mg/L", chlorideLayers);
+
+    // Layer groups for production ranges 
+    let productionLayers = "Toggle All Production Rates";
+    
+    const productionRangeInactive = L.layerGroup();
+    const productionRange0 = L.layerGroup();
+    const productionRange100 = L.layerGroup();
+    const productionRange200 = L.layerGroup();
+    const productionRange300 = L.layerGroup();
+    const productionRange400 = L.layerGroup();
+    const productionRange500 = L.layerGroup();
+    const productionRange600 = L.layerGroup();
+    const productionRange700 = L.layerGroup();
+    const productionRange700Plus = L.layerGroup();
+
+    layerControl.addOverlay(productionRangeInactive, "Inactive", productionLayers);
+    layerControl.addOverlay(productionRange0, "0", productionLayers);
+    layerControl.addOverlay(productionRange100, "(0 - 100] gpm", productionLayers);
+    layerControl.addOverlay(productionRange200, "(100 - 200] gpm", productionLayers);
+    layerControl.addOverlay(productionRange300, "(200 - 300] gpm", productionLayers);
+    layerControl.addOverlay(productionRange400, "(300 - 400] gpm", productionLayers);
+    layerControl.addOverlay(productionRange500, "(400 - 500] gpm", productionLayers);
+    layerControl.addOverlay(productionRange600, "(500 - 600] gpm", productionLayers);
+    layerControl.addOverlay(productionRange700, "(600 - 700] gpm", productionLayers);
+    layerControl.addOverlay(productionRange700Plus, "700+ gpm", productionLayers);
+
     // Creates a layer group to hold all GeoJSON layers for searching
     const searchLayerGroup = L.layerGroup();
 
@@ -280,13 +324,62 @@ export function LMap(element) {
                     let basin = L.geoJSON(geojson, {
                         pointToLayer: function(feature, latlng) { // Designates custom marker for each well 
                             let svg = getIcon(feature.properties) 
-                            return L.marker(latlng, {
+                            // console.log(svg)
+
+                            // TODO - Add point to chloride range layer group
+                            const latestChloride = checkLastValue(feature.properties.ci_vals)[0]
+                            const latestProduction = checkLastValue(feature.properties.prod_vals)[0]
+                            // console.log(latestChloride, latestProduction)
+
+                            let point = L.marker(latlng, {
                                 icon: L.divIcon({
                                     className: "custom-icon",
                                     html: `${svg}`,
                                     iconSize: [30, 30],
                                 }),
                             })
+
+                            if (latestChloride == null) {
+                                point.addTo(chlorideRange30);
+                            } else if (latestChloride <= 30) {
+                                point.addTo(chlorideRange30);
+                            } else if (latestChloride <= 70) {
+                                point.addTo(chlorideRange70);
+                            } else if (latestChloride <= 150) {
+                                point.addTo(chlorideRange150);
+                            } else if (latestChloride <=250) {
+                                point.addTo(chlorideRange250);
+                            } else if (latestChloride <= 300) {
+                                point.addTo(chlorideRange300);
+                            } else if (latestChloride <= 400) {
+                                point.addTo(chlorideRange400);
+                            } else if (latestChloride <= 450) {
+                                point.addTo(chlorideRange450);
+                            }
+
+                            if (latestProduction == null) {
+                                point.addTo(productionRangeInactive);
+                            } else if (latestProduction < 1) {
+                                point.addTo(productionRange0);
+                            } else if (latestProduction <= 100) {
+                                point.addTo(productionRange100);
+                            } else if (latestProduction <= 200) {
+                                point.addTo(productionRange200);
+                            } else if (latestProduction <= 300) {
+                                point.addTo(productionRange300);
+                            } else if (latestProduction <= 400) {
+                                point.addTo(productionRange400);
+                            } else if (latestProduction <= 500) {
+                                point.addTo(productionRange500);
+                            } else if (latestProduction <= 600) {
+                                point.addTo(productionRange600);
+                            } else if (latestProduction <= 700) {
+                                point.addTo(productionRange700);
+                            } else {
+                                point.addTo(productionRange700Plus);
+                            }
+
+                            return point;
                         }, 
                         onEachFeature: getWellInfo,
                     });
