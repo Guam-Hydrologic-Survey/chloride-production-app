@@ -2,6 +2,8 @@
 Legend.js
 */
 
+let chlorideToggleBtns = [];
+
 // TODO - cleanup and use constants for marker color and shapes (from Chloride and Production components)
 export function Legend(element) {
 
@@ -26,7 +28,18 @@ export function Legend(element) {
     `;
   
     legend(chlorideId, productionId);
+
+    // console.log(chlorideToggleBtns);
+    // document.getElementById("chloride-range-blue");
+
+    // document.addEventListener('DOMContentLoaded', (e) => {
+    //     setTimeout(() => {
+    //         console.log(document.getElementById(chlorideToggleBtns[0]))
+    //     }, 1000)
+    // })
   }
+
+  export { chlorideToggleBtns }
   
   function legend(chlorideId, productionId) {
     let chl = document.getElementById(chlorideId) 
@@ -54,10 +67,13 @@ export function Legend(element) {
         .then(json =>  {
             let data = json.chlorideRange
             for (let i = 0; i < data.length; i++) {
+                let toggleBtnId = `chloride-range-${data[i].name}`;
+                chlorideToggleBtns.push(toggleBtnId);
+                // chlorideToggleBtns += toggleBtnId + ","
                 // chl.innerHTML += `${JSON.stringify(data[i])}<br>`
                 chl.innerHTML += /*html*/ `
                 <div class="chloride-range-item">
-                  <button type="button" class="btn"  data-bs-toggle="button">
+                  <button type="button" class="btn"  data-bs-toggle="button" id="${toggleBtnId}">
                       <?xml version="1.0" encoding="UTF-8"?>
                       <svg id="circle-icon-svg" width="20px" height="24px" stroke-width="2" viewBox="0 0 24 20" fill="${data[i].hex}" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
                           <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
