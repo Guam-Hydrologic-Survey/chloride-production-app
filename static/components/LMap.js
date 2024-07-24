@@ -9,13 +9,14 @@ import { getIcon, checkLastValue } from "./CustomIcon.js";
 // import { CustomOverlay } from "./CustomOverlay.js";
 import { Stats } from "./Stats.js";
 import { Plot } from "./Plot.js";
+import { chlorideToggleBtns } from "./Legend_v2.js";
 
 export function LMap(element) {
     // Center of Guam
     const center = [13.5435056,144.7478083];
 
     // Creates Leaflet map 
-    const map = L.map('map', {
+    const map = L.map(element, {
         center: center,
         zoom: 12,
         zoomControl: false,
@@ -206,13 +207,13 @@ export function LMap(element) {
     const chlorideRange450 = L.layerGroup();
 
     // add layers to the layer control 
-    layerControl.addOverlay(chlorideRange30, "[0 - 30] [CL-] mg/L", chlorideLayers);
-    layerControl.addOverlay(chlorideRange70, "(30 - 70] [CL-] mg/L", chlorideLayers);
-    layerControl.addOverlay(chlorideRange150, "(70 - 150] [CL-] mg/L", chlorideLayers);
-    layerControl.addOverlay(chlorideRange250, "(150 - 250] [CL-] mg/L", chlorideLayers);
-    layerControl.addOverlay(chlorideRange300, "(250 - 300] [CL-] mg/L", chlorideLayers);
-    layerControl.addOverlay(chlorideRange400, "(300 - 400] [CL-] mg/L", chlorideLayers);
-    layerControl.addOverlay(chlorideRange400, "(400 - 450] [CL-] mg/L", chlorideLayers);
+    // layerControl.addOverlay(chlorideRange30, "[0 - 30] [CL-] mg/L", chlorideLayers);
+    // layerControl.addOverlay(chlorideRange70, "(30 - 70] [CL-] mg/L", chlorideLayers);
+    // layerControl.addOverlay(chlorideRange150, "(70 - 150] [CL-] mg/L", chlorideLayers);
+    // layerControl.addOverlay(chlorideRange250, "(150 - 250] [CL-] mg/L", chlorideLayers);
+    // layerControl.addOverlay(chlorideRange300, "(250 - 300] [CL-] mg/L", chlorideLayers);
+    // layerControl.addOverlay(chlorideRange400, "(300 - 400] [CL-] mg/L", chlorideLayers);
+    // layerControl.addOverlay(chlorideRange400, "(400 - 450] [CL-] mg/L", chlorideLayers);
 
     // Layer groups for production ranges 
     let productionLayers = "Toggle All Production Rates";
@@ -229,17 +230,80 @@ export function LMap(element) {
     const productionRange700Plus = L.layerGroup();
 
     // add layers to the layer control 
-    layerControl.addOverlay(productionRangeInactive, "Inactive", productionLayers);
-    layerControl.addOverlay(productionRange0, "0", productionLayers);
-    layerControl.addOverlay(productionRange100, "(0 - 100] gpm", productionLayers);
-    layerControl.addOverlay(productionRange200, "(100 - 200] gpm", productionLayers);
-    layerControl.addOverlay(productionRange300, "(200 - 300] gpm", productionLayers);
-    layerControl.addOverlay(productionRange400, "(300 - 400] gpm", productionLayers);
-    layerControl.addOverlay(productionRange500, "(400 - 500] gpm", productionLayers);
-    layerControl.addOverlay(productionRange600, "(500 - 600] gpm", productionLayers);
-    layerControl.addOverlay(productionRange700, "(600 - 700] gpm", productionLayers);
-    layerControl.addOverlay(productionRange700Plus, "700+ gpm", productionLayers);
+    // layerControl.addOverlay(productionRangeInactive, "Inactive", productionLayers);
+    // layerControl.addOverlay(productionRange0, "0", productionLayers);
+    // layerControl.addOverlay(productionRange100, "(0 - 100] gpm", productionLayers);
+    // layerControl.addOverlay(productionRange200, "(100 - 200] gpm", productionLayers);
+    // layerControl.addOverlay(productionRange300, "(200 - 300] gpm", productionLayers);
+    // layerControl.addOverlay(productionRange400, "(300 - 400] gpm", productionLayers);
+    // layerControl.addOverlay(productionRange500, "(400 - 500] gpm", productionLayers);
+    // layerControl.addOverlay(productionRange600, "(500 - 600] gpm", productionLayers);
+    // layerControl.addOverlay(productionRange700, "(600 - 700] gpm", productionLayers);
+    // layerControl.addOverlay(productionRange700Plus, "700+ gpm", productionLayers);
 
+    document.addEventListener('DOMContentLoaded', (e) => {
+        setTimeout(() => {
+            console.log(chlorideToggleBtns.length) // check if exists on DOM 
+
+            document.getElementById(chlorideToggleBtns[0]).addEventListener('click', () => {
+                if (!map.hasLayer(chlorideRange30)) {
+                    chlorideRange30.addTo(map)
+                } else {
+                    map.removeLayer(chlorideRange30)
+                }
+            });
+
+            document.getElementById(chlorideToggleBtns[1]).addEventListener('click', () => {
+                if (!map.hasLayer(chlorideRange70)) {
+                    chlorideRange70.addTo(map)
+                } else {
+                    map.removeLayer(chlorideRange70)
+                }
+            });
+            
+            document.getElementById(chlorideToggleBtns[2]).addEventListener('click', () => {
+                if (!map.hasLayer(chlorideRange150)) {
+                    chlorideRange150.addTo(map)
+                } else {
+                    map.removeLayer(chlorideRange150)
+                }
+            }); 
+
+            document.getElementById(chlorideToggleBtns[3]).addEventListener('click', () => {
+                if (!map.hasLayer(chlorideRange250)) {
+                    chlorideRange250.addTo(map)
+                } else {
+                    map.removeLayer(chlorideRange250)
+                }
+            });
+
+            document.getElementById(chlorideToggleBtns[4]).addEventListener('click', () => {
+                if (!map.hasLayer(chlorideRange300)) {
+                    chlorideRange300.addTo(map)
+                } else {
+                    map.removeLayer(chlorideRange300)
+                }
+            });
+            
+            document.getElementById(chlorideToggleBtns[5]).addEventListener('click', () => {
+                if (!map.hasLayer(chlorideRange400)) {
+                    chlorideRange400.addTo(map)
+                } else {
+                    map.removeLayer(chlorideRange400)
+                }
+            });
+
+            document.getElementById(chlorideToggleBtns[6]).addEventListener('click', () => {
+                if (!map.hasLayer(chlorideRange450)) {
+                    chlorideRange450.addTo(map)
+                } else {
+                    map.removeLayer(chlorideRange450)
+                }
+            });
+
+        }, 1000);
+    });
+    
     // Creates a layer group to hold all GeoJSON layers for searching
     const searchLayerGroup = L.layerGroup();
 
@@ -306,7 +370,7 @@ export function LMap(element) {
                             </div>
                             <br>
                             <div class="d-flex justify-content-center">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" title="View Data">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="m105-233-65-47 200-320 120 140 160-260 109 163q-23 1-43.5 5.5T545-539l-22-33-152 247-121-141-145 233ZM863-40 738-165q-20 14-44.5 21t-50.5 7q-75 0-127.5-52.5T463-317q0-75 52.5-127.5T643-497q75 0 127.5 52.5T823-317q0 26-7 50.5T795-221L920-97l-57 57ZM643-217q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm89-320q-19-8-39.5-13t-42.5-6l205-324 65 47-188 296Z"/></svg>
                                     View Data
                                 </button>                
@@ -316,9 +380,9 @@ export function LMap(element) {
 
                         // On click event on the points
                         // Sends data for clicked item to global variable plotData 
-                        layer.on('click', pt => {
-                            Stats(pt.target.feature.properties);
-                            Plot(pt.target.feature.properties);
+                        layer.on('click', point => {
+                            Stats(point.target.feature.properties);
+                            Plot(point.target.feature.properties);
                         });
                     } // End of getWellInfo function
                     
