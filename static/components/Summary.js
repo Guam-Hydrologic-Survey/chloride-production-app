@@ -8,12 +8,16 @@ export function Summary(element) {
     `
     <div class="offcanvas offcanvas-start rounded shadow bg-body" data-bs-scroll="true" tabindex="-1" id="summary" aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-backdrop="false">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
+        <h3 class="offcanvas-title" id="summary-offcanvas-title">Summary</h3>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
 
       <div class="offcanvas-body">
-        <h3>Summary</h3>
+        <h5 class="summary-offcanvas-subtitle">2024 Overview</h5>
+        <hr>
+        ${createTable()}
+        <br>
+        <h5 class="summary-offcanvas-subtitle">History</h5>
         <hr>
         ${createTable()}
       </div>
@@ -92,6 +96,8 @@ let tot_pwac = 0
 
 // table headers 
 let h = ["Basin", "Total Production", "Production Weighted Average Chloride"]
+
+let headers2 = [];
 
   
 // creates BS table, calls table functions, returns table html
