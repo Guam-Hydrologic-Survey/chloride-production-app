@@ -124,5 +124,5 @@ export function Plot(data) {
           }
     };
 
-    Plotly.newPlot(plotContentId, [chlorideTrace, productionTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+    Plotly.newPlot(plotContentId, [chlorideTrace, productionTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true, modeBarButtonsToRemove: ['lasso2d', 'select2d']}, config);
 }
