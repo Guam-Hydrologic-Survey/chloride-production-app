@@ -69,6 +69,14 @@
     margin-right: auto;
 }
 
+#summary-offcanvas-title {
+    font-family: 'Roboto Slab', serif;
+}
+
+.summary-offcanvas-subtitle {
+    font-style: italic;
+}
+
 /* .offcanvas-body {
     height: 1024px;
     top: 50%;
