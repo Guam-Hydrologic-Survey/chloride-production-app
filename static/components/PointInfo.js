@@ -23,7 +23,10 @@ export function PointInfo(element) {
             <div class="modal-body">
                 <div id="${statsContentId}"></div> <!-- previously #modal-body-content -->
                 <div class="vl"></div>
-                <div id="${plotContentId}"></div> <!-- previously #large-plot -->
+                <div>
+                    <button type="button" class="btn btn-primary" id="plot-zoom-latest-data">Latest Data</button>
+                    <div id="${plotContentId}"></div> <!-- previously #large-plot -->
+                </div>
             </div>
             </div>
         </div>
