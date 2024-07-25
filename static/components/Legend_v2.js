@@ -3,6 +3,7 @@ Legend.js
 */
 
 let chlorideToggleBtns = [];
+let productionToggleBtns = [];
 
 // TODO - cleanup and use constants for marker color and shapes (from Chloride and Production components)
 export function Legend(element) {
@@ -23,6 +24,11 @@ export function Legend(element) {
         <hr>
         <div id="${chlorideId}"></div>
         <div id="${productionId}"></div>
+        <hr>
+        <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="toggle-chl-prod-layers-switch">
+        <label class="form-check-label" for="toggle-chl-prod-layers-switch">Toggle Layers</label>
+        </div>
       </div>
     </div>
     `;
@@ -39,28 +45,26 @@ export function Legend(element) {
     // })
   }
 
-  export { chlorideToggleBtns }
+  export { chlorideToggleBtns, productionToggleBtns }
   
   function legend(chlorideId, productionId) {
     let chl = document.getElementById(chlorideId) 
     chl.innerHTML = /*html*/
     `
-    <h5>Salinity</h5>
-    <p>[Cl-] mg/L</p>
+    <h6>Salinity ([Cl-] mg/L)</h6>
     `;
   
     let prod = document.getElementById(productionId)
     prod.innerHTML = /*html*/
     `
     <br>
-    <h5>Production</h5>
-    <p>gpm</p>
+    <h6>Production (gpm)</h6>
     <hr>
     `;
   
     const chloridePath = "./static/data/chlorideRange.json"
-    const productionPath = "./static/data/productionRange.json"
-    const shapesPath = "./static/data/shapes.json"
+    // const productionPath = "./static/data/productionRange.json"
+    // const shapesPath = "./static/data/shapes.json"
   
     fetch(chloridePath)
         .then(response => response.json())
@@ -220,24 +224,61 @@ export function Legend(element) {
   
     // Adds svg and ranges to HTML container 
     for (let i = 0; i < shapes.length; i++) {
+        let toggleBtnId = `production-range-${shapes[i].name.replace(/\s/g,"-")}`;
+        productionToggleBtns.push(toggleBtnId);
+
         if (shapes[i].range == 0) {
             prod.innerHTML += /*html*/
             `
-            <div class="production-range-item">
+            <div class="form-check">
+                <input class="form-check-input checkbox-input" type="checkbox" value="${toggleBtnId}" id="${toggleBtnId}" checked>
+                <label class="form-check-label" for="${toggleBtnId}">
                 ${shapes[i].svg}
                 ${shapes[i].range} (inactive)
-                <br>
+                </label>
             </div>
             `;
             continue
         } 
         prod.innerHTML += /*html*/
         `
-        <div class="production-range-item">
+        <div class="form-check">
+            <input class="form-check-input checkbox-input" type="checkbox" value="${toggleBtnId}" id="${toggleBtnId}" checked>
+            <label class="form-check-label" for="${toggleBtnId}">
             ${shapes[i].svg}
             ${shapes[i].range}
-            <br>
+            </label>
         </div>
         `;
     }
   } 
+
+  function og() {
+        // Adds svg and ranges to HTML container 
+        for (let i = 0; i < shapes.length; i++) {
+            let toggleBtnId = `production-range-${shapes[i].name}`;
+            productionToggleBtns.push(toggleBtnId);
+    
+            if (shapes[i].range == 0) {
+                prod.innerHTML += /*html*/
+                `
+                <div class="production-range-item">
+                    <button type="button" class="btn"  data-bs-toggle="button" id="${toggleBtnId}">
+                        ${shapes[i].svg}
+                        ${shapes[i].range} (inactive)
+                    </button>
+                </div>
+                `;
+                continue
+            } 
+            prod.innerHTML += /*html*/
+            `
+            <div class="production-range-item">
+                <button type="button" class="btn"  data-bs-toggle="button" id="${toggleBtnId}">
+                    ${shapes[i].svg}
+                    ${shapes[i].range}
+                </button>
+            </div>
+            `;
+        }
+  }
