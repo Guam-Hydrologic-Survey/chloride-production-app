@@ -9,7 +9,7 @@ import { getIcon, checkLastValue } from "./CustomIcon.js";
 // import { CustomOverlay } from "./CustomOverlay.js";
 import { Stats } from "./Stats.js";
 import { Plot } from "./Plot.js";
-import { chlorideToggleBtns } from "./Legend_v2.js";
+import { chlorideToggleBtns, productionToggleBtns } from "./Legend_v2.js";
 
 export function LMap(element) {
     // Center of Guam
@@ -243,7 +243,26 @@ export function LMap(element) {
 
     document.addEventListener('DOMContentLoaded', (e) => {
         setTimeout(() => {
-            console.log(chlorideToggleBtns.length) // check if exists on DOM 
+            // console.log(chlorideToggleBtns.length) // check if exists on DOM 
+            // console.log(productionToggleBtns)
+
+            // document.getElementById("toggle-chl-prod-layers-switch").addEventListener('change', (e) => {
+            //     if (e.target.checked) {
+            //         console.log("toggle layers on")
+            //         // console.log(document.getElementsByClassName("checkbox-input"))
+            //         let elements = document.getElementsByClassName("checkbox-input");
+            //         for (let i = 0; i < elements.length; i++) {
+            //             if (elements[i].style.display === "none") {
+            //                 elements[i].style.display = "block";
+            //             } else {
+            //                 elements[i].style.display = "none";
+            //             }
+            //         }
+            //         console.log("checkboxes appears")
+            //     } else {
+            //         console.log("toggle layers off")
+            //     }
+            // })
 
             document.getElementById(chlorideToggleBtns[0]).addEventListener('click', () => {
                 if (!map.hasLayer(chlorideRange30)) {
@@ -298,6 +317,91 @@ export function LMap(element) {
                     chlorideRange450.addTo(map)
                 } else {
                     map.removeLayer(chlorideRange450)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[0]).addEventListener('change', (e) => {
+                // if (!map.hasLayer(productionRangeInactive)) {
+                //     productionRangeInactive.addTo(map)
+                // } else {
+                //     map.removeLayer(productionRangeInactive)
+                // }
+                if (e.target.checked) {
+                    productionRangeInactive.addTo(map)
+                } else {
+                    map.removeLayer(productionRangeInactive)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[0]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange0.addTo(map)
+                } else {
+                    map.removeLayer(productionRange0)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[1]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange100.addTo(map)
+                } else {
+                    map.removeLayer(productionRange100)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[2]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange200.addTo(map)
+                } else {
+                    map.removeLayer(productionRange200)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[3]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange300.addTo(map)
+                } else {
+                    map.removeLayer(productionRange300)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[4]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange400.addTo(map)
+                } else {
+                    map.removeLayer(productionRange400)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[5]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange500.addTo(map)
+                } else {
+                    map.removeLayer(productionRange500)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[6]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange600.addTo(map)
+                } else {
+                    map.removeLayer(productionRange600)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[7]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange700.addTo(map)
+                } else {
+                    map.removeLayer(productionRange700)
+                }
+            });
+
+            document.getElementById(productionToggleBtns[8]).addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    productionRange700Plus.addTo(map)
+                } else {
+                    map.removeLayer(productionRange700Plus)
                 }
             });
 
