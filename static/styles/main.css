@@ -283,7 +283,6 @@
     opacity: 0.0
 }
 
-
 @keyframes pulsate {
     0% { transform: opacity: 0.0; }
     50% { opacity: 1.0; }
