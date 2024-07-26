@@ -77,6 +77,14 @@
     font-style: italic;
 }
 
+#legend-offcanvas-title {
+    font-family: 'Roboto Slab', serif;
+}
+
+#about-modal-title {
+    font-family: 'Roboto Slab', serif;
+}
+
 /* .offcanvas-body {
     height: 1024px;
     top: 50%;
