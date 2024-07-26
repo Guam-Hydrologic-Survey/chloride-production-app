@@ -33,8 +33,8 @@ export function Plot(data) {
         yaxis:"y2"
     };
 
-    const latestChlorideValue = checkLastValue(data.ci_vals);
-    const latestProductionValue = checkLastValue(data.prod_vals);
+    let latestChlorideValue = checkLastValue(data.ci_vals);
+    let latestProductionValue = checkLastValue(data.prod_vals);
     
     // Configuration for selecting data time frame  
     var selectorOptions = {
@@ -83,7 +83,7 @@ export function Plot(data) {
     };
 
     // Plot features and layout
-    const layout = {
+    let layout = {
         autosize: false,
         height: 550,
         width: 800,
@@ -115,22 +115,22 @@ export function Plot(data) {
               xanchor: 'right',
               y: -0.3
         },
-        annotations: [
-            {
-                x: x_dates_conv[latestChlorideValue[1]],
-                y: latestChlorideValue[0],
-                text: `<b>${latestChlorideValue[0]} [Cl-] mg/L</b>`,
-                showarrow: true,
-                visible: false
-            },
-            {
-                x: x_dates_conv[latestProductionValue[1]],
-                y: latestProductionValue[0], 
-                text: `<b>${latestProductionValue[0]} gpm</b>`,
-                showarrow: true,
-                visible: false
-            }
-        ]
+        // annotations: [
+        //     {
+        //         x: x_dates_conv[latestChlorideValue[1]],
+        //         y: latestChlorideValue[0],
+        //         text: `<b>${latestChlorideValue[0]} [Cl-] mg/L</b>`,
+        //         showarrow: true,
+        //         visible: false
+        //     },
+        //     {
+        //         x: x_dates_conv[latestProductionValue[1]],
+        //         y: latestProductionValue[0], 
+        //         text: `<b>${latestProductionValue[0]} gpm</b>`,
+        //         showarrow: true,
+        //         visible: false
+        //     }
+        // ]
     };
 
     var config = {
@@ -149,19 +149,44 @@ export function Plot(data) {
 
     const pointZoomBtn = document.getElementById('plot-zoom-latest-data');
 
-
     // TODO - fix annotation for latest production value 
+    // ISSUE - retrieves 
     pointZoomBtn.addEventListener('click', () => {
         if (!zoomed) {
-            let update = {
-                'xaxis.range': [x_dates_conv[latestChlorideValue[1] - 20], x_dates_conv[latestChlorideValue[1] + 20]],
-                'yaxis.range': [latestChlorideValue[0] - 20, latestChlorideValue[0] + 20]
-            };
+            // let update = {
+            //     'xaxis.range': [x_dates_conv[latestChlorideValue[1] - 5], x_dates_conv[latestChlorideValue[1] + 5]],
+            //     'yaxis.range': [latestChlorideValue[0] - 5, latestChlorideValue[0] + 5]
+            // };
 
-            Plotly.relayout(plotContentId, update);
+            // Plotly.relayout(plotContentId, update);
+            Plotly.relayout(plotContentId, { annotations: 
+                [
+                    {
+                        x: x_dates_conv[latestChlorideValue[1]],
+                        y: latestChlorideValue[0],
+                        xref: 'x',
+                        yref: 'y',
+                        text: `<span style=" color: rgb(31, 119, 180)"><b>${latestChlorideValue[0]} [Cl-] mg/L</b></span>`,
+                        showarrow: true,
+                        arrowhead: 7,
+                        ax: 0,
+                        ay: -30
+                    },
+                    {
+                        x: x_dates_conv[latestProductionValue[1]],
+                        y: latestProductionValue[0],
+                        text: `<span style="color:rgb(251,136,33);"><b>${latestProductionValue[0]} gpm</b></span>`,
+                        showarrow: true,
+                        showarrow: true,
+                        arrowhead: 7,
+                        ax: 0,
+                        ay: -30
+                    },
+                ]
+            })
 
             // layout.annotations[0].visible = true;
-            layout.annotations[1].visible = true;
+            // layout.annotations[1].visible = true;
 
             console.log(layout.annotations);
 
@@ -173,13 +198,13 @@ export function Plot(data) {
             Plotly.relayout(plotContentId, 'yaxis.autorange', true);
 
             // layout.annotations[0].visible = false;
-            layout.annotations[1].visible = false;
+            // layout.annotations[1].visible = false;
 
-            Plotly.relayout(plotContentId, { annotations: layout.annotations });
+            Plotly.relayout(plotContentId, { annotations: [] });
 
             pointZoomBtn.textContent = "Latest data";
         }
 
         zoomed = !zoomed;
-    })
+    });
 }
