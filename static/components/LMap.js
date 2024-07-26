@@ -241,6 +241,22 @@ export function LMap(element) {
     // layerControl.addOverlay(productionRange700, "(600 - 700] gpm", productionLayers);
     // layerControl.addOverlay(productionRange700Plus, "700+ gpm", productionLayers);
 
+    function checkLayerExistence(layer) {
+        if (!map.hasLayer(layer)) {
+            layer.addTo(map);
+        } else {
+            map.removeLayer(layer);
+        }
+    }
+
+    function checkCheckBox(choice, layer) {
+        if (choice) {
+            layer.addTo(map)
+        } else {
+            map.removeLayer(layer)
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', (e) => {
         setTimeout(() => {
             // console.log(chlorideToggleBtns.length) // check if exists on DOM 
@@ -264,145 +280,75 @@ export function LMap(element) {
             //     }
             // })
 
+            // TODO - change to for loop, add each chlorideRange layer into an array list (same goes for productionRange layers)
+            // event listeners for chloride range layers 
             document.getElementById(chlorideToggleBtns[0]).addEventListener('click', () => {
-                if (!map.hasLayer(chlorideRange30)) {
-                    chlorideRange30.addTo(map)
-                } else {
-                    map.removeLayer(chlorideRange30)
-                }
+                checkLayerExistence(chlorideRange30)
             });
 
             document.getElementById(chlorideToggleBtns[1]).addEventListener('click', () => {
-                if (!map.hasLayer(chlorideRange70)) {
-                    chlorideRange70.addTo(map)
-                } else {
-                    map.removeLayer(chlorideRange70)
-                }
+                checkLayerExistence(chlorideRange70)
             });
             
             document.getElementById(chlorideToggleBtns[2]).addEventListener('click', () => {
-                if (!map.hasLayer(chlorideRange150)) {
-                    chlorideRange150.addTo(map)
-                } else {
-                    map.removeLayer(chlorideRange150)
-                }
+                checkLayerExistence(chlorideRange150)
             }); 
 
             document.getElementById(chlorideToggleBtns[3]).addEventListener('click', () => {
-                if (!map.hasLayer(chlorideRange250)) {
-                    chlorideRange250.addTo(map)
-                } else {
-                    map.removeLayer(chlorideRange250)
-                }
+                checkLayerExistence(chlorideRange250)
             });
 
             document.getElementById(chlorideToggleBtns[4]).addEventListener('click', () => {
-                if (!map.hasLayer(chlorideRange300)) {
-                    chlorideRange300.addTo(map)
-                } else {
-                    map.removeLayer(chlorideRange300)
-                }
+                checkLayerExistence(chlorideRange300)
             });
             
             document.getElementById(chlorideToggleBtns[5]).addEventListener('click', () => {
-                if (!map.hasLayer(chlorideRange400)) {
-                    chlorideRange400.addTo(map)
-                } else {
-                    map.removeLayer(chlorideRange400)
-                }
+                checkLayerExistence(chlorideRange400)
             });
 
             document.getElementById(chlorideToggleBtns[6]).addEventListener('click', () => {
-                if (!map.hasLayer(chlorideRange450)) {
-                    chlorideRange450.addTo(map)
-                } else {
-                    map.removeLayer(chlorideRange450)
-                }
+                checkLayerExistence(chlorideRange450)
+            });
+
+            // event listeners for production range layers 
+            document.getElementById(productionToggleBtns[0]).addEventListener('change', (e) => {
+                checkCheckBox(e.target.checked, productionRangeInactive)
             });
 
             document.getElementById(productionToggleBtns[0]).addEventListener('change', (e) => {
-                // if (!map.hasLayer(productionRangeInactive)) {
-                //     productionRangeInactive.addTo(map)
-                // } else {
-                //     map.removeLayer(productionRangeInactive)
-                // }
-                if (e.target.checked) {
-                    productionRangeInactive.addTo(map)
-                } else {
-                    map.removeLayer(productionRangeInactive)
-                }
-            });
-
-            document.getElementById(productionToggleBtns[0]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange0.addTo(map)
-                } else {
-                    map.removeLayer(productionRange0)
-                }
+                checkCheckBox(e.target.checked, productionRange0)
             });
 
             document.getElementById(productionToggleBtns[1]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange100.addTo(map)
-                } else {
-                    map.removeLayer(productionRange100)
-                }
+                checkCheckBox(e.target.checked, productionRange100)
             });
 
             document.getElementById(productionToggleBtns[2]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange200.addTo(map)
-                } else {
-                    map.removeLayer(productionRange200)
-                }
+                checkCheckBox(e.target.checked, productionRange200)
             });
 
             document.getElementById(productionToggleBtns[3]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange300.addTo(map)
-                } else {
-                    map.removeLayer(productionRange300)
-                }
+                checkCheckBox(e.target.checked, productionRange300)
             });
 
             document.getElementById(productionToggleBtns[4]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange400.addTo(map)
-                } else {
-                    map.removeLayer(productionRange400)
-                }
+                checkCheckBox(e.target.checked, productionRange400)
             });
 
             document.getElementById(productionToggleBtns[5]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange500.addTo(map)
-                } else {
-                    map.removeLayer(productionRange500)
-                }
+                checkCheckBox(e.target.checked, productionRange500)
             });
 
             document.getElementById(productionToggleBtns[6]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange600.addTo(map)
-                } else {
-                    map.removeLayer(productionRange600)
-                }
+                checkCheckBox(e.target.checked, productionRange600)
             });
 
             document.getElementById(productionToggleBtns[7]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange700.addTo(map)
-                } else {
-                    map.removeLayer(productionRange700)
-                }
+                checkCheckBox(e.target.checked, productionRange700)
             });
 
             document.getElementById(productionToggleBtns[8]).addEventListener('change', (e) => {
-                if (e.target.checked) {
-                    productionRange700Plus.addTo(map)
-                } else {
-                    map.removeLayer(productionRange700Plus)
-                }
+                checkCheckBox(e.target.checked, productionRange700Plus)
             });
 
         }, 1000);
