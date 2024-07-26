@@ -16,12 +16,10 @@ export function Legend(element) {
     <!-- Bootstrap Offcanvas for Legend -->
     <div class="offcanvas offcanvas-start offcanvas-size-sm rounded shadow bg-body" data-bs-scroll="true" tabindex="-1" id="legend" aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-backdrop="false">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
+        <h3 class="offcanvas-title" id="legend-offcanvas-title">Legend</h3>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <h3>Legend</h3>
-        <hr>
         <div id="${chlorideId}"></div>
         <div id="${productionId}"></div>
         <hr>
@@ -29,20 +27,12 @@ export function Legend(element) {
         <input class="form-check-input" type="checkbox" role="switch" id="toggle-chl-prod-layers-switch">
         <label class="form-check-label" for="toggle-chl-prod-layers-switch">Toggle Layers</label>
         </div>
+        <button type="button" class="btn btn-primary"><i class="bi bi-arrow-clockwise"></i> Reset</button>
       </div>
     </div>
     `;
   
     legend(chlorideId, productionId);
-
-    // console.log(chlorideToggleBtns);
-    // document.getElementById("chloride-range-blue");
-
-    // document.addEventListener('DOMContentLoaded', (e) => {
-    //     setTimeout(() => {
-    //         console.log(document.getElementById(chlorideToggleBtns[0]))
-    //     }, 1000)
-    // })
   }
 
   export { chlorideToggleBtns, productionToggleBtns }
