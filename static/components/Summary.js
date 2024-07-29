@@ -34,15 +34,15 @@ export function Summary(element) {
     // getSummary();
 }
 
-function accordionItem(basin) {
+function accordionItem(basin, index) {
   let ai = /*html*/ `
   <div class="accordion-item">
     <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-basin-${index}" aria-expanded="true" aria-controls="collapse-basin-${index}">
       ${basin.basin} Basin
       </button>
     </h2>
-    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+    <div id="collapse-basin-${index}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
       <div class="accordion-body">
       ${createTable(2, basin.history)}
       </div>
@@ -56,8 +56,8 @@ function createAccordion(basins) {
   const accordId = "accordionExample";
   let accordItems = "";
   
-  basins.forEach((basin) => {
-    accordItems += accordionItem(basin)
+  basins.forEach((basin, index) => {
+    accordItems += accordionItem(basin, index)
   })
 
   let accord = `
