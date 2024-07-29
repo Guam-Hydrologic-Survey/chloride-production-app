@@ -2,6 +2,8 @@
 /test
 /python 
 /node_modules
+/static/data/tests
+/src/data/tests
 
 # -------------- For Visual Studio Code 
 .vscode/*
