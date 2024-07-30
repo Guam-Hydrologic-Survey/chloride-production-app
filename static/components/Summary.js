@@ -7,9 +7,6 @@ import { roundDec } from "../utils/roundDec.js";
 // TODO - testing stage only, to be configured when data is ready
 export function Summary(element) {
 
-  // table headers 
-  // current year summary
-
     element.innerHTML = /*html*/
     `
     <div class="offcanvas offcanvas-start rounded shadow bg-body" data-bs-scroll="true" tabindex="-1" id="summary" aria-labelledby="offcanvasWithBothOptionsLabel" data-bs-backdrop="false">
@@ -30,8 +27,23 @@ export function Summary(element) {
 
     </div>
     `;
+}
 
-    // getSummary();
+function createAccordion(basins) {
+    const accordId = "accordionExample";
+    let accordItems = "";
+    
+    basins.forEach((basin, index) => {
+      accordItems += accordionItem(basin, index)
+    })
+  
+    let accord = `
+    <div class="accordion" id="${accordId}">
+      ${accordItems}
+    <div>
+    `;
+  
+    return accord;
 }
 
 function accordionItem(basin, index) {
@@ -49,29 +61,14 @@ function accordionItem(basin, index) {
     </div>
   </div>
   `;
+
   return ai
 }
- 
-function createAccordion(basins) {
-  const accordId = "accordionExample";
-  let accordItems = "";
-  
-  basins.forEach((basin, index) => {
-    accordItems += accordionItem(basin, index)
-  })
 
-  let accord = `
-  <div class="accordion" id="${accordId}">
-    ${accordItems}
-  <div>
-  `;
-
-  return accord;
-}
-
+// headers for summary for current year 
 const headers1 = ["Basin", "Total Production", "Production Weighted Average Chloride"];
 
-// history 
+// headers for production history
 const headers2 = ["Years", "Total Production"];
 
 const basins = [
@@ -323,10 +320,6 @@ const basins = [
 //       createTable(basins, headers);
 //     })
 // };
-  
-// constants 
-let tot_prod = 0
-let tot_pwac = 0
   
 // creates BS table, calls table functions, returns table html
 function createTable(displayType, basins) {
