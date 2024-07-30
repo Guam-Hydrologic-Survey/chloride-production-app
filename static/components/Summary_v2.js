@@ -275,6 +275,7 @@ const basins = [
 function createTable(basins) {
     let table = /*html*/ `
     <table class="table">
+        <caption><i><i class="bi bi-info-circle-fill"></i> Click on a <strong>basin</strong> to view its production rate history.</i></caption>
         <thead><tr>${tableHeaders(headers1)}</tr></thead>
         <tbody class="table-group-divider">${tableBodySummary(basins)}</tbody>
         <tfoot class="table-group-divider">${tableFooter(basins, headers1)}</tfoot>
@@ -305,7 +306,7 @@ function tableBodySummary(basins) {
         let targetId = `row-basin-${i}`;
         let tr_sum = /*html*/ `
         <tr data-bs-toggle="collapse" data-bs-target="#${targetId}" class="collapse-row">
-            <th scope="row" class="toggle-basin-history">${basins[i].basin}</th>
+            <th scope="row" class="toggle-basin-history" title="${basins[i].basin} Basin">${basins[i].basin}</th>
             <td>${roundDec(basins[i].current_prod_avg.p)}</td>
             <td>${roundDec(basins[i].current_prod_avg.pwac)}</td>
         </tr>
