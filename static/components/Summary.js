@@ -1,5 +1,6 @@
 /*
 Summary.js
+Description: Creates the left side panel (offcanvas element) that displays two tables: 1) summary of the production for the current year and 2) history of the well production rate for each basin. 
 */
 
 import { roundDec } from "../utils/roundDec.js";
