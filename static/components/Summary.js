@@ -29,46 +29,10 @@ export function Summary(element) {
     `;
 }
 
-function createAccordion(basins) {
-    const accordId = "accordionExample";
-    let accordItems = "";
-    
-    basins.forEach((basin, index) => {
-      accordItems += accordionItem(basin, index)
-    })
-  
-    let accord = `
-    <div class="accordion" id="${accordId}">
-      ${accordItems}
-    <div>
-    `;
-  
-    return accord;
-}
-
-function accordionItem(basin, index) {
-  let ai = /*html*/ `
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-basin-${index}" aria-expanded="true" aria-controls="collapse-basin-${index}">
-      ${basin.basin} Basin
-      </button>
-    </h2>
-    <div id="collapse-basin-${index}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-      ${createTable(2, basin.history)}
-      </div>
-    </div>
-  </div>
-  `;
-
-  return ai
-}
-
-// headers for summary for current year 
+// Headers for summary for current year 
 const headers1 = ["Basin", "Total Production", "Production Weighted Average Chloride"];
 
-// headers for production history
+// Headers for production history
 const headers2 = ["Years", "Total Production"];
 
 const basins = [
@@ -321,40 +285,43 @@ const basins = [
 //     })
 // };
   
-// creates BS table, calls table functions, returns table html
+// Creates BootStrap table, calls table functions 
+// Returns "table" - a string containing the HTML element for a table 
 function createTable(displayType, basins) {
-  // console.log(theaders.length)
   let table = ``;
-  if (displayType == 1) { // 1 means summary for current year
+  if (displayType == 1) { // Creates summary; 1 means summary for current year
     table += `
     <table class="table table-hover">
     <thead><tr>${tableHeaders(headers1)}</tr></thead>
     <tbody class="table-group-divider">${tableBodySummary(basins)}</tbody>
     <tfoot class="table-group-divider">${tableFooter(basins, headers1)}</tfoot>
     </table>`;
-  } else { // create table for history 
+  } else { // Creates table for history 
     table += `
     <table class="table table-hover">
     <thead><tr>${tableHeaders(headers2)}</tr></thead>
     <tbody class="table-group-divider">${tableBodyHistory(basins)}</tbody>
     </table>`;
   }
-  return table
+  return table;
 }
 
-// creates header for table, uses h constant (TODO - h needs to be defined --> change to function)
+// Creates header for table 
+// Expects "theaders" - an array list containing strings (must be in order of appearance for table columns) 
+// Returns "tr" - a string containing the HTML element for the table headers 
 function tableHeaders(theaders) {
-  // console.log(theaders)
-    let tr = ""
+    let tr = "";
     for (let i = 0; i < theaders.length; i++) {
-        tr += `<th scope="col">${theaders[i]}</th>`
+        tr += `<th scope="col">${theaders[i]}</th>`;
     }
-    return tr
+    return tr;
 }
 
-// creates table's body: each row containing basin's name, current total prod value, and production weighted avg chloride
+// Creates table's body: Each row containing basin's name, current total prod value, and production weighted avg chloride
+// Expects "basins" - an array list containing objects of basins 
+// Returns "tb" - a string containing HTML elements for the table body 
 function tableBodySummary(basins) {
-    let tb = ""
+    let tb = "";
     for (let i = 0; i < basins.length; i++) {
         let tr = `
         <tr>
@@ -363,42 +330,89 @@ function tableBodySummary(basins) {
         <td>${roundDec(basins[i].current_prod_avg.pwac)}</td>
         </tr>
         `
-        tb += tr
+        tb += tr;
     }
-    return tb
+    return tb;
 }
 
-function tableBodyHistory(basinsHistory) {
-  let tb = ""
-  for (let i = 0; i < basinsHistory.years.length; i++) {
-    let tr = `
-    <tr>
-    <th scope="row">${basinsHistory.years[i]}</th>
-    <td>${roundDec(basinsHistory.prod[i])}</td>
-    </tr>
-    `;
-    tb += tr
-}
-return tb
-}
-
-// creates the last row of the table, containing the totals 
+// Creates the last row of the table, which contains the sums 
+// Expects "basins" (an array list of basin objects) and "theaders" (an array list containing strings, must be ordered in appearance for table columns) 
+// Returns "tr" - a string containing the HTML for the table footer 
 function tableFooter(basins, theaders) {
-    let tf = ""
-    let sums = getSum(basins)
+    let tf = "";
+    let sums = getSum(basins);
     for (let i = 0; i < theaders.length; i++) {
         if (i == 0) { tf += `<th scope="row">Totals</th>`; }
         else { tf += `<td>${roundDec(sums[i - 1])}</td>` }
     } 
-    return tf
+    return tf;
 }
 
-// utility/helper function, computes sum of a given array
+// Utility/helper function that computes sum of a given array 
+// Expects "basins" - an array list of basin objects 
+// Returns "sums" - the totals for the production average and production weighted average chloride 
 function getSum(basins) {
-    let sums = [0 , 0]
+    let sums = [0 , 0];
     for (let i = 0; i < basins.length; i++) {
         sums[0] += basins[i].current_prod_avg.p
         sums[1] += basins[i].current_prod_avg.pwac
     }
-    return sums
+    return sums;
 } 
+
+// Creates accordion element 
+// Expects an array list containing basin objects with current year summary and history 
+// Returns "accord" - a string containing the HTML element for an accordion 
+function createAccordion(basins) {
+    const accordId = "accordionExample";
+    let accordItems = "";
+    
+    basins.forEach((basin, index) => {
+      accordItems += accordionItem(basin, index)
+    })
+  
+    let accord = `
+    <div class="accordion" id="${accordId}">
+      ${accordItems}
+    <div>
+    `;
+    return accord;
+}
+
+// Generates an accordion item 
+// Expects a basin object (an element from the basins object array) and index (integer) providing object's position from the basins object list 
+// Returns "ai" - a string containing the HTML element for a singular accordion item 
+function accordionItem(basin, index) {
+  let ai = /*html*/ `
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-basin-${index}" aria-expanded="true" aria-controls="collapse-basin-${index}">
+      ${basin.basin} Basin
+      </button>
+    </h2>
+    <div id="collapse-basin-${index}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      ${createTable(2, basin.history)}
+      </div>
+    </div>
+  </div>
+  `;
+  return ai;
+}
+
+// Creates the table body for the basin's total production history 
+// Expects "basinsHistory" - object from the basins array list 
+// Returns "tb" - a string containing the HTML elements for the table body 
+function tableBodyHistory(basinsHistory) {
+  let tb = "";
+  for (let i = 0; i < basinsHistory.years.length; i++) {
+    let tr = `
+    <tr>
+        <th scope="row">${basinsHistory.years[i]}</th>
+        <td>${roundDec(basinsHistory.prod[i])}</td>
+    </tr>
+    `;
+    tb += tr;
+    }
+    return tb;
+}
