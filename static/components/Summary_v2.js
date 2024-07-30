@@ -1,7 +1,10 @@
 /*
-Summary.js
+Summary_v2.js
+Description: An updated version of the summary table, which include a table summarizing the production rate of the current year. Each row of the table can be expanded to view the selected basin's production history. 
 */
 
+
+// utils 
 import { roundDec } from "../utils/roundDec.js";
  
 // TODO - testing stage only, to be configured when data is ready
@@ -23,10 +26,10 @@ export function Summary(element) {
     `;
 }
 
-// headers for summary for current year 
+// Headers for summary for current year
 const headers1 = ["Basin", "Total Production", "Production Weighted Average Chloride"];
 
-// headers for production history 
+// Headers for production history
 const headers2 = ["Years", "Total Production"];
 
 const basins = [
@@ -266,6 +269,9 @@ const basins = [
   }
 ];
 
+// Creates BootStrap table, calls table functions 
+// Expects "basins" - an array list containing basin objects 
+// Returns "table" - a string containing the HTML element for a table 
 function createTable(basins) {
     let table = /*html*/ `
     <table class="table">
@@ -274,10 +280,12 @@ function createTable(basins) {
         <tfoot class="table-group-divider">${tableFooter(basins, headers1)}</tfoot>
     </table>
     `;
-
     return table;
 }
 
+// Creates header for table 
+// Expects "theaders" - an array list containing strings (must be in order of appearance for table columns) 
+// Returns "th" - a string containing the HTML element for the table headers 
 function tableHeaders(theaders) {
     let th =``;
     for (let i = 0; i < theaders.length; i++) {
@@ -286,6 +294,11 @@ function tableHeaders(theaders) {
     return th;
 }
 
+// Creates table's body: 
+// - Two parts: "tr_sum" (a row containing basin's name, current total prod value, and production weighted avg chloride) and "tr_hist" (a row containing the production history of a basin)
+// - "tr_sum" is what displayed for the user and toggles the view for "tr_hist"
+// Expects "basins" - an array list containing objects of basins 
+// Returns "tb" - a string containing HTML elements for the table body 
 function tableBodySummary(basins) {
     let tb = ``;
     for (let i = 0; i < basins.length; i++) {
@@ -303,7 +316,7 @@ function tableBodySummary(basins) {
             <td colspan="4">
                 <div class="card card-body">
                     <p><i>Production History</i></p>
-                    <table class="table table-hover">
+                    <table class="table table-hover table-sm table-striped">
                         <thead><tr>${tableHeaders(headers2)}</tr></thead>
                         <tbody class="table-group-divider">${tableBodyHistory(basins[i].history)}</tbody>
                     </table>
@@ -317,6 +330,9 @@ function tableBodySummary(basins) {
     return tb;
 }
 
+// Creates the table body for the basin's total production history 
+// Expects "basinsHistory" - object from the basins array list 
+// Returns "tb" - a string containing the HTML elements for the table body 
 function tableBodyHistory(basinsHistory) {
     let tb = ``;
     for (let i = 0; i < basinsHistory.years.length; i++) {
@@ -331,7 +347,9 @@ function tableBodyHistory(basinsHistory) {
     return tb;
 }
 
-// creates the last row of the table, containing the totals 
+// Creates the last row of the table, which contains the sums 
+// Expects "basins" (an array list of basin objects) and "theaders" (an array list containing strings, must be ordered in appearance for table columns) 
+// Returns "tr" - a string containing the HTML for the table footer 
 function tableFooter(basins, theaders) {
     let tf = ""
     let sums = getSum(basins)
@@ -339,10 +357,12 @@ function tableFooter(basins, theaders) {
         if (i == 0) { tf += `<th scope="row">Totals</th>`; }
         else { tf += `<td>${roundDec(sums[i - 1])}</td>` }
     } 
-    return tf
+    return tf;
 }
 
-// utility/helper function, computes sum of a given array
+// Utility/helper function that computes sum of a given array 
+// Expects "basins" - an array list of basin objects 
+// Returns "sums" - the totals for the production average and production weighted average chloride 
 function getSum(basins) {
     let sums = [0 , 0]
     for (let i = 0; i < basins.length; i++) {
