@@ -28,23 +28,25 @@ export function About(element) {
                 Data
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="static\data\CPDB_2023_Questionable_Data_Removed.xlsx" target="_blank" rel="noreferrer noopener">Questionable Data Removed</a></li>
+                <li><a class="dropdown-item" href="./static/data/CPDB_2023_Questionable_Data_Removed.xlsx" target="_blank" rel="noreferrer noopener" title="Download Excel sheet">Questionable Data Removed</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/data/cpdb/" target="_blank" rel="noreferrer noopener">Chloride & Production Database</a></li>
+                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/data/cpdb/" target="_blank" rel="noreferrer noopener" title="GHS Chloride & Production Database">Chloride & Production Database</a></li>
               </ul>
             </div>
 
             <!-- Dropdown for links to associated TRs -->
             <div class="btn-group">
-              <button type="button" class="btn btn-primary">WERI Technical Report</button>
-              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+              <button type="button" class="btn btn-primary" title="WERI TR ### (Authors, Year)">WERI Technical Report</button>
+              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" title="View associated technical reports">
                 <span class="visually-hidden">Toggle Dropdown</span>
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/WERI%20TR%2098%20-%20McDonald%20&%20Jenson%202003.pdf" target="_blank" rel="noreferrer noopener">WERI TR 98 </a></li>
-                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/CPDB/SimardEtAl2015-SalinityNorthernGuamLensAquifer,TR143,WERIUOG.pdf" target="_blank" rel="noreferrer noopener">WERI TR 143</a></li>
-                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/TRs/WERI%20TR%20177%20-%20Ko%20et%20al%202022.pdf" target="_blank" rel="noreferrer noopener">WERI TR 177</a></li>
-                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/TRs/WERI%20TR%20178%20-%20Ko%20et%20al%202023.pdf" target="_blank" rel="noreferrer noopener">WERI TR 178</a></li>
+                <li class="dropdown-item">Associated Technical Reports</li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/WERI%20TR%2098%20-%20McDonald%20&%20Jenson%202003.pdf" target="_blank" rel="noreferrer noopener" title="Chloride History and Trends of Water Production Wells in the Northern Guam Lens Aquifer">WERI TR 98 (McDonald & Jenson, 2003)</a></li>
+                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/CPDB/SimardEtAl2015-SalinityNorthernGuamLensAquifer,TR143,WERIUOG.pdf" target="_blank" rel="noreferrer noopener" title="Salinity in the Northern Guam Lens Aquifer">WERI TR 143 (Simard et al., 2015)</a></li>
+                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/TRs/WERI%20TR%20177%20-%20Ko%20et%20al%202022.pdf" target="_blank" rel="noreferrer noopener" title="Geospatial and Temporal Analysis of Patterns and Trends in Salinity in Finegayan Basin">WERI TR 177 (Ko et al., 2022)</a></li>
+                <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/TRs/WERI%20TR%20178%20-%20Ko%20et%20al%202023.pdf" target="_blank" rel="noreferrer noopener" title="Geospatial and Temporal Analysis of Patterns and Trends in Salinity in Yigo-Tumon Basin">WERI TR 178 (Ko et al., 2023)</a></li>
               </ul>
             </div>
             <div class="dropdown">
@@ -52,8 +54,8 @@ export function About(element) {
                 Map Series
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/mappfx/">MAppFx Library</a></li>
-                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/interagency-maps/">Interagency Maps</a></li>
+                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/mappfx/" title="GHS MAppFx Library">MAppFx Library</a></li>
+                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/interagency-maps/" title="GHS Interagency Maps">Interagency Maps</a></li>
               </ul>
             </div>
 
