@@ -2,8 +2,9 @@
 Plot.js
 */
 
-import { plotContentId } from "./PointInfo.js";
+import { plotContentId, resetBtnId } from "./PointInfo.js";
 import { checkLastValue } from "./CustomIcon.js";
+import { roundDec } from "../utils/roundDec.js";
 
 export function Plot(data) {
     
@@ -115,22 +116,6 @@ export function Plot(data) {
               xanchor: 'right',
               y: -0.3
         },
-        // annotations: [
-        //     {
-        //         x: x_dates_conv[latestChlorideValue[1]],
-        //         y: latestChlorideValue[0],
-        //         text: `<b>${latestChlorideValue[0]} [Cl-] mg/L</b>`,
-        //         showarrow: true,
-        //         visible: false
-        //     },
-        //     {
-        //         x: x_dates_conv[latestProductionValue[1]],
-        //         y: latestProductionValue[0], 
-        //         text: `<b>${latestProductionValue[0]} gpm</b>`,
-        //         showarrow: true,
-        //         visible: false
-        //     }
-        // ]
     };
 
     var config = {
@@ -145,20 +130,14 @@ export function Plot(data) {
 
     Plotly.newPlot(plotContentId, [chlorideTrace, productionTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true, modeBarButtonsToRemove: ['lasso2d', 'select2d']}, config);
 
-    var zoomed = false;
+    var annotated = false;
 
-    const pointZoomBtn = document.getElementById('plot-zoom-latest-data');
+    const viewLatestDataBtn = document.getElementById(resetBtnId);
 
     // TODO - fix annotation for latest production value 
     // ISSUE - retrieves 
-    pointZoomBtn.addEventListener('click', () => {
-        if (!zoomed) {
-            // let update = {
-            //     'xaxis.range': [x_dates_conv[latestChlorideValue[1] - 5], x_dates_conv[latestChlorideValue[1] + 5]],
-            //     'yaxis.range': [latestChlorideValue[0] - 5, latestChlorideValue[0] + 5]
-            // };
-
-            // Plotly.relayout(plotContentId, update);
+    viewLatestDataBtn .addEventListener('click', () => {
+        if (!annotated) {
             Plotly.relayout(plotContentId, { annotations: 
                 [
                     {
@@ -175,7 +154,7 @@ export function Plot(data) {
                     {
                         x: x_dates_conv[latestProductionValue[1]],
                         y: latestProductionValue[0],
-                        text: `<span style="color:rgb(251,136,33);"><b>${latestProductionValue[0]} gpm</b></span>`,
+                        text: `<span style="color:rgb(251,136,33);"><b>${roundDec(latestProductionValue[0])} gpm</b></span>`,
                         showarrow: true,
                         showarrow: true,
                         arrowhead: 7,
@@ -183,28 +162,17 @@ export function Plot(data) {
                         ay: -30
                     },
                 ]
-            })
-
-            // layout.annotations[0].visible = true;
-            // layout.annotations[1].visible = true;
-
-            console.log(layout.annotations);
+            });
 
             Plotly.relayout(plotContentId, { annotations: layout.annotations });
-
-            pointZoomBtn.textContent = 'Reset zoom';
+            viewLatestDataBtn .textContent = 'Reset';
+            viewLatestDataBtn .setAttribute("title", "Remove annotations from plot");
         } else {
-            Plotly.relayout(plotContentId, 'xaxis.autorange', true);
-            Plotly.relayout(plotContentId, 'yaxis.autorange', true);
-
-            // layout.annotations[0].visible = false;
-            // layout.annotations[1].visible = false;
-
             Plotly.relayout(plotContentId, { annotations: [] });
-
-            pointZoomBtn.textContent = "Latest data";
+            viewLatestDataBtn .textContent = 'Latest Data';
+            viewLatestDataBtn .setAttribute("title", "View latest data values for chloride and production");
         }
 
-        zoomed = !zoomed;
+        annotated = !annotated;
     });
 }

@@ -38,8 +38,10 @@ export function PointInfo(element) {
     `;
 
     document.getElementById(modalId).addEventListener('hidden.bs.modal', () => {
-        document.getElementById(resetBtnId).textContent = "Latest Data";
+        const resetBtn = document.getElementById(resetBtnId);
+        resetBtn.textContent = "Latest Data";
+        resetBtn.setAttribute("title", "View latest data values for chloride and production");
     });
 }
 
-export { statsContentId, plotContentId, modalId, modalHeaderTitleId }
+export { statsContentId, plotContentId, resetBtnId, modalId, modalHeaderTitleId }
