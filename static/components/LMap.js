@@ -6,6 +6,7 @@ LMap.js
 import { BaseLayers } from "./BaseLayers.js";
 import { basins } from "./Basins.js";
 import { getIcon, checkLastValue } from "./CustomIcon.js";
+import { MarkerPopup } from "./MarkerPopup.js";
 // import { CustomOverlay } from "./CustomOverlay.js";
 import { Stats } from "./Stats.js";
 import { Plot } from "./Plot.js";
@@ -238,29 +239,32 @@ export function LMap(element) {
 
     document.addEventListener('DOMContentLoaded', (e) => {
         setTimeout(() => {
-            // console.log(chlorideToggleBtns.length) // check if exists on DOM 
-            // console.log(productionToggleBtns)
 
-            // document.getElementById("toggle-chl-prod-layers-switch").addEventListener('change', (e) => {
-            //     if (e.target.checked) {
-            //         console.log("toggle layers on")
-            //         // console.log(document.getElementsByClassName("checkbox-input"))
-            //         let elements = document.getElementsByClassName("checkbox-input");
-            //         for (let i = 0; i < elements.length; i++) {
-            //             if (elements[i].style.display === "none") {
-            //                 elements[i].style.display = "block";
-            //             } else {
-            //                 elements[i].style.display = "none";
-            //             }
-            //         }
-            //         console.log("checkboxes appears")
-            //     } else {
-            //         console.log("toggle layers off")
-            //     }
-            // })
+            // TODO - simplify adding layers back to map
+            // Resets layers on map (adds everything back)
+            document.getElementById("legend-layers-reset").addEventListener('click', () => {
+                chlorideRange30.addTo(map);
+                chlorideRange70.addTo(map);
+                chlorideRange150.addTo(map);
+                chlorideRange250.addTo(map);
+                chlorideRange300.addTo(map);
+                chlorideRange400.addTo(map);
+                chlorideRange450.addTo(map);
+
+                productionRangeInactive.addTo(map);
+                productionRange0.addTo(map);
+                productionRange100.addTo(map);
+                productionRange200.addTo(map);
+                productionRange300.addTo(map);
+                productionRange400.addTo(map);
+                productionRange500.addTo(map);
+                productionRange600.addTo(map);
+                productionRange700.addTo(map);
+                productionRange700Plus.addTo(map);
+            });
 
             // TODO - change to for loop, add each chlorideRange layer into an array list (same goes for productionRange layers)
-            // event listeners for chloride range layers 
+            // Event listeners for chloride range layers 
             document.getElementById(chlorideToggleBtns[0]).addEventListener('click', () => {
                 checkLayerExistence(chlorideRange30)
             });
@@ -289,7 +293,7 @@ export function LMap(element) {
                 checkLayerExistence(chlorideRange450)
             });
 
-            // event listeners for production range layers 
+            // Event listeners for production range layers 
             document.getElementById(productionToggleBtns[0]).addEventListener('change', (e) => {
                 checkCheckBox(e.target.checked, productionRangeInactive)
             });
@@ -370,7 +374,7 @@ export function LMap(element) {
         document.getElementById("searchtext15").value = "";
     }); 
 
-    // initialize search 
+    // Initialize search 
     map.addControl(searchControl);
 
     // Contains each layer from fetch in layer control
@@ -390,22 +394,7 @@ export function LMap(element) {
                         layer.bindTooltip(feature.properties.name, { permanent: true, direction: 'bottom', offset: [0,10], className: 'basin-tooltip' })
                 
                         // Popups with basic well info and buttons for stats and plot
-                        layer.bindPopup(
-                            `
-                            <div id="marker-content-container">
-                                <span id="marker-well-name">Well ${feature.properties.name}</span> 
-                                <br> 
-                                <span id="marker-basin-name">${feature.properties.basin} Basin</span>
-                            </div>
-                            <br>
-                            <div class="d-flex justify-content-center">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" title="View Data">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff"><path d="m105-233-65-47 200-320 120 140 160-260 109 163q-23 1-43.5 5.5T545-539l-22-33-152 247-121-141-145 233ZM863-40 738-165q-20 14-44.5 21t-50.5 7q-75 0-127.5-52.5T463-317q0-75 52.5-127.5T643-497q75 0 127.5 52.5T823-317q0 26-7 50.5T795-221L920-97l-57 57ZM643-217q42 0 71-29t29-71q0-42-29-71t-71-29q-42 0-71 29t-29 71q0 42 29 71t71 29Zm89-320q-19-8-39.5-13t-42.5-6l205-324 65 47-188 296Z"/></svg>
-                                    View Data
-                                </button>                
-                            </div>
-                            `
-                        );
+                        layer.bindPopup(MarkerPopup(feature.properties.name, feature.properties.basin));
 
                         // On click event on the points
                         // Sends data for clicked item to global variable plotData 
@@ -432,7 +421,7 @@ export function LMap(element) {
                             const latestChloride = checkLastValue(feature.properties.ci_vals)[0]
                             const latestProduction = checkLastValue(feature.properties.prod_vals)[0]
 
-                            // adds point to chloride range layer based on value 
+                            // Adds point to chloride range layer based on value 
                             if (latestChloride == null) {
                                 point.addTo(chlorideRange30);
                             } else if (latestChloride <= 30) {
@@ -480,7 +469,7 @@ export function LMap(element) {
                     });
 
                     basin.addTo(map);
-                    basin.addTo(searchLayerGroup)
+                    basin.addTo(searchLayerGroup);
 
                     layerControl.addOverlay(basin, `${basins[i].name} Basin`, basinLayers);
                 }); // End of fetch 
