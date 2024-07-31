@@ -275,7 +275,7 @@ const basins = [
 function createTable(basins) {
     let table = /*html*/ `
     <table class="table">
-        <caption><i><i class="bi bi-info-circle-fill"></i> Click on a <strong>basin</strong> to view its production rate history.</i></caption>
+        <caption><i><i class="bi bi-info-circle-fill"></i> Click on a <strong>basin</strong> to view its average total production rate history.</i></caption>
         <thead><tr>${tableHeaders(headers1)}</tr></thead>
         <tbody class="table-group-divider">${tableBodySummary(basins)}</tbody>
         <tfoot class="table-group-divider">${tableFooter(basins, headers1)}</tfoot>
