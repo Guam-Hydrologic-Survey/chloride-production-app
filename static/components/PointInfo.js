@@ -2,15 +2,16 @@
 PointInfo.js
 */
 
-let modalHeaderTitleId = "point-info-header";
-let statsContentId = "stats-content";
-let plotContentId = "plot-content";
+const modalId = "point-info-modal";
+const modalHeaderTitleId = "point-info-header";
+const statsContentId = "stats-content";
+const plotContentId = "plot-content";
 
 export function PointInfo(element) {
 
     element.innerHTML = /*html*/ 
     `
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="point-info-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header">
@@ -34,4 +35,4 @@ export function PointInfo(element) {
     `;
 }
 
-export { statsContentId, plotContentId, modalHeaderTitleId }
+export { statsContentId, plotContentId, modalId, modalHeaderTitleId }
