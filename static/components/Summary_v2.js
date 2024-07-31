@@ -318,7 +318,7 @@ function tableBodySummary(basins) {
         `;
 
         let tr_hist = /*html*/ `
-        <tr id="${targetId}" class="collapse">
+        <tr id="${targetId}" class="collapse animate__animated animate__fadeInLeft">
             <td colspan="4">
                 <div class="card card-body">
                     <p><i>Production History</i></p>
