@@ -206,15 +206,6 @@ export function LMap(element) {
     const chlorideRange400 = L.layerGroup();
     const chlorideRange450 = L.layerGroup();
 
-    // add layers to the layer control 
-    // layerControl.addOverlay(chlorideRange30, "[0 - 30] [CL-] mg/L", chlorideLayers);
-    // layerControl.addOverlay(chlorideRange70, "(30 - 70] [CL-] mg/L", chlorideLayers);
-    // layerControl.addOverlay(chlorideRange150, "(70 - 150] [CL-] mg/L", chlorideLayers);
-    // layerControl.addOverlay(chlorideRange250, "(150 - 250] [CL-] mg/L", chlorideLayers);
-    // layerControl.addOverlay(chlorideRange300, "(250 - 300] [CL-] mg/L", chlorideLayers);
-    // layerControl.addOverlay(chlorideRange400, "(300 - 400] [CL-] mg/L", chlorideLayers);
-    // layerControl.addOverlay(chlorideRange400, "(400 - 450] [CL-] mg/L", chlorideLayers);
-
     // Layer groups for production ranges 
     let productionLayers = "Toggle All Production Rates";
     
@@ -228,18 +219,6 @@ export function LMap(element) {
     const productionRange600 = L.layerGroup();
     const productionRange700 = L.layerGroup();
     const productionRange700Plus = L.layerGroup();
-
-    // add layers to the layer control 
-    // layerControl.addOverlay(productionRangeInactive, "Inactive", productionLayers);
-    // layerControl.addOverlay(productionRange0, "0", productionLayers);
-    // layerControl.addOverlay(productionRange100, "(0 - 100] gpm", productionLayers);
-    // layerControl.addOverlay(productionRange200, "(100 - 200] gpm", productionLayers);
-    // layerControl.addOverlay(productionRange300, "(200 - 300] gpm", productionLayers);
-    // layerControl.addOverlay(productionRange400, "(300 - 400] gpm", productionLayers);
-    // layerControl.addOverlay(productionRange500, "(400 - 500] gpm", productionLayers);
-    // layerControl.addOverlay(productionRange600, "(500 - 600] gpm", productionLayers);
-    // layerControl.addOverlay(productionRange700, "(600 - 700] gpm", productionLayers);
-    // layerControl.addOverlay(productionRange700Plus, "700+ gpm", productionLayers);
 
     function checkLayerExistence(layer) {
         if (!map.hasLayer(layer)) {
