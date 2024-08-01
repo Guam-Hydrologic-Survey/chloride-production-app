@@ -294,9 +294,9 @@ function createTable(basins) {
 // Returns "th" - a string containing the HTML element for the table headers 
 function tableHeaders(theaders) {
     let th =``;
-    for (let i = 0; i < theaders.length; i++) {
-        th += `<th scope="col">${theaders[i]}</th>`;
-    }
+    theaders.forEach((theader) => {
+        th += `<th scope="col">${theader}</th>`;
+    });
     return th;
 }
 
@@ -307,13 +307,13 @@ function tableHeaders(theaders) {
 // Returns "tb" - a string containing HTML elements for the table body 
 function tableBodySummary(basins) {
     let tb = ``;
-    for (let i = 0; i < basins.length; i++) {
-        let targetId = `row-basin-${i}`;
+    basins.forEach((basin, index) => {
+        let targetId = `row-basin-${index}`;
         let tr_sum = /*html*/ `
         <tr data-bs-toggle="collapse" data-bs-target="#${targetId}" class="collapse-row" aria-controls="${targetId}">
-            <th scope="row" class="toggle-basin-history" title="${basins[i].basin} Basin">${basins[i].basin}</th>
-            <td>${roundDec(basins[i].current_prod_avg.p)}</td>
-            <td>${roundDec(basins[i].current_prod_avg.pwac)}</td>
+            <th scope="row" class="toggle-basin-history" title="${basin.basin} Basin">${basin.basin}</th>
+            <td>${roundDec(basin.current_prod_avg.p)}</td>
+            <td>${roundDec(basin.current_prod_avg.pwac)}</td>
         </tr>
         `;
 
@@ -324,7 +324,7 @@ function tableBodySummary(basins) {
                     <p><i>Production History</i></p>
                     <table class="table table-hover table-sm table-striped">
                         <thead><tr>${tableHeaders(headers2)}</tr></thead>
-                        <tbody class="table-group-divider">${tableBodyHistory(basins[i].history)}</tbody>
+                        <tbody class="table-group-divider">${tableBodyHistory(basin.history)}</tbody>
                     </table>
                 </div>
             </td>
@@ -332,7 +332,7 @@ function tableBodySummary(basins) {
         `;
 
         tb += tr_sum + tr_hist;
-    }
+    });
     return tb;
 }
 
@@ -368,12 +368,13 @@ function tableFooter(basins, theaders) {
 
 // Utility/helper function that computes sum of a given array 
 // Expects "basins" - an array list of basin objects 
-// Returns "sums" - the totals for the production average and production weighted average chloride 
+// Returns "sums" - an array containing two numerical values, the totals for the production average and production weighted average chloride 
 function getSum(basins) {
+    // Sum index values = [total for production average, total for production weighted average chloride]
     let sums = [0 , 0]
-    for (let i = 0; i < basins.length; i++) {
-        sums[0] += basins[i].current_prod_avg.p
-        sums[1] += basins[i].current_prod_avg.pwac
-    }
-    return sums
+    basins.forEach((basin) => {
+        sums[0] += basin.current_prod_avg.p;
+        sums[1] += basin.current_prod_avg.pwac;
+    });
+    return sums;
 } 
