@@ -59,30 +59,21 @@ export function Legend(element) {
     fetch(chloridePath)
         .then(response => response.json())
         .then(json =>  {
-            let data = json.chlorideRange
+            let data = json.chlorideRange;
             for (let i = 0; i < data.length; i++) {
                 let toggleBtnId = `chloride-range-${data[i].name}`;
                 chlorideToggleBtns.push(toggleBtnId);
-                // chlorideToggleBtns += toggleBtnId + ","
-                // chl.innerHTML += `${JSON.stringify(data[i])}<br>`
                 chl.innerHTML += /*html*/ `
-                <div class="chloride-range-item">
-                  <button type="button" class="btn"  data-bs-toggle="button" id="${toggleBtnId}">
-                      <?xml version="1.0" encoding="UTF-8"?>
-                      <svg id="circle-icon-svg" width="20px" height="24px" stroke-width="2" viewBox="0 0 24 20" fill="${data[i].hex}" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                          <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
-                      </svg>
-                      ${data[i].range}
-                  </button>
-                  <!--
-                  <?xml version="1.0" encoding="UTF-8"?>
-                  <svg id="circle-icon-svg" width="32px" height="32px" stroke-width="2" viewBox="0 0 24 24" fill="${data[i].hex}" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
-                  </svg>
-                  ${data[i].range}
-                  -->
+                <div class="form-check">
+                    <input class="form-check-input checkbox-input" type="checkbox" value="${toggleBtnId}" id="${toggleBtnId}" checked>
+                    <label class="form-check-label" for="${toggleBtnId}">
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <svg id="circle-icon-svg" width="20px" height="24px" stroke-width="2" viewBox="0 0 24 20" fill="${data[i].hex}" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        ${data[i].range}
+                    </label>
                 </div>
-                <br>
                 `;
             }
         });
@@ -198,7 +189,7 @@ export function Legend(element) {
                 range: "(600 - 700]"
             },
             {
-                name: "white circle", // high production value - TODO: confirm this 
+                name: "white circle", // High production value (700+) - TODO: confirm this 
                 svg: `
                 <svg width="${width}px" height="${height}px" viewBox="0 0 ${viewboxWidth} ${viewboxHeight}" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g>
