@@ -37,51 +37,33 @@ export function Plot(data) {
     let latestChlorideValue = checkLastValue(data.ci_vals);
     let latestProductionValue = checkLastValue(data.prod_vals);
     
+    // TODO - fix date step (ISSUE - moves forward in time instead of backwards)
     // Configuration for selecting data time frame  
-    var selectorOptions = {
-        buttons: [{
-            step: 'year',
-            stepmode: 'backward',
-            count: 1,
-            label: '1y'
-        }, {
-            step: 'year',
-            stepmode: 'backward',
-            count: 5,
-            label: '5y'
-        }, {
-            step: 'year',
-            stepmode: 'todate',
-            count: 10,
-            label: '10y'
-        }, {
-            step: 'year',
-            stepmode: 'backward',
-            count: 20,
-            label: '20y'
-        }, 
-        {
-            step: 'year',
-            stepmode: 'backward',
-            count: 30,
-            label: '30y'
-        }, 
-        {
-            step: 'year',
-            stepmode: 'backward',
-            count: 40,
-            label: '40y'
-        },
-        {
-            step: 'year',
-            stepmode: 'backward',
-            count: 50,
-            label: '50y'
-        },
-        {
-            step: 'all',
-        }],
-    };
+    // var selectorOptions = {
+    //     buttons: [{
+    //         step: 'month',
+    //         stepmode: 'backward',
+    //         count: 1,
+    //         label: '1m'
+    //     }, {
+    //         step: 'month',
+    //         stepmode: 'backward',
+    //         count: 6,
+    //         label: '6m'
+    //     }, {
+    //         step: 'year',
+    //         stepmode: 'todate',
+    //         count: 1,
+    //         label: 'YTD'
+    //     }, {
+    //         step: 'year',
+    //         stepmode: 'backward',
+    //         count: 1,
+    //         label: '1y'
+    //     }, {
+    //         step: 'all',
+    //     }],
+    // };
 
     // Plot features and layout
     let layout = {
@@ -93,7 +75,8 @@ export function Plot(data) {
         },
         xaxis: {
             // rangeselector: selectorOptions,
-            rangeslider: {}
+            // rangeslider: {},
+            type: 'date',
         },
         yaxis: {
             title: '[CI-] (mg/L)',
@@ -119,16 +102,21 @@ export function Plot(data) {
     };
 
     var config = {
+        scrollZoom: true, 
+        displaylogo: false, 
+        responsive: true, 
+        modeBarButtonsToAdd: ['v1hovermode', 'hovercompare', 'togglespikelines'],
+        modeBarButtonsToRemove: ['lasso2d', 'select2d'],
         toImageButtonOptions: {
             format: 'png', // png, svg, jpeg, webp
-            filename: 'well_plot',
+            filename: `well_${data.name}-chloride_production_plot`,
             height: 500,
             width: 900,
-            scale: 1 
-          }
+            scale: 5 
+        }
     };
 
-    Plotly.newPlot(plotContentId, [chlorideTrace, productionTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true, modeBarButtonsToRemove: ['lasso2d', 'select2d']}, config);
+    Plotly.newPlot(plotContentId, [chlorideTrace, productionTrace], layout, config);
 
     var annotated = false;
 
@@ -165,12 +153,12 @@ export function Plot(data) {
             });
 
             Plotly.relayout(plotContentId, { annotations: layout.annotations });
-            viewLatestDataBtn .textContent = 'Reset';
-            viewLatestDataBtn .setAttribute("title", "Remove annotations from plot");
+            viewLatestDataBtn.textContent = 'Reset';
+            viewLatestDataBtn.setAttribute("title", "Remove annotations from plot");
         } else {
             Plotly.relayout(plotContentId, { annotations: [] });
-            viewLatestDataBtn .textContent = 'Latest Data';
-            viewLatestDataBtn .setAttribute("title", "View latest data values for chloride and production");
+            viewLatestDataBtn.textContent = 'Latest Data';
+            viewLatestDataBtn.setAttribute("title", "View latest data values for chloride and production");
         }
 
         annotated = !annotated;
