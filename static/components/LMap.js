@@ -239,6 +239,24 @@ export function LMap(element) {
 
     document.addEventListener('DOMContentLoaded', (e) => {
         setTimeout(() => {
+            chlorideRange30.addTo(map);
+            chlorideRange70.addTo(map);
+            chlorideRange150.addTo(map);
+            chlorideRange250.addTo(map);
+            chlorideRange300.addTo(map);
+            chlorideRange400.addTo(map);
+            chlorideRange450.addTo(map);
+
+            productionRangeInactive.addTo(map);
+            productionRange0.addTo(map);
+            productionRange100.addTo(map);
+            productionRange200.addTo(map);
+            productionRange300.addTo(map);
+            productionRange400.addTo(map);
+            productionRange500.addTo(map);
+            productionRange600.addTo(map);
+            productionRange700.addTo(map);
+            productionRange700Plus.addTo(map);
 
             // TODO - simplify adding layers back to map
             // Resets layers on map (adds everything back)
@@ -261,6 +279,14 @@ export function LMap(element) {
                 productionRange600.addTo(map);
                 productionRange700.addTo(map);
                 productionRange700Plus.addTo(map);
+
+                // Check the respective checkboxes
+                // Check all checkboxes value
+                const checkboxes = document.querySelectorAll('.form-check-input');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+   
             });
 
             // TODO - change to for loop, add each chlorideRange layer into an array list (same goes for productionRange layers)
@@ -294,43 +320,43 @@ export function LMap(element) {
             });
 
             // Event listeners for production range layers 
-            document.getElementById(productionToggleBtns[0]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[0]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRangeInactive)
             });
 
-            document.getElementById(productionToggleBtns[0]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[0]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange0)
             });
 
-            document.getElementById(productionToggleBtns[1]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[1]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange100)
             });
 
-            document.getElementById(productionToggleBtns[2]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[2]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange200)
             });
 
-            document.getElementById(productionToggleBtns[3]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[3]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange300)
             });
 
-            document.getElementById(productionToggleBtns[4]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[4]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange400)
             });
 
-            document.getElementById(productionToggleBtns[5]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[5]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange500)
             });
 
-            document.getElementById(productionToggleBtns[6]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[6]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange600)
             });
 
-            document.getElementById(productionToggleBtns[7]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[7]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange700)
             });
 
-            document.getElementById(productionToggleBtns[8]).addEventListener('change', (e) => {
+            document.getElementById(productionToggleBtns[8]).addEventListener('click', (e) => {
                 checkCheckBox(e.target.checked, productionRange700Plus)
             });
 
