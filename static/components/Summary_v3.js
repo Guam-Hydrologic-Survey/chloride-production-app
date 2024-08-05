@@ -1,10 +1,7 @@
 /*
 Summary_v3.js
-Description: An updated version of the summary table, which include a table summarizing the production rate of the current year. Each row of the table can be expanded to view the selected basin's production history. 
+Description: An updated version of the summary table, which fetches the JSON for the summary-history data and creates a table summarizing the production rate of the current year. Each row of the table can be expanded to view the selected basin's production history. 
 */
-
-// data 
-import { basins } from "../data/summaryHistory.js";
 
 // utils 
 import { roundDec } from "../utils/roundDec.js";
@@ -38,6 +35,7 @@ const headers1 = ["Basin", "Total Production", "Production Weighted Average Chlo
 const headers2 = ["Years", "Total Production"];
 
 // Retrieves JSON for summary-history data and calls upon createTable() function 
+// Returns response with call to createTable() function 
 function getSummaryHistoryData() {
     return fetch("./static/data/summaryHistory.json")
         .then(response => response.json())
