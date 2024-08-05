@@ -23,10 +23,6 @@ export function Legend(element) {
         <div id="${chlorideId}"></div>
         <div id="${productionId}"></div>
         <hr>
-        <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="toggle-chl-prod-layers-switch">
-        <label class="form-check-label" for="toggle-chl-prod-layers-switch">Toggle Layers</label>
-        </div>
         <button type="button" class="btn btn-primary" id="legend-layers-reset"><i class="bi bi-arrow-clockwise"></i> Reset</button>
       </div>
     </div>
