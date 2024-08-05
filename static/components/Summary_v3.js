@@ -21,6 +21,18 @@ export function Summary(element) {
 
             <div class="offcanvas-body">
                 ${table}
+                <br>
+                <p style="font-style: italic;">History of Chloride Concentrations from January 1973 to December 2022</p>
+                <iframe 
+                    width="365" 
+                    height="221" 
+                    src="https://www.youtube-nocookie.com/embed/4SoeZWt8Sp8?si=flWfWL_S2ujPFs87" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
             </div>
 
             </div>
