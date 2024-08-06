@@ -11,7 +11,7 @@ import { LMap } from "./components/LMap.js";
 import { PointInfo } from "./components/PointInfo.js";
 
 // tests
-import { Summary } from "./components/Summary_v3.js";
+import { Summary } from "./components/Summary_v4.js";
 import { Legend } from "./components/Legend_v2.js";
 
 document.getElementById("app").innerHTML = /*html*/

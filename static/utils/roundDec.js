@@ -31,9 +31,9 @@ function checkIfInteger(value) {
         // checks if it's <= 0.0001 or if there are many leading 0's
         if (value <= 0.001) {
             // converts to scientific notation 
-            return value.toExponential(4);
+            return value.toExponential(1); //one decimal place
         } else {
-            return Number(value.toFixed(4));
+            return Number(value.toFixed(1)); //one decimal place
         }
     } else {
         return value;
