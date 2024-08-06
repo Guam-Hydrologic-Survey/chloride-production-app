@@ -49,7 +49,7 @@ const headers2 = ["Years", "Production (GPM)", "Weighted Average Chloride (mg/L)
 // Retrieves JSON for summary-history data and calls upon createTable() function 
 // Returns response with call to createTable() function 
 function getSummaryHistoryData() {
-    return fetch("./static/data/summaryHistory.json")
+    return fetch("./static/data/summaryHistory2.json")
         .then(response => response.json())
         .then(data => {
             return createTable(data.basins)
@@ -132,6 +132,7 @@ function tableBodyHistory(basinsHistory) {
         <tr>
             <th scope="row">${basinsHistory.years[i]}</th>
             <td>${roundDec(basinsHistory.prod[i])}</td>
+            <td>${roundDec(basinsHistory.pwacYears[i])}</td>
         </tr>
         `;
         tb += tr;
