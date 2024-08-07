@@ -41,10 +41,10 @@ export function Summary(element) {
 }
 
 // Headers for summary for current year
-const headers1 = ["Basin", "Production (GPM)", "Weighted Average Chloride (mg/L)", "Inactive Wells", "Active Wells"];
+const headers1 = ["Basin", "Production (MGD)", "Weighted Average Chloride (ppm)", "Inactive Wells", "Active Wells"];
 
 // Headers for history
-const headers2 = ["Years", "Production (GPM)", "Weighted Average Chloride (mg/L)"];
+const headers2 = ["Years", "Production (MGD)", "Weighted Average Chloride (ppm)"];
 
 // Retrieves JSON for summary-history data and calls upon createTable() function 
 // Returns response with call to createTable() function 
