@@ -5,16 +5,26 @@ Plot.js
 import { plotContentId, resetBtnId } from "./PointInfo.js";
 import { checkLastValue } from "./CustomIcon.js";
 import { roundDec } from "../utils/roundDec.js";
+import { calculateRegression } from "../utils/calculateRegression.js";
 
 export function Plot(data) {
     
     // Array to hold date objects
     const x_dates_conv = [];
+    const x_numeric = [];
 
     // Converts date strings from x_vals to JS date objects 
     for (let i = 0; i < data.x_vals.length; i++) {
         x_dates_conv[i] = new Date(data.x_vals[i]);
+        x_numeric[i] = (x_dates_conv[i] - x_dates_conv[0]) / (1000 * 60 * 60 * 24); // days since the first date convert to values
     };
+
+    const y_chloride = data.ci_vals;
+    const y_production = data.prod_vals;
+
+    // Calculate the regression line for chloride levels
+    const chlorideRegression = calculateRegression(x_numeric, y_chloride);
+    const productionRegression = calculateRegression(x_numeric, y_production);
 
     // Plots x,y coordinates for enlarged plot
     const chlorideTrace = {
@@ -31,7 +41,38 @@ export function Plot(data) {
         type: 'scatter', 
         mode: 'markers',
         name: 'Production Rate',
-        yaxis:"y2"
+        yaxis:"y2",
+        marker: {
+            color: 'rgb(251,136,33)'
+        }
+    };
+
+    // Calculate the regression line for chloride levels
+    const ciRegLine = {
+        x: x_dates_conv,
+        y: x_numeric.map(num => chlorideRegression.slope * num + chlorideRegression.intercept),
+        type: 'scatter',
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Chloride Regression Line',
+        line: {
+            color: 'blue',
+            dash: 'dash'
+        }
+    };
+
+    // Calculate the regression line for production rates
+    const prodRegLine = {
+        x: x_dates_conv,
+        y: x_numeric.map(num => productionRegression.slope * num + productionRegression.intercept),
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Production Regression Line',
+        yaxis: "y2",
+        line: {
+            color: 'orange',
+            dash: 'dash'
+        }
     };
 
     let latestChlorideValue = checkLastValue(data.ci_vals);
@@ -116,7 +157,7 @@ export function Plot(data) {
         }
     };
 
-    Plotly.newPlot(plotContentId, [chlorideTrace, productionTrace], layout, config);
+    Plotly.newPlot(plotContentId, [chlorideTrace, ciRegLine, productionTrace,prodRegLine], layout, config);
 
     var annotated = false;
 
