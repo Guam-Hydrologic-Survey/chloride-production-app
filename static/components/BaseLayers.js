@@ -4,8 +4,9 @@
 export function BaseLayers(map) {
 
     // WERI-GHS attribution 
-    const devs = "MW Zapata, DK Valerio, NC Habana"
+    const devs = "MWZapata, DKValerio, JACaasi, MCSnaer & NCHabana"
     const year = 2024;
+    const weriLogo = `<img src="./static/assets/WERI-Logo.ico" style="height:20px; width:18px; display:inline-block; margin-right:2px; margin-bottom: 2px;/>`;
     const attr = ` | <a href="https://weri.uog.edu/">WERI</a>-<a href="https://guamhydrologicsurvey.uog.edu/">GHS</a>: ${devs} (${year})`;
 
     // map.addEventListener("click", function (event) {
