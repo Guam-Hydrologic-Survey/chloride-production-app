@@ -41,9 +41,7 @@ export function Summary(element) {
 }
 
 // Headers for summary for current year
-const headers1 = ["Basin", "Production (GPM)", "Weighted Average Chloride (mg/L)", "Active Wells", "Inactive Wells"];
-
-const headers3 = ["Basin", "Active Wells", "Inactive Wells"];
+const headers1 = ["Basin", "Production (GPM)", "Weighted Average Chloride (mg/L)", "Inactive Wells", "Active Wells"];
 
 // Headers for history
 const headers2 = ["Years", "Production (GPM)", "Weighted Average Chloride (mg/L)"];
