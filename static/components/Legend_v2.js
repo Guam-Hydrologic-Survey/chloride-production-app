@@ -23,7 +23,9 @@ export function Legend(element) {
         <div id="${chlorideId}"></div>
         <div id="${productionId}"></div>
         <hr>
-        <button type="button" class="btn btn-primary" id="legend-layers-reset"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+        <div class="d-grid">
+            <button type="button" class="btn btn-primary" id="legend-layers-reset" title="Reset layers on map"><i class="bi bi-arrow-clockwise"></i> Reset Layers</button>
+        </div>
       </div>
     </div>
     `;
