@@ -71,7 +71,7 @@
 
 /* width of Summary offcanvas */
 #summary {
-    width: 27% !important;
+    width: 28% !important;
 }
 
 #summary-offcanvas-title {
@@ -80,6 +80,10 @@
 
 .summary-offcanvas-subtitle {
     font-style: italic;
+}
+
+.summary-offcanvas-body {
+    font-size: 14px;
 }
 
 .toggle-basin-history {
@@ -229,6 +233,7 @@
     position: relative;
     
 }
+
 #point-info-header {
     margin-left: 30%;
 }

@@ -19,7 +19,7 @@ export function Summary(element) {
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
 
-            <div class="offcanvas-body">
+            <div class="offcanvas-body summary-offcanvas-body">
                 ${table}
                 <br>
                 <p style="font-style: italic;">History of Chloride Concentrations from January 1973 to December 2022</p>
@@ -107,7 +107,7 @@ function tableBodySummary(basins) {
 
         let tr_hist = /*html*/ `
         <tr id="${targetId}" class="collapse animate__animated animate__fadeInLeft">
-            <td colspan="4">
+            <td colspan="5">
                 <div class="card card-body">
                     <p><i>Production History</i></p>
                     <table class="table table-hover table-sm table-striped">
