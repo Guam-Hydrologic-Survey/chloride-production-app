@@ -1,18 +1,15 @@
 /* 
-index.js
+index.js 
+Description: Point of entry for JS files. Calls on each component to append elements (map, modals, offcanvas) to the page. 
 */
 
 // components 
 import { NavBar } from "./components/NavBar.js";
 import { About } from "./components/About.js";
 import { LMap } from "./components/LMap.js";
-// import { Legend } from "./components/Legend.js";
-// import { Summary } from "./components/Summary.js";
-import { PointInfo } from "./components/PointInfo.js";
-
-// tests
 import { Summary } from "./components/Summary_v5.js";
 import { Legend } from "./components/Legend_v2.js";
+import { PointInfo } from "./components/PointInfo.js";
 
 document.getElementById("app").innerHTML = /*html*/
 `
