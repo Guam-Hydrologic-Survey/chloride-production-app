@@ -1,5 +1,6 @@
 /* 
-About.js
+About.js 
+Description: Creates the About modal, which contains the abstract for the project and associated links. 
 */
 
 export function About(element) {
@@ -22,7 +23,8 @@ export function About(element) {
             </p>
           </div>
           <div class="modal-footer about-btns">
-            <!-- Example single danger button -->
+
+            <!-- Button group for data: 1) removed from data set & 2) GHS CPDB -->
             <div class="btn-group">
               <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 Data
@@ -49,6 +51,8 @@ export function About(element) {
                 <li><a class="dropdown-item" href="https://ghs-cdn.uog.edu/wp-content/databases/Library/PDFs/TRs/WERI%20TR%20178%20-%20Ko%20et%20al%202023.pdf" target="_blank" rel="noreferrer noopener" title="Geospatial and Temporal Analysis of Patterns and Trends in Salinity in Yigo-Tumon Basin">WERI TR 178 (Ko et al., 2023)</a></li>
               </ul>
             </div>
+
+            <!-- Dropdown for links to GHS maps libraries -->
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Map Series
