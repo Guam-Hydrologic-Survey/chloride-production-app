@@ -29,7 +29,9 @@ export function PointInfo(element) {
                 <div class="vl"></div>
                 <div>
                     <div id="${plotContentId}"></div> <!-- previously #large-plot -->
-                    <button type="button" class="btn btn-primary" id="${resetBtnId}" title="View latest data values for chloride and production">Latest Data</button>
+                    <div class="d-grid mx-auto col-6">
+                        <button type="button" class="btn btn-primary" id="${resetBtnId}" title="View latest data values for chloride and production" style="margin: 2px;">Latest Data</button>
+                    </div>
                 </div>
             </div>
             </div>
