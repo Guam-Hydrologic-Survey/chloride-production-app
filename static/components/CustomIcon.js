@@ -1,5 +1,6 @@
 /*
 CustomIcon.js
+Description: Generates the map marker icon based on the last available values for chloride and production. 
 */
 
  // Function to create icon for point 

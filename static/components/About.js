@@ -1,6 +1,7 @@
 /* 
 About.js 
 Description: Creates the About modal, which contains the abstract for the project and associated links. 
+Parameters: 'element' - the ID of the container for the about modal 
 */
 
 export function About(element) {

@@ -1,9 +1,12 @@
 /* 
 MarkerPopup.js
+Description: Creates the popup when clicking on a point on the map. This popup contains basin information about the well and the button to view the timeseries plot for chloride and production data. 
 */
 
 import { modalId } from "./PointInfo.js";
 
+// Expects 'well' and 'basin' (both are string values containing the name of the well and the basin it resides in)
+// Returns 'pop' a string containing the HTML element for the marker popup 
 export function MarkerPopup(well, basin) {
     let popup = /*html*/ `
     <div id="marker-content-container">

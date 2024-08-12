@@ -4,6 +4,7 @@ Stats.js
 
 import { statsContentId, modalHeaderTitleId } from "./PointInfo.js";
 
+// Expects 'data' - an object containing statistical attributes 
 export function Stats(data) {
 
     let ciSlope = data.ci_slope;

@@ -1,4 +1,8 @@
 /*
+BaseLayers.js 
+Description: Contains the constants of Leaflet map tiles to be used in the layer control for the base maps. 
+Parameters: 'map' - the object for the Leaflet map 
+Returns: 'baseLayers' - an object containing Leaflet tile layers
 */
 
 export function BaseLayers(map) {

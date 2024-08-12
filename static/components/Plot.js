@@ -7,6 +7,7 @@ import { checkLastValue } from "./CustomIcon.js";
 import { roundDec } from "../utils/roundDec.js";
 import { calculateRegression } from "../utils/calculateRegression.js";
 
+// Expects 'data' - an object containing the attributes for the plot values 
 export function Plot(data) {
     
     // Array to hold date objects
@@ -165,8 +166,6 @@ export function Plot(data) {
 
     const viewLatestDataBtn = document.getElementById(resetBtnId);
 
-    // TODO - fix annotation for latest production value 
-    // ISSUE - retrieves 
     viewLatestDataBtn .addEventListener('click', () => {
         if (!annotated) {
             Plotly.relayout(plotContentId, { annotations: 

@@ -1,5 +1,6 @@
 /*
 Legend.js
+Description: Creates the Legend component listing the values for the chloride and production marker icons. 
 */
 
 // TODO - cleanup and use constants for marker color and shapes (from Chloride and Production components)

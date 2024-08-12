@@ -1,10 +1,13 @@
 /* 
 NavBar.js
+Description: Creates the Navigation Bar component. 
 */
 
+
+// Expects 'element' - a string containing the ID of the NavBar's parent container 
 export function NavBar(element) {
 
-  // update this with link to designated GHS page/post, if available 
+  // Update this with link to designated GHS page/post, if available 
   const tr = "https://guamhydrologicsurvey.uog.edu/";
 
   // GHS & WERI homepages 

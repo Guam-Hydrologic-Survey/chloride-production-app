@@ -1,7 +1,9 @@
 /* 
 PointInfo.js
+Description: Creates the parent component (the popup modal) that contains the available statistic information and the timeseries plot for the chloride levels and production rates. 
 */
 
+// Constants (mainly ID's for containers)
 const modalId = "point-info-modal";
 const modalHeaderTitleId = "point-info-header";
 
@@ -10,6 +12,7 @@ const plotContentId = "plot-content";
 
 const resetBtnId = "plot-zoom-latest-data";
 
+// Expects 'element' - a string containing the ID of the container for the Point Info component 
 export function PointInfo(element) {
 
     element.innerHTML = /*html*/ 
