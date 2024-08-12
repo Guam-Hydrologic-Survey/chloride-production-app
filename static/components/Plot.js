@@ -56,7 +56,7 @@ export function Plot(data) {
         mode: 'lines',
         name: 'Chloride Regression Line',
         line: {
-            color: 'blue',
+            color: 'rgb(18, 68, 105)',
             dash: 'dash'
         }
     };
@@ -70,7 +70,7 @@ export function Plot(data) {
         name: 'Production Regression Line',
         yaxis: "y2",
         line: {
-            color: 'orange',
+            color: 'rgb(140, 67, 3)',
             dash: 'dash'
         }
     };
@@ -134,12 +134,14 @@ export function Plot(data) {
             side: 'right',
             range: [0, 'auto']
         },
+        showlegend: true,
         legend: {
-              "orientation": "h",
-              x: .5,
-              xanchor: 'right',
-              y: -0.3
+            "orientation": "h",
+            x: .5,
+            xanchor: 'right',
+            y: -0.3
         },
+        hovermode: "closest",
     };
 
     var config = {
