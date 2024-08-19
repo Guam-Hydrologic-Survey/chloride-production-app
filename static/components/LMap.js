@@ -10,7 +10,7 @@ import { MarkerPopup } from "./MarkerPopup.js";
 // import { CustomOverlay } from "./CustomOverlay.js";
 import { Stats } from "./Stats.js";
 import { Plot } from "./Plot.js";
-import { chlorideToggleBtns, productionToggleBtns } from "./Legend_v2.js";
+import { chlorideToggleBtns, productionToggleBtns, layersResetBtnId, layersRemoveBtnId } from "./Legend_v3.js";
 
 export function LMap(element) {
     // Center of Guam
@@ -260,7 +260,7 @@ export function LMap(element) {
 
             // TODO - simplify adding layers back to map
             // Resets layers on map (adds everything back)
-            document.getElementById("legend-layers-reset").addEventListener('click', () => {
+            document.getElementById(layersResetBtnId).addEventListener('click', () => {
                 chlorideRange30.addTo(map);
                 chlorideRange70.addTo(map);
                 chlorideRange150.addTo(map);
@@ -286,7 +286,34 @@ export function LMap(element) {
                 checkboxes.forEach(checkbox => {
                     checkbox.checked = true;
                 });
-   
+            });
+
+            // TODO - add event listener for REMOVE LAYERS button on Legend panel 
+            document.getElementById(layersRemoveBtnId).addEventListener('click', () => {
+                // PSEUDOCODE: uncheck all boxes, remove all chloride and production layers from map 
+                const checkboxes = document.querySelectorAll('.form-check-input');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+
+                map.removeLayer(chlorideRange30);
+                map.removeLayer(chlorideRange70);
+                map.removeLayer(chlorideRange150);
+                map.removeLayer(chlorideRange250);
+                map.removeLayer(chlorideRange300);
+                map.removeLayer(chlorideRange400);
+                map.removeLayer(chlorideRange450);
+
+                map.removeLayer(productionRangeInactive);
+                map.removeLayer(productionRange0);
+                map.removeLayer(productionRange100);
+                map.removeLayer(productionRange200);
+                map.removeLayer(productionRange300);
+                map.removeLayer(productionRange400);
+                map.removeLayer(productionRange500);
+                map.removeLayer(productionRange600);
+                map.removeLayer(productionRange700);
+                map.removeLayer(productionRange700Plus);
             });
 
             // TODO - change to for loop, add each chlorideRange layer into an array list (same goes for productionRange layers)
