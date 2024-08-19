@@ -103,20 +103,8 @@
     text-align: center;
 }
 
-.vl {
-    border-right: 1.99px solid rgba(0, 0, 0, 0.1);
-    height: 500px;
-}
-
-.well-stats{
-    top: -60px;
-    left: 10px;
-    position: relative;
-    
-}
-
-#point-info-header {
-    margin-left: 30%;
+.spacer {
+    height: 10px;
 }
 
 .chloride-range-item {
@@ -127,6 +115,10 @@
 
 .production-range-item {
     line-height: 45px;
+}
+
+#point-info-header {
+    margin-left: 30%;
 }
 
 /* Style configuration for About modal */
@@ -165,6 +157,17 @@
 }
 
 /* Style configuration for the title and location section of stats panel */
+.well-stats{
+    top: -60px;
+    left: 10px;
+    position: relative;
+}
+
+.vl {
+    border-right: 1.99px solid rgba(0, 0, 0, 0.1);
+    height: 500px;
+}
+
 .stats-location {
     font-size: 18px;
     font-style: italic;
