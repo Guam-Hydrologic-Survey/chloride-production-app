@@ -1,9 +1,12 @@
 /*
-Legend.js
+Legend_v3.js
 */
 
 let chlorideToggleBtns = [];
 let productionToggleBtns = [];
+
+const layersResetBtnId = "legend-layers-reset";
+const layersRemoveBtnId = "legend-layers-remove";
 
 // TODO - cleanup and use constants for marker color and shapes (from Chloride and Production components)
 export function Legend(element) {
@@ -24,7 +27,9 @@ export function Legend(element) {
         <div id="${productionId}"></div>
         <hr>
         <div class="d-grid">
-            <button type="button" class="btn btn-primary" id="legend-layers-reset" title="Reset layers on map"><i class="bi bi-arrow-clockwise"></i> Reset Layers</button>
+            <button type="button" class="btn btn-primary" id="${layersResetBtnId}" title="Add layers back on map"><i class="bi bi-arrow-clockwise"></i> Reset Layers</button>
+            <span class="spacer"></span>
+            <button type="button" class="btn btn-secondary" id="${layersRemoveBtnId}" title="Remove layers from map"><i class="bi bi-x-lg"></i> Remove Layers</button>
         </div>
       </div>
     </div>
@@ -33,7 +38,7 @@ export function Legend(element) {
     legend(chlorideId, productionId);
   }
 
-  export { chlorideToggleBtns, productionToggleBtns }
+  export { chlorideToggleBtns, productionToggleBtns, layersResetBtnId, layersRemoveBtnId }
   
   function legend(chlorideId, productionId) {
     let chl = document.getElementById(chlorideId) 
@@ -231,4 +236,3 @@ export function Legend(element) {
         `;
     }
   } 
-  
