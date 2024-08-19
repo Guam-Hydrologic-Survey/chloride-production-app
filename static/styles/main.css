@@ -12,12 +12,8 @@
 
 .mapTitle {
     padding: 6px 8px;
-    /* font: 14px/16px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px; */
 }
+
 .mapTitle h4 {
     margin: 0 0 5px;
     color: #777;
@@ -39,15 +35,6 @@
     font-size: 14px;
 }
 
-/* .leaflet-tooltip.basin-tooltip {
-    font-weight: 600;
-    font-size: 14px;
-    background: white;
-    border-radius: 30px;
-    border: transparent;
-    padding: 10px;
-} */
-
 .modal-header {
     justify-content: space-around;
 }
@@ -58,18 +45,7 @@
     justify-content: center;
 }
 
-.offcanvas-size-sm {
-    --bs-offcanvas-width: min(95vw, 200px) !important;
-}
-
-#legend > p, img {
-    /* padding-left: 30px; */ 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* width of Summary offcanvas */
+/* Style configuration for Summary offcanvasS */
 #summary {
     width: 28% !important;
 }
@@ -90,27 +66,73 @@
     cursor: pointer;
 }
 
+/* Style configuration for Legend offcanvas */
 #legend-offcanvas-title {
     font-family: 'Roboto Slab', serif;
 }
 
+.offcanvas-size-sm {
+    --bs-offcanvas-width: min(95vw, 200px) !important;
+}
+
+#legend > p, img {
+    /* padding-left: 30px; */ 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.legend {
+    padding: 5px;
+    font: 12px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    line-height: 8px;
+    color: #555;
+}
+
+.legend p {
+    line-height: 3px; 
+    margin-bottom: 10px;
+}
+
+.legend h4 {
+    font-size: 14px;
+    text-align: center;
+}
+
+.vl {
+    border-right: 1.99px solid rgba(0, 0, 0, 0.1);
+    height: 500px;
+}
+
+.well-stats{
+    top: -60px;
+    left: 10px;
+    position: relative;
+    
+}
+
+#point-info-header {
+    margin-left: 30%;
+}
+
+.chloride-range-item {
+    display: flex;
+    align-items: center;
+    line-height: 40px;
+}
+
+.production-range-item {
+    line-height: 45px;
+}
+
+/* Style configuration for About modal */
 #about-modal-title {
     font-family: 'Roboto Slab', serif;
 }
-
-/* .offcanvas-body {
-    height: 1024px;
-    top: 50%;
-} */ 
-
-/* .header {
-    z-index: 9999;
-}
-
-#weri-logo {
-    width: 200px;
-    height: 200px;
-} */
 
 .bs-btn-group {
     margin: 20px;
@@ -175,10 +197,6 @@
     margin: 0;
 }
 
-/* .full-stats {
-    font-size: 10px;
-} */
-
 .stats-text-full {
     font-size: 13px;
     padding: 3px;
@@ -199,58 +217,6 @@
 
 .plot-btn-container {
     float: right;
-}
-
-.legend {
-    padding: 5px;
-    font: 12px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    line-height: 8px;
-    color: #555;
-}
-
-.legend p {
-    line-height: 3px; 
-    margin-bottom: 10px;
-}
-
-.legend h4 {
-    font-size: 14px;
-    text-align: center;
-}
-
-.vl {
-    border-right: 1.99px solid rgba(0, 0, 0, 0.1);
-    height: 500px;
-}
-
-.well-stats{
-    top: -60px;
-    left: 10px;
-    position: relative;
-    
-}
-
-#point-info-header {
-    margin-left: 30%;
-}
-
-.chloride-range-item {
-    display: flex;
-    align-items: center;
-    line-height: 40px;
-}
-
-/* .chloride-range-item > p {
-    padding-top: 15px;
-    padding-left: 10px;
-} */
-
-.production-range-item {
-    line-height: 45px;
 }
 
 /* Override styles for Leaflet Control Search plugin */
@@ -297,7 +263,7 @@
     padding-left: 4px;
 }
 
-/* */
+/* Animation for Leaflet Search on a found target */
 .search-pulse {
     animation: pulsate 1s ease-out;
     -webkit-animation: pulsate 1s ease-out;
