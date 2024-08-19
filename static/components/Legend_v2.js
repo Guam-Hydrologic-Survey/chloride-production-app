@@ -231,33 +231,4 @@ export function Legend(element) {
         `;
     }
   } 
-
-  function og() {
-        // Adds svg and ranges to HTML container 
-        for (let i = 0; i < shapes.length; i++) {
-            let toggleBtnId = `production-range-${shapes[i].name}`;
-            productionToggleBtns.push(toggleBtnId);
-    
-            if (shapes[i].range == 0) {
-                prod.innerHTML += /*html*/
-                `
-                <div class="production-range-item">
-                    <button type="button" class="btn"  data-bs-toggle="button" id="${toggleBtnId}">
-                        ${shapes[i].svg}
-                        ${shapes[i].range} (inactive)
-                    </button>
-                </div>
-                `;
-                continue
-            } 
-            prod.innerHTML += /*html*/
-            `
-            <div class="production-range-item">
-                <button type="button" class="btn"  data-bs-toggle="button" id="${toggleBtnId}">
-                    ${shapes[i].svg}
-                    ${shapes[i].range}
-                </button>
-            </div>
-            `;
-        }
-  }
+  
