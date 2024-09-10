@@ -148,9 +148,17 @@ function tableBodyHistory(basinsHistory) {
 function tableFooter(basins, theaders) {
     let tf = ""
     let sums = getSum(basins)
+    //sum [1 ] continue
     for (let i = 0; i < theaders.length; i++) {
         if (i == 0) { tf += `<th scope="row">Totals</th>`; }
-        else { tf += `<td><b>${roundDec(sums[i - 1])}<b></td>` }
+        else { 
+            if (i == 2){
+                //continue;
+                tf += `<td><b>---<b></td>` 
+                i++;
+            }
+            tf += `<td><b>${roundDec(sums[i - 1])}<b></td>` 
+        }
     } 
     return tf;
 }
@@ -163,7 +171,7 @@ function getSum(basins) {
     let sums = [0 , 0, 0, 0]
     basins.forEach((basin) => {
         sums[0] += basin.current_prod_avg.p;
-        sums[1] += basin.current_prod_avg.pwac;
+        sums[1] += roundDec(basin.current_prod_avg.pwac);
         sums[2] += basin.status.inactive;
         sums[3] += basin.status.active
     });
