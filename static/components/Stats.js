@@ -39,15 +39,16 @@ export function Stats(data) {
     `
     <div class="stats-row">
         <div class="stats-col">
-            <p class="stats-text">[CI-] Slope (mg/L)</p>
+            <p class="stats-text">[CI-] Slope (mg/L/mo)</p>
             <p class="stats-text">[CI-] Intercept (mg/L)</p>
-            <p class="stats-text">Production Slope (avg GPM)</p>
+            <p class="stats-text">Production Slope (avg GPM/mo)</p>
             <p class="stats-text">Production Intercept <br>(avg GPM)</p>
             <br>
             <br>
         </div>
         <div class="stats-col">
             <p class="stats-num">${ciSlope}</p>
+            <br>
             <p class="stats-num">${ciIntercept}</p>
             <br>
             <p class="stats-num">${prodSlope}</p>
