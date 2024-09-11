@@ -41,7 +41,7 @@ export function Summary(element) {
 }
 
 // Headers for summary for current year
-const headers1 = ["Basin", "Production<br>(avg MGD)", "PWA Chloride (mg/L)", "Inactive Wells", "Active Wells"];
+const headers1 = ["Basin", "Production<br>(MGD)", "PWA Chloride (mg/L)", "Inactive Wells", "Active Wells"];
 
 // Headers for history
 const headers2 = ["Years", "MGD", "mg/L"];
@@ -64,7 +64,7 @@ function createTable(basins) {
     <table class="table">
         <caption>
             <i>
-                <i class="bi bi-info-circle-fill"></i> Click on a <strong>basin</strong> to view its average total production rate history.
+                <i class="bi bi-info-circle-fill"></i> Click on a <strong>basin</strong> to view its history.
             </i>
         </caption>
         <thead><tr>${tableHeaders(headers1)}</tr></thead>

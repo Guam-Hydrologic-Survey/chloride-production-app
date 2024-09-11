@@ -41,8 +41,8 @@ export function Stats(data) {
         <div class="stats-col">
             <p class="stats-text">[CI-] Slope (mg/L/mo)</p>
             <p class="stats-text">[CI-] Intercept (mg/L)</p>
-            <p class="stats-text">Production Slope (avg GPM/mo)</p>
-            <p class="stats-text">Production Intercept <br>(avg GPM)</p>
+            <p class="stats-text">Production Slope (GPM/mo)</p>
+            <p class="stats-text">Production Intercept <br>(GPM)</p>
             <br>
             <br>
         </div>
