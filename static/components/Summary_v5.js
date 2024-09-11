@@ -154,7 +154,7 @@ function tableFooter(basins, theaders) {
         else { 
             if (i == 2){
                 //continue;
-                tf += `<td><b>92.4<b></td>` 
+                tf += `<td><b>92.5<b></td>` 
                 i++;
             }
             tf += `<td><b>${roundDec(sums[i - 1])}<b></td>` 
