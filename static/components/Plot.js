@@ -128,7 +128,7 @@ export function Plot(data) {
             
         },
         yaxis2: {
-            title: 'Production (avg GPM)',
+            title: 'Production (GPM)',
             titlefont: {color: 'rgb(251,136,33)'},
             tickfont: {color: 'rgb(251,136,33)'},
             overlaying: 'y',
