@@ -49,7 +49,7 @@ const headers2 = ["Years", "MGD", "mg/L"];
 // Retrieves JSON for summary-history data and calls upon createTable() function 
 // Returns response with call to createTable() function 
 function getSummaryHistoryData() {
-    return fetch("./static/data/summaryHistory2.json")
+    return fetch("./static/data/summaryHistory062024.json")
         .then(response => response.json())
         .then(data => {
             return createTable(data.basins)
@@ -154,7 +154,7 @@ function tableFooter(basins, theaders) {
         else { 
             if (i == 2){
                 //continue;
-                tf += `<td><b>92.5<b></td>` 
+                tf += `<td><b>92.2<b></td>` 
                 i++;
             }
             tf += `<td><b>${roundDec(sums[i - 1])}<b></td>` 
