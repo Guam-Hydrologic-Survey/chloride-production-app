@@ -154,7 +154,7 @@ function tableFooter(basins, theaders) {
         else { 
             if (i == 2){
                 //continue;
-                tf += `<td><b>92.2<b></td>` 
+                tf += `<td><b>${calculateTotalPWAC(basins,sums)}<b></td>` 
                 i++;
             }
             tf += `<td><b>${roundDec(sums[i - 1])}<b></td>` 
@@ -177,3 +177,12 @@ function getSum(basins) {
     });
     return sums;
 } 
+
+function calculateTotalPWAC(basins, sums) {
+    // Sum index values = [total for production average, total for production weighted average chloride]
+    let pwac = 0
+    basins.forEach((basin) => {
+        pwac += basin.current_prod_avg.p * basin.current_prod_avg.pwac;
+    });
+    return roundDec(pwac / sums[0]);
+}
