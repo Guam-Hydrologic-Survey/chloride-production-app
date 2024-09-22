@@ -451,33 +451,33 @@ map.addControl(searchControl);
 // Array of objects, each object containing basin name, full file path, and color on map 
 const basins = [
 	{
-		"name": "Finegayan",
-		"data": "./static/data/finegayanBasinV2.json",
-        "color": "green",
-	},
-	{
-		"name": "Hagatna",
-		"data": "./static/data/hagatnaBasinV2.json",
-        "color": "#FFAA00",
-	},
-	{
 		"name": "Machanao",
-		"data":	"./static/data/machanaoBasinV2.json",
-        "color": "#7A8EF5",
-	},
-	{
-		"name": "Mangilao",
-		"data":	"./static/data/mangilaoBasinV2.json",
-        "color": "red",
+		"data":	"./static/data/MachanaoBasin062024.json",
+		"color": "#7A8EF5",
 	},
 	{
 		"name": "Upi",
-		"data":	"./static/data/upiBasinV2.json",
-        "color": "blue",
+		"data":	"./static/data/UpiBasin062024.json",
+		"color": "blue",
+	},
+	{
+		"name": "Mangilao",
+		"data":	"./static/data/MangilaoBasin062024.json",
+		"color": "red",
+	},
+	{
+		"name": "Finegayan",
+		"data": "./static/data/FinegayanBasin062024.json",
+		"color": "green",
+	},
+	{
+		"name": "Hagatna",
+		"data": "./static/data/HagåtñaBasin062024.json",
+        "color": "#FFAA00",
 	},
 	{
 		"name": "Yigo-Tumon",
-		"data":	"./static/data/yigoTumonBasinV2.json",
+		"data":	"./static/data/Yigo-TumonBasin062024.json",
         "color": "#73DFFF",
 	},
 ];
