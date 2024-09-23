@@ -39,9 +39,9 @@ export function Stats(data) {
     `
     <div class="stats-row">
         <div class="stats-col">
-            <p class="stats-text">[CI-] Slope (mg/L/mo)</p>
+            <p class="stats-text">+[CI-] Slope (mg/L/mo)</p>
             <p class="stats-text">[CI-] R<sup>2</sup> (mg/L)</p>
-            <p class="stats-text">Production Slope (GPM/mo)</p>
+            <p class="stats-text">+Production Slope (GPM/mo)</p>
             <p class="stats-text">Production R<sup>2</sup><br>(GPM)</p>
             <br>
             <br>
