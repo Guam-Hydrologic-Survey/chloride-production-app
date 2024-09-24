@@ -196,6 +196,7 @@ export function LMap(element) {
     // TODO - refine layers for chloride and production ranges
     let legendLayers = {
         chlorideLayers: [
+            { chlorideRangeNoData: L.layerGroup() },
             { chlorideRange30: L.layerGroup() },
             { chlorideRange70: L.layerGroup() },
             { chlorideRange150: L.layerGroup() },
@@ -391,21 +392,23 @@ export function LMap(element) {
 
                             // Adds point to chloride range layer based on value 
                             if (latestChloride == null) {
-                                point.addTo(legendLayers.chlorideLayers[0].chlorideRange30);
-                            } else if (latestChloride <= 30) {
-                                point.addTo(legendLayers.chlorideLayers[0].chlorideRange30);
+                                point.addTo(legendLayers.chlorideLayers[0].chlorideRangeNoData);
+                            } else if (latestChloride < 1) {
+                                point.addTo(legendLayers.chlorideLayers[0].chlorideRangeNoData);
+                            }else if (latestChloride <= 30) {
+                                point.addTo(legendLayers.chlorideLayers[1].chlorideRange30);
                             } else if (latestChloride <= 70) {
-                                point.addTo(legendLayers.chlorideLayers[1].chlorideRange70);
+                                point.addTo(legendLayers.chlorideLayers[2].chlorideRange70);
                             } else if (latestChloride <= 150) {
-                                point.addTo(legendLayers.chlorideLayers[2].chlorideRange150);
+                                point.addTo(legendLayers.chlorideLayers[3].chlorideRange150);
                             } else if (latestChloride <=250) {
-                                point.addTo(legendLayers.chlorideLayers[3].chlorideRange250);
+                                point.addTo(legendLayers.chlorideLayers[4].chlorideRange250);
                             } else if (latestChloride <= 300) {
-                                point.addTo(legendLayers.chlorideLayers[4].chlorideRange300);
+                                point.addTo(legendLayers.chlorideLayers[5].chlorideRange300);
                             } else if (latestChloride <= 400) {
-                                point.addTo(legendLayers.chlorideLayers[5].chlorideRange400);
+                                point.addTo(legendLayers.chlorideLayers[6].chlorideRange400);
                             } else if (latestChloride <= 450) {
-                                point.addTo(legendLayers.chlorideLayers[6].chlorideRange450);
+                                point.addTo(legendLayers.chlorideLayers[7].chlorideRange450);
                             }
 
                             // adds point to production range layer based on value

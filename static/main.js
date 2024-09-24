@@ -591,9 +591,14 @@ function checkChloride(chloride) {
 
     const colors = [
         {
+            name: "gray",
+            hex: "#555555",
+            range: "No Data"
+        },
+        {
             name: "blue",
             hex: "#0070FF",
-            range: "[0 - 30]"
+            range: "(0 - 30]"
         },
         {
             name: "green",
@@ -629,20 +634,22 @@ function checkChloride(chloride) {
 
     if (chloride == null) {
         chlorideIcon = colors[0].hex
-    } else if (chloride <= 30) {
+    } else if (chloride < 1) {
         chlorideIcon = colors[0].hex
-    } else if (chloride <= 70) {
+    }else if (chloride <= 30) {
         chlorideIcon = colors[1].hex
-    } else if (chloride <= 150) {
+    } else if (chloride <= 70) {
         chlorideIcon = colors[2].hex
-    } else if (chloride <=250) {
+    } else if (chloride <= 150) {
         chlorideIcon = colors[3].hex
-    } else if (chloride <= 300) {
+    } else if (chloride <=250) {
         chlorideIcon = colors[4].hex
-    } else if (chloride <= 400) {
+    } else if (chloride <= 300) {
         chlorideIcon = colors[5].hex
-    } else if (chloride <= 450) {
+    } else if (chloride <= 400) {
         chlorideIcon = colors[6].hex
+    } else if (chloride <= 450) {
+        chlorideIcon = colors[7].hex
     }
 
     return chlorideIcon;

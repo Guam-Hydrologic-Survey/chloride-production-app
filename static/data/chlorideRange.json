@@ -1,10 +1,16 @@
 {
     "chlorideRange": [
         {
+            "name": "gray",
+            "hex": "#555555",
+            "rgb": "rgb(85,85,85)",
+            "range": "No Data"
+        },
+        {
             "name": "blue",
             "hex": "#0070FF",
             "rgb": "rgb(0,112,255)",
-            "range": "[0 - 30]"
+            "range": "(0 - 30]"
         },
         {
             "name": "green",
