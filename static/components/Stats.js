@@ -53,7 +53,6 @@ export function Stats(data) {
             <br>
             <p class="stats-num">${prodSlope}</p>
             <p class="stats-num">${prodRsquared}</p>
-        
         </div>
     </div>
     `;

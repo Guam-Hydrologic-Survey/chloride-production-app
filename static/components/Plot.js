@@ -184,6 +184,8 @@ export function Plot(data) {
                     {
                         x: x_dates_conv[latestProductionValue[1]],
                         y: latestProductionValue[0],
+                        xref: 'x',
+                        yref: 'y2',
                         text: `<span style="color:rgb(251,136,33);"><b>${roundDec(latestProductionValue[0])} gpm</b></span>`,
                         showarrow: true,
                         showarrow: true,
