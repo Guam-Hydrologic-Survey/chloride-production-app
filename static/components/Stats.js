@@ -40,21 +40,20 @@ export function Stats(data) {
     <div class="stats-row">
         <div class="stats-col">
             <p class="stats-text">+[CI-] Slope (mg/L/mo)</p>
-            <p class="stats-text">[CI-] R<sup>2</sup> (mg/L)</p>
+            <p class="stats-text">[CI-] R<sup>2</sup></p>
             <p class="stats-text">+Production Slope (GPM/mo)</p>
-            <p class="stats-text">Production R<sup>2</sup><br>(GPM)</p>
+            <p class="stats-text">Production R<sup>2</sup></p>
             <br>
             <br>
         </div>
         <div class="stats-col">
-            <p class="stats-num">${ciSlope}</p>
             <br>
+            <p class="stats-num">${ciSlope}</p>
             <p class="stats-num">${ciRSquared}</p>
             <br>
             <p class="stats-num">${prodSlope}</p>
-            <br>
             <p class="stats-num">${prodRsquared}</p>
-            <br>
+        
         </div>
     </div>
     `;
