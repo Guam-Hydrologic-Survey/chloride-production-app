@@ -49,7 +49,7 @@ const headers2 = ["Years", "MGD", "mg/L"];
 // Retrieves JSON for summary-history data and calls upon createTable() function 
 // Returns response with call to createTable() function 
 function getSummaryHistoryData() {
-    return fetch("./static/data/summaryHistory10162024.json")
+    return fetch("./static/data/summaryHistory10212024.json")
         .then(response => response.json())
         .then(data => {
             return createTable(data.basins)
