@@ -56,11 +56,11 @@ export function About(element) {
             <!-- Dropdown for links to GHS maps libraries -->
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Map Series
+                WERI Map Series
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/mappfx/" title="GHS MAppFx Library">MAppFx Library</a></li>
-                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/interagency-maps/" title="GHS Interagency Maps">Interagency Maps</a></li>
+                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/mappfx/" title="MAppFx Library on GHS">MAppFx Library</a></li>
+                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/web-mapps/" title="Web MApps Library on GHS">Web MApps</a></li>
               </ul>
             </div>
 
