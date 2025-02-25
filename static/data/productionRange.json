@@ -1,0 +1,60 @@
+{
+    "productionRange": [
+        {
+            "shape": "circle", 
+            "color": "black",
+            "hex": "#000000",
+            "rgb": "rgb(0,0,0)",
+            "range": "0"
+        },
+        {
+            "shape": "circle", 
+            "color": "light orange",
+            "hex": "#FFD37F", 
+            "rgb": "rgb(255,211,127)",
+            "range": "(0 - 100]"
+        },
+        {
+            "shape": "circle", 
+            "color": "light green",
+            "hex": "#D3FFBE", 
+            "rgb": "rgb(211,255,190)",
+            "range": "(100 - 200]"
+        },
+        {
+            "shape": "circle", 
+            "color": "blue",
+            "hex": "#0070FF", 
+            "rgb": "",
+            "range": "(200 - 300]"
+        },
+        {
+            "shape": "triangle",
+            "color": "blue",
+            "hex": "#0070FF",
+            "rgb": "rgb(0,112,255)",
+            "range": "(300 - 400]"
+        },
+        {
+            "shape": "square",
+            "color": "blue",
+            "hex": "#0070FF",
+            "rgb": "rgb(0,112,255)",
+            "range": "(400 - 500]"
+        },
+        {
+            "shape": "pentagon",
+            "color": "blue",
+            "hex": "#0070FF",
+            "rgb": "rgb(0,112,255)",
+            "range": "(500 - 600]"
+        },
+        {
+            "shape": "hexagon",
+            "color": "blue",
+            "hex": "#0070FF",
+            "rgb": "rgb(0,112,255)",
+            "range": "(600 - 700]"
+        }
+    ]
+}

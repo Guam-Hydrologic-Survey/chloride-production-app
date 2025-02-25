@@ -2,6 +2,8 @@
 /test
 /python 
 /node_modules
+/static/data/tests
+/src/data/tests
 
 # -------------- For Visual Studio Code 
 .vscode/*
@@ -16,6 +18,7 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+.vscode
 
 # OS generated files #
 .DS_Store

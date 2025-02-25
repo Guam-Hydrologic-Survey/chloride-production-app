@@ -1,0 +1,24 @@
+{
+    "icons": [
+        {
+            "shape": "circle",
+            "file": "./static/assets/svg/Circle.svg"
+        },
+        {
+            "shape": "triangle",
+            "file": "./static/assets/svg/Triangle.svg"
+        },
+        {
+            "shape": "square",
+            "file": "./static/assets/svg/Square.svg"
+        },
+        {
+            "shape": "pentagon",
+            "file": "./static/assets/svg/Pentagon.svg"
+        },
+        {
+            "shape": "hexagon",
+            "file": "./static/assets/svg/Hexagon.svg"
+        }
+    ]
+}

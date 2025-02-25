@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
 
 #map {
     position: absolute;
@@ -11,23 +12,63 @@
 
 .mapTitle {
     padding: 6px 8px;
-    /* font: 14px/16px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px; */
 }
+
 .mapTitle h4 {
     margin: 0 0 5px;
     color: #777;
 }
-.modal-header{
+
+#marker-content-container {
+    text-align: center;
+}
+
+#marker-well-name {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 5px;
+}
+
+#marker-basin-name {
+    font-style: italic;
+    font-size: 14px;
+}
+
+.modal-header {
     justify-content: space-around;
 }
+
 .modal-body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Style configuration for Summary offcanvasS */
+#summary {
+    width: 28% !important;
+}
+
+#summary-offcanvas-title {
+    font-family: 'Roboto Slab', serif;
+}
+
+.summary-offcanvas-subtitle {
+    font-style: italic;
+}
+
+.summary-offcanvas-body {
+    font-size: 14px;
+}
+
+.toggle-basin-history {
+    cursor: pointer;
+}
+
+/* Style configuration for Legend offcanvas */
+#legend-offcanvas-title {
+    font-family: 'Roboto Slab', serif;
 }
 
 .offcanvas-size-sm {
@@ -41,19 +82,49 @@
     margin-right: auto;
 }
 
-/* .offcanvas-body {
-    height: 1024px;
-    top: 50%;
-} */ 
-
-/* .header {
-    z-index: 9999;
+.legend {
+    padding: 5px;
+    font: 12px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    line-height: 8px;
+    color: #555;
 }
 
-#weri-logo {
-    width: 200px;
-    height: 200px;
-} */
+.legend p {
+    line-height: 3px; 
+    margin-bottom: 10px;
+}
+
+.legend h4 {
+    font-size: 14px;
+    text-align: center;
+}
+
+.spacer {
+    height: 10px;
+}
+
+.chloride-range-item {
+    display: flex;
+    align-items: center;
+    line-height: 40px;
+}
+
+.production-range-item {
+    line-height: 45px;
+}
+
+#point-info-header {
+    margin-left: 30%;
+}
+
+/* Style configuration for About modal */
+#about-modal-title {
+    font-family: 'Roboto Slab', serif;
+}
 
 .bs-btn-group {
     margin: 20px;
@@ -72,7 +143,31 @@
     --bs-offcanvas-width: min(100vh, 900px) !important;
 }
 
+.btn-link {
+    text-decoration: none;
+    color: black;
+}
+
+.btn-link:hover {
+    color:#555;
+}
+
+.btn-link:focus {
+    color:#555;
+}
+
 /* Style configuration for the title and location section of stats panel */
+.well-stats{
+    top: -60px;
+    left: 10px;
+    position: relative;
+}
+
+.vl {
+    border-right: 1.99px solid rgba(0, 0, 0, 0.1);
+    height: 500px;
+}
+
 .stats-location {
     font-size: 18px;
     font-style: italic;
@@ -92,7 +187,7 @@
 }
 
 .stats-text {
-    /* font-weight: bold; */
+    font-weight: bold;
     font-size: 15px;
     padding: 20px 0px 50px 0px;
     margin: 0;
@@ -104,10 +199,6 @@
     padding: 20px 36px 50px 0px;
     margin: 0;
 }
-
-/* .full-stats {
-    font-size: 10px;
-} */
 
 .stats-text-full {
     font-size: 13px;
@@ -122,10 +213,6 @@
     margin: 0;
 }
 
-button {
-    font-style: italic;
-}
-
 /* Hides tooltips on page load */
 .leaflet-tooltip {
     visibility: hidden;
@@ -135,37 +222,60 @@ button {
     float: right;
 }
 
-.legend {
-    padding: 5px;
-    font: 12px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    line-height: 8px;
-    color: #555;
+/* Override styles for Leaflet Control Search plugin */
+.leaflet-control-search.search-exp {
+    background: #0d6efd; 
+    border: 0;
+    border-radius: 0 5px 5px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
 }
 
-.legend p {
-    line-height: 3px; 
-     margin-bottom: 10px;
+.leaflet-control-search .search-button {
+    display: block;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background-color: #0d6efd;
+    background: url(../assets/search.svg) no-repeat 4px 6px #0d6efd;
+    border-radius: 0 5px 5px 0;
 }
 
-.legend h4 {
-    font-size: 14px;
-    text-align: center;
+.leaflet-control-search .search-button:hover {
+    background-color: #0d6efd;
+    background: url(../assets/search.svg) no-repeat 4px 6px #0d6efd;
 }
-.vl {
-    border-right: 1.99px solid rgba(0, 0, 0, 0.1);
-    height: 500px;
-  }
 
-.well-stats{
-    top: -60px;
-    left: 10px;
-    position: relative;
-    
+.leaflet-control-search .search-cancel {
+    right: 38px;
+    background: url(../assets/cancel.svg) no-repeat 4px 4px #fff;
 }
-.modal-title-plot {
-    margin-left: 24%;
+
+.leaflet-control-search .search-input {
+    float: left;
+    border: 0;
+    border-radius: 8px;
+    height: 20px;
+    padding: 16px;
+    margin: 6px;
+}
+
+.leaflet-control-search .search-tooltip {
+    padding-left: 4px;
+}
+
+/* Animation for Leaflet Search on a found target */
+.search-pulse {
+    animation: pulsate 1s ease-out;
+    -webkit-animation: pulsate 1s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    opacity: 0.0
+}
+
+@keyframes pulsate {
+    0% { transform: opacity: 0.0; }
+    50% { opacity: 1.0; }
+    100% { transform: opacity: 0.0; }
 }
