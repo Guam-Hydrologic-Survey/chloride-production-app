@@ -18,6 +18,7 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
+.vscode
 
 # OS generated files #
 .DS_Store
