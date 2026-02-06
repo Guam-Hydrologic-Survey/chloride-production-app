@@ -39,7 +39,7 @@ export function About(element) {
 
             <!-- Dropdown for links to associated TRs -->
             <div class="btn-group">
-              <button type="button" class="btn btn-primary" title="WERI TR ### (Authors, Year)">WERI Technical Report</button>
+              <a class="btn btn-primary" title="Coming soon!" href="https://guamhydrologicsurvey.uog.edu/2025/11/07/mappfx-chloride-and-production/" target="_blank" rel="noreferrer noopener" role="button">WERI Technical Report</a>
               <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" title="View associated technical reports">
                 <span class="visually-hidden">Toggle Dropdown</span>
               </button>
@@ -59,8 +59,8 @@ export function About(element) {
                 WERI Map Series
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/mappfx/" title="MAppFx Library on GHS">MAppFx Library</a></li>
-                <li><a class="dropdown-item" href="https://guamhydrologicsurvey.uog.edu/index.php/web-mapps/" title="Web MApps Library on GHS">Web MApps</a></li>
+                <li><a class="dropdown-item" target="_blank" rel="noreferrer noopener" href="https://guamhydrologicsurvey.uog.edu/mappfx-library/" title="MAppFx Library on GHS">MAppFx Library</a></li>
+                <li><a class="dropdown-item" target="_blank" rel="noreferrer noopener" href="https://guamhydrologicsurvey.uog.edu/web-mapps-library/" title="Web MApps Library on GHS">Web MApps</a></li>
               </ul>
             </div>
 

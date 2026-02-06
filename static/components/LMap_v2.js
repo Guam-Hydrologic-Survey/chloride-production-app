@@ -11,6 +11,7 @@ import { MarkerPopup } from "./MarkerPopup.js";
 import { Stats } from "./Stats.js";
 import { Plot } from "./Plot.js";
 import { chlorideToggleBtns, productionToggleBtns, layersResetBtnId, layersRemoveBtnId } from "./Legend_v3.js";
+import { TitleCard } from "./TitleCard.js";
 
 export function LMap(element) {
     // Center of Guam
@@ -73,16 +74,7 @@ export function LMap(element) {
     let overlays_60k_combined = L.layerGroup([overlay_60kncp, overlay_60kscp]);
     layerControl.addOverlay(overlays_60k_combined, "60K");
 
-    // Configure map title 
-    const mapTitle = L.control({position: 'topleft'});
-
-    mapTitle.onAdd =  function(map) {
-        this._div = L.DomUtil.create('div', 'mapTitle'); 
-        this._div.innerHTML = '<img src="./static/assets/WERI_MappFx_Chloride_And_Production_Title_Card_White_Bold.png" height="150">';
-        return this._div;
-    };
-
-    mapTitle.addTo(map);
+    TitleCard(map);
 
     L.control.zoom({
         // options: topleft, topright, bottomleft, bottomright
