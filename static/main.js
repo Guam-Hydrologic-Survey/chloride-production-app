@@ -466,7 +466,7 @@ const basins = [
 		"color": "red",
 	},
 	{
-		"name": "Finegayan",
+		"name": "Finagua'yok",
 		"data": "./static/data/Finagua'yokBasin092026.json",
 		"color": "green",
 	},
