@@ -15,12 +15,15 @@ import { TitleCard } from "./TitleCard.js";
 
 export function LMap(element) {
     // Center of Guam
-    const center = [13.5435056,144.7478083];
+    const center = [
+        13.525014519452709,
+        144.84778404235843
+    ];
 
     // Creates Leaflet map 
     const map = L.map(element, {
         center: center,
-        zoom: 12,
+        zoom: 13,
         zoomControl: false,
     });
 
