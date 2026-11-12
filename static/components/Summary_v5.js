@@ -6,7 +6,9 @@ Description: An updated version of the summary table, which fetches the JSON for
 // utils 
 import { roundDec } from "../utils/roundDec.js";
 
-const data_source = "./static/data/cp_sum_hist_2026.10.05.json";
+const update_date = "2026.11.12"
+
+const data_source = `./static/data/cp_sum_hist_${update_date}.json`;
  
 // TODO - testing stage only, to be configured when data is ready (pending confirmation of numbers)
 // TODO - add units for production values in cells 
