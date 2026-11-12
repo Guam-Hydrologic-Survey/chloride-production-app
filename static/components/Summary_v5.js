@@ -5,6 +5,8 @@ Description: An updated version of the summary table, which fetches the JSON for
 
 // utils 
 import { roundDec } from "../utils/roundDec.js";
+
+const data_source = "./static/data/cp_sum_hist_2026.10.05.json";
  
 // TODO - testing stage only, to be configured when data is ready (pending confirmation of numbers)
 // TODO - add units for production values in cells 
@@ -49,7 +51,7 @@ const headers2 = ["Years", "MGD", "mg/L"];
 // Retrieves JSON for summary-history data and calls upon createTable() function 
 // Returns response with call to createTable() function 
 function getSummaryHistoryData() {
-    return fetch("./static/data/cp_sum_hist_2026.10.05.json")
+    return fetch(data_source)
         .then(response => response.json())
         .then(data => {
             return createTable(data.basins)
